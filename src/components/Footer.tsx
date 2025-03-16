@@ -59,14 +59,16 @@ const Footer = () => {
             </p>
             <div className="flex space-x-4">
               {[
-                { icon: <Github className="w-5 h-5" />, href: "#" },
-                { icon: <Twitter className="w-5 h-5" />, href: "#" },
-                { icon: <Linkedin className="w-5 h-5" />, href: "#" },
-                { icon: <Instagram className="w-5 h-5" />, href: "#" }
+                { icon: <Github className="w-5 h-5" />, href: "https://github.com/Shadownik-official" },
+                { icon: <Twitter className="w-5 h-5" />, href: "https://x.com/Shadownik_ofc" },
+                { icon: <Linkedin className="w-5 h-5" />, href: "https://www.linkedin.com/company/shadownik" },
+                { icon: <Instagram className="w-5 h-5" />, href: "https://instagram.com/Shadownik.official" }
               ].map((social, index) => (
                 <MotionA
                   key={index}
                   href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   className="p-2 bg-gradient-to-br from-primary/20 to-accent/20 rounded-lg hover:from-primary/30 hover:to-accent/30 transition-all duration-300 border border-white/10 group"

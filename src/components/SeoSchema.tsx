@@ -18,12 +18,18 @@ const SeoSchema = () => {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "Shadownik",
-    "url": "https://web.shadownik.online",
-    "logo": "https://web.shadownik.online/logo.png",
+    "url": "https://shadownik.com",
+    "logo": "https://shadownik.com/logo.png",
     "sameAs": [
-      "https://twitter.com/shadownik",
+      "https://github.com/Shadownik-official",
+      "https://x.com/Shadownik_ofc",
       "https://www.linkedin.com/company/shadownik",
-      "https://github.com/shadownik"
+      "https://discord.gg/UA4yYEGx",
+      "https://www.facebook.com/people/Shadownik/61562599613319",
+      "https://instagram.com/Shadownik.official",
+      "https://www.youtube.com/@Shadownik.official",
+      "https://t.me/shadownikofficial",
+      "https://www.whatsapp.com/channel/0029VakSdtTfXUuURqTLgF3A"
     ],
     "contactPoint": {
       "@type": "ContactPoint",

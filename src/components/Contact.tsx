@@ -249,18 +249,30 @@ const Contact = () => {
                 className="mt-8"
               >
                 <h3 className="text-lg font-semibold mb-4">Connect With Us</h3>
-                <div className="flex space-x-4">
-                  {["twitter", "linkedin", "github", "instagram"].map((platform, i) => (
+                <div className="flex flex-wrap gap-4">
+                  {[
+                    { platform: "github", href: "https://github.com/Shadownik-official" },
+                    { platform: "twitter", href: "https://x.com/Shadownik_ofc" },
+                    { platform: "linkedin", href: "https://www.linkedin.com/company/shadownik" },
+                    { platform: "discord", href: "https://discord.gg/UA4yYEGx" },
+                    { platform: "facebook", href: "https://www.facebook.com/people/Shadownik/61562599613319" },
+                    { platform: "instagram", href: "https://instagram.com/Shadownik.official" },
+                    { platform: "youtube", href: "https://www.youtube.com/@Shadownik.official" },
+                    { platform: "telegram", href: "https://t.me/shadownikofficial" },
+                    { platform: "whatsapp", href: "https://www.whatsapp.com/channel/0029VakSdtTfXUuURqTLgF3A" }
+                  ].map((social, i) => (
                     <MotionA 
-                      key={platform}
-                      href={`#${platform}`} 
+                      key={social.platform}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       whileHover={{ y: -5 }}
                       transition={{ type: 'spring', stiffness: 400, damping: 10 }}
                       className="bg-gradient-to-br from-gray-800 to-black p-3 rounded-full border border-white/10 hover:border-primary/50 transition-colors"
                     >
                       <img 
-                        src={`https://cdn.simpleicons.org/${platform}/ffffff`} 
-                        alt={platform} 
+                        src={`https://cdn.simpleicons.org/${social.platform}/ffffff`} 
+                        alt={social.platform} 
                         className="w-5 h-5"
                       />
                     </MotionA>
