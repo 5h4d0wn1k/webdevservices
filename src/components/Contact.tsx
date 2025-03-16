@@ -1,20 +1,23 @@
-import React, { forwardRef } from 'react';
-import { motion } from 'framer-motion';
+import React, { forwardRef, useState, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Mail,
   Phone,
   MapPin,
   Send,
   MessageSquare,
-  Sparkles
+  Sparkles,
+  CheckCircle,
+  AlertCircle,
+  Loader2
 } from 'lucide-react';
 
 const contactInfo = [
   {
     icon: <Mail className="w-6 h-6" />,
     title: "Email",
-    value: "hello@shadownik.com",
-    link: "mailto:hello@shadownik.com"
+    value: "info@shadownik.online",
+    link: "mailto:info@shadownik.online"
   },
   {
     icon: <Phone className="w-6 h-6" />,
@@ -39,149 +42,377 @@ const MotionA = motion(forwardRef((props: any, ref) => (
   <a ref={ref} {...props} />
 )));
 
-const MotionButton = motion(forwardRef((props: any, ref) => (
-  <button ref={ref} {...props} />
-)));
+interface FormData {
+  name: string;
+  email: string;
+  service: string;
+  message: string;
+}
+
+interface FormErrors {
+  name?: string;
+  email?: string;
+  service?: string;
+  message?: string;
+}
 
 const Contact = () => {
+  const [formData, setFormData] = useState<FormData>({
+    name: '',
+    email: '',
+    service: '',
+    message: ''
+  });
+  
+  const [formErrors, setFormErrors] = useState<FormErrors>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [isTouched, setIsTouched] = useState<Record<string, boolean>>({});
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    
+    // Validate on change if field has been touched
+    if (isTouched[name]) {
+      validateField(name, value);
+    }
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setIsTouched(prev => ({ ...prev, [name]: true }));
+    validateField(name, value);
+  };
+
+  const validateField = (name: string, value: string) => {
+    let error = '';
+
+    switch (name) {
+      case 'name':
+        if (!value.trim()) error = 'Name is required';
+        break;
+      case 'email':
+        if (!value.trim()) {
+          error = 'Email is required';
+        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
+          error = 'Invalid email address';
+        }
+        break;
+      case 'service':
+        if (!value.trim()) error = 'Please select a service';
+        break;
+      case 'message':
+        if (!value.trim()) error = 'Message is required';
+        break;
+      default:
+        break;
+    }
+
+    setFormErrors(prev => ({ ...prev, [name]: error }));
+    return !error;
+  };
+
+  const validateForm = () => {
+    const fields = ['name', 'email', 'service', 'message'] as const;
+    let isValid = true;
+    
+    // Set all fields as touched
+    const touchedFields = fields.reduce((acc, field) => ({ ...acc, [field]: true }), {});
+    setIsTouched(touchedFields);
+    
+    // Validate all fields
+    fields.forEach(field => {
+      const valid = validateField(field, formData[field]);
+      if (!valid) isValid = false;
+    });
+    
+    return isValid;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!validateForm()) return;
+    
+    setIsSubmitting(true);
+    
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send message');
+      }
+
+      setSubmitStatus('success');
+      // Reset form after successful submission
+      setTimeout(() => {
+        setFormData({ name: '', email: '', service: '', message: '' });
+        setIsTouched({});
+        setSubmitStatus('idle');
+        if (formRef.current) formRef.current.reset();
+      }, 3000);
+    } catch (error) {
+      setSubmitStatus('error');
+      setTimeout(() => {
+        setSubmitStatus('idle');
+      }, 3000);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const services = [
+    "Web Development",
+    "Mobile App Development",
+    "E-commerce Solutions",
+    "UI/UX Design",
+    "Custom Software",
+    "Digital Marketing",
+    "SEO Services",
+    "Cloud Solutions",
+    "AI Integration",
+    "Other Services"
+  ];
+
   return (
-    <section id="contact" className="py-24 px-4 relative overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_50%_50%,rgba(99,102,241,0.1),transparent_50%)]" />
-        <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 2px 2px, rgba(99,102,241,0.15) 1px, transparent 0)`,
-          backgroundSize: '40px 40px',
-        }} />
-      </div>
-
-      {/* Glowing Orbs */}
+    <section id="contact" className="py-20 relative">
+      {/* Background Effects */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/20 rounded-full filter blur-3xl animate-pulse-slow" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/20 rounded-full filter blur-3xl animate-pulse-slow delay-1000" />
+        <div className="absolute w-full h-1/2 bg-gradient-to-b from-black to-transparent" />
+        <div className="absolute bottom-0 w-full h-1/2 bg-gradient-to-t from-black to-transparent" />
+        <div className="absolute right-1/4 bottom-1/3 w-96 h-96 bg-primary/20 rounded-full filter blur-[120px]" />
+        <div className="absolute left-1/4 top-1/3 w-96 h-96 bg-accent/20 rounded-full filter blur-[120px]" />
       </div>
 
-      <div className="max-w-7xl mx-auto relative">
-        <MotionDiv
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <MessageSquare className="w-6 h-6 text-primary animate-pulse" />
-            <span className="text-primary uppercase tracking-wider text-sm font-medium">Get in Touch</span>
+          <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/20 border border-primary/30 mb-4">
+            <MessageSquare size={14} className="text-primary mr-2" />
+            <span className="text-sm font-medium text-primary">Get in Touch</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-neon-purple bg-clip-text text-transparent animate-gradient">
-            Let's Create Something Amazing
-          </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-            Ready to transform your digital presence? We're here to help bring your vision to life.
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">Ready to Transform Your Digital Presence?</h2>
+          <p className="max-w-2xl mx-auto text-xl text-gray-400">
+            Contact us today to discuss your project and discover how Shadownik can elevate your web presence
           </p>
-        </MotionDiv>
+        </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-16">
-          <MotionDiv
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="bg-gradient-to-br from-primary/5 to-accent/5 backdrop-blur-sm rounded-2xl p-8 mb-8 border border-white/10">
-              <div className="grid gap-6">
-                {contactInfo.map((info, index) => (
-                  <MotionA
-                    key={info.title}
-                    href={info.link}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    whileHover={{ scale: 1.02 }}
-                    className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-white/5 to-white/10 hover:from-primary/10 hover:to-accent/10 transition-all duration-300 group border border-white/10"
-                  >
-                    <div className="p-3 bg-gradient-to-br from-primary/20 to-accent/20 rounded-lg group-hover:from-primary/30 group-hover:to-accent/30 transition-colors">
-                      {info.icon}
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-400">{info.title}</div>
-                      <div className="font-medium bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                        {info.value}
-                      </div>
-                    </div>
-                  </MotionA>
-                ))}
-              </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+          {/* Contact Info */}
+          <div className="lg:col-span-1">
+            <div className="space-y-8">
+              {contactInfo.map((item, index) => (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="flex items-start space-x-4"
+                >
+                  <div className="bg-gradient-to-br from-primary/20 to-accent/20 p-3 rounded-lg">
+                    {React.cloneElement(item.icon, { className: 'w-6 h-6 text-primary' })}
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold mb-1">{item.title}</h3>
+                    <MotionA
+                      href={item.link}
+                      className="text-gray-400 hover:text-primary transition-colors"
+                      whileHover={{ x: 5 }}
+                      transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+                    >
+                      {item.value}
+                    </MotionA>
+                  </div>
+                </motion.div>
+              ))}
+
+              {/* Social Media */}
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="mt-8"
+              >
+                <h3 className="text-lg font-semibold mb-4">Connect With Us</h3>
+                <div className="flex space-x-4">
+                  {["twitter", "linkedin", "github", "instagram"].map((platform, i) => (
+                    <MotionA 
+                      key={platform}
+                      href={`#${platform}`} 
+                      whileHover={{ y: -5 }}
+                      transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+                      className="bg-gradient-to-br from-gray-800 to-black p-3 rounded-full border border-white/10 hover:border-primary/50 transition-colors"
+                    >
+                      <img 
+                        src={`https://cdn.simpleicons.org/${platform}/ffffff`} 
+                        alt={platform} 
+                        className="w-5 h-5"
+                      />
+                    </MotionA>
+                  ))}
+                </div>
+              </motion.div>
             </div>
-          </MotionDiv>
+          </div>
 
-          <MotionDiv
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+          {/* Contact Form */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="lg:col-span-2"
           >
-            <form className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-gradient-to-br from-gray-900 to-black border border-white/10 rounded-2xl p-8 shadow-xl">
+              <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+                {/* Success/Error Messages */}
+                <AnimatePresence mode="wait">
+                  {submitStatus === 'success' && (
+                    <motion.div 
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="bg-green-900/30 border border-green-500/30 rounded-lg p-4 flex items-center space-x-3"
+                    >
+                      <CheckCircle className="text-green-500 w-5 h-5 flex-shrink-0" />
+                      <p className="text-green-100">Your message has been sent successfully! We'll get back to you soon.</p>
+                    </motion.div>
+                  )}
+                  
+                  {submitStatus === 'error' && (
+                    <motion.div 
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="bg-red-900/30 border border-red-500/30 rounded-lg p-4 flex items-center space-x-3"
+                    >
+                      <AlertCircle className="text-red-500 w-5 h-5 flex-shrink-0" />
+                      <p className="text-red-100">There was an error sending your message. Please try again.</p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              
+                {/* Name Field */}
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-400 mb-2">
-                    Name
-                  </label>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-1">Name</label>
                   <input
                     type="text"
                     id="name"
-                    className="w-full bg-gradient-to-r from-white/5 to-white/10 border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
-                    placeholder="John Doe"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    className={`w-full px-4 py-3 bg-black/30 border ${
+                      formErrors.name && isTouched.name ? 'border-red-500/50' : 'border-white/10 focus:border-primary/50'
+                    } rounded-lg focus:outline-none focus:ring-1 focus:ring-primary/50 transition-colors`}
+                    placeholder="Your name"
                   />
+                  {formErrors.name && isTouched.name && (
+                    <p className="mt-1 text-sm text-red-400">{formErrors.name}</p>
+                  )}
                 </div>
+                
+                {/* Email Field */}
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-400 mb-2">
-                    Email
-                  </label>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">Email</label>
                   <input
                     type="email"
                     id="email"
-                    className="w-full bg-gradient-to-r from-white/5 to-white/10 border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
-                    placeholder="john@example.com"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    className={`w-full px-4 py-3 bg-black/30 border ${
+                      formErrors.email && isTouched.email ? 'border-red-500/50' : 'border-white/10 focus:border-primary/50'
+                    } rounded-lg focus:outline-none focus:ring-1 focus:ring-primary/50 transition-colors`}
+                    placeholder="Your email"
                   />
+                  {formErrors.email && isTouched.email && (
+                    <p className="mt-1 text-sm text-red-400">{formErrors.email}</p>
+                  )}
                 </div>
-              </div>
-
-              <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-gray-400 mb-2">
-                  Subject
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  className="w-full bg-gradient-to-r from-white/5 to-white/10 border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
-                  placeholder="Project Inquiry"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-400 mb-2">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  rows={6}
-                  className="w-full bg-gradient-to-r from-white/5 to-white/10 border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
-                  placeholder="Tell us about your project..."
-                ></textarea>
-              </div>
-
-              <MotionButton
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full bg-gradient-to-r from-primary to-accent text-white font-medium py-4 rounded-lg flex items-center justify-center gap-2 hover:from-primary-dark hover:to-accent-dark transition-all duration-300 shadow-lg shadow-primary/25 group"
-              >
-                Send Message
-                <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </MotionButton>
-            </form>
-          </MotionDiv>
+                
+                {/* Service Selection */}
+                <div>
+                  <label htmlFor="service" className="block text-sm font-medium text-gray-300 mb-1">Service Needed</label>
+                  <select
+                    id="service"
+                    name="service"
+                    value={formData.service}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    className={`w-full px-4 py-3 bg-black/30 border ${
+                      formErrors.service && isTouched.service ? 'border-red-500/50' : 'border-white/10 focus:border-primary/50'
+                    } rounded-lg focus:outline-none focus:ring-1 focus:ring-primary/50 transition-colors`}
+                  >
+                    <option value="">Select a service</option>
+                    {services.map(service => (
+                      <option key={service} value={service}>{service}</option>
+                    ))}
+                  </select>
+                  {formErrors.service && isTouched.service && (
+                    <p className="mt-1 text-sm text-red-400">{formErrors.service}</p>
+                  )}
+                </div>
+                
+                {/* Message Field */}
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-1">Message</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    rows={6}
+                    className={`w-full px-4 py-3 bg-black/30 border ${
+                      formErrors.message && isTouched.message ? 'border-red-500/50' : 'border-white/10 focus:border-primary/50'
+                    } rounded-lg focus:outline-none focus:ring-1 focus:ring-primary/50 transition-colors resize-none`}
+                    placeholder="Tell us about your project..."
+                  />
+                  {formErrors.message && isTouched.message && (
+                    <p className="mt-1 text-sm text-red-400">{formErrors.message}</p>
+                  )}
+                </div>
+                
+                {/* Submit Button */}
+                <div>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full py-3 px-4 bg-gradient-to-r from-primary to-accent text-white font-semibold rounded-lg hover:from-primary/90 hover:to-accent/90 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300 flex items-center justify-center disabled:opacity-70"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-5 h-5 mr-2" />
+                        Send Message
+                      </>
+                    )}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
