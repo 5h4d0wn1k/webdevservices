@@ -18,6 +18,10 @@ import Newsletter from './components/Newsletter';
 import CookieConsent from './components/CookieConsent';
 import ChatBot from './components/ChatBot';
 import ConsultationBooking from './components/ConsultationBooking';
+import { ScrollExperience } from './components/services/ScrollExperience';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ClientOnboarding } from './components/services/ClientOnboarding';
+import Admin from './pages/Admin';
 
 function App() {
   // Simple client-side routing
@@ -51,6 +55,16 @@ function App() {
             <Footer />
           </>
         );
+      case '/services':
+        return (
+          <>
+            <Navigation />
+            <ScrollExperience />
+            <ConsultationBooking />
+            <Newsletter />
+            <Footer />
+          </>
+        );
       default:
         return (
           <>
@@ -74,15 +88,21 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white">
-      <SeoSchema />
-      <PageTransition>
-        {renderContent()}
-        <ScrollToTop />
-        <ChatBot />
-        <CookieConsent />
-      </PageTransition>
-    </div>
+    <Router>
+      <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white">
+        <SeoSchema />
+        <PageTransition>
+          <Routes>
+            <Route path="/" element={renderContent()} />
+            <Route path="/onboarding" element={<ClientOnboarding />} />
+            <Route path="/admin" element={<Admin />} />
+          </Routes>
+          <ScrollToTop />
+          <ChatBot />
+          <CookieConsent />
+        </PageTransition>
+      </div>
+    </Router>
   );
 }
 

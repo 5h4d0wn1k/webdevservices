@@ -13,23 +13,23 @@ import {
 const stats = [
   {
     icon: <Trophy className="w-6 h-6 text-primary" />,
-    value: "150+",
-    label: "Awards Won"
+    value: "4",
+    label: "Happy Clients"
   },
   {
     icon: <Users className="w-6 h-6 text-primary" />,
-    value: "500+",
-    label: "Clients Worldwide"
+    value: "8",
+    label: "Projects Launched"
   },
   {
     icon: <Globe2 className="w-6 h-6 text-primary" />,
-    value: "30+",
+    value: "3",
     label: "Countries Served"
   },
   {
     icon: <Rocket className="w-6 h-6 text-primary" />,
-    value: "1000+",
-    label: "Projects Launched"
+    value: "100%",
+    label: "Client Satisfaction"
   }
 ];
 
@@ -77,7 +77,7 @@ const About = () => {
               <span className="text-primary uppercase tracking-wider text-sm font-medium">About Us</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-neon-purple bg-clip-text text-transparent">
-              Crafting Digital Excellence Since 2015
+              Crafting Digital Excellence Since 2024
             </h2>
             <p className="text-gray-400 text-lg mb-8">
               At Shadownik, we're more than just developers – we're digital craftsmen obsessed with perfection. Our journey began with a simple mission: to create exceptional digital experiences that push the boundaries of what's possible.

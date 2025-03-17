@@ -9,7 +9,15 @@ import {
   Sparkles,
   CheckCircle,
   AlertCircle,
-  Loader2
+  Loader2,
+  Github,
+  Twitter,
+  Linkedin,
+  Instagram,
+  Facebook,
+  Youtube,
+  MessageCircle,
+  MessagesSquare
 } from 'lucide-react';
 
 const contactInfo = [
@@ -251,30 +259,26 @@ const Contact = () => {
                 <h3 className="text-lg font-semibold mb-4">Connect With Us</h3>
                 <div className="flex flex-wrap gap-4">
                   {[
-                    { platform: "github", href: "https://github.com/Shadownik-official" },
-                    { platform: "twitter", href: "https://x.com/Shadownik_ofc" },
-                    { platform: "linkedin", href: "https://www.linkedin.com/company/shadownik" },
-                    { platform: "discord", href: "https://discord.gg/UA4yYEGx" },
-                    { platform: "facebook", href: "https://www.facebook.com/people/Shadownik/61562599613319" },
-                    { platform: "instagram", href: "https://instagram.com/Shadownik.official" },
-                    { platform: "youtube", href: "https://www.youtube.com/@Shadownik.official" },
-                    { platform: "telegram", href: "https://t.me/shadownikofficial" },
-                    { platform: "whatsapp", href: "https://www.whatsapp.com/channel/0029VakSdtTfXUuURqTLgF3A" }
+                    { icon: <Github className="w-5 h-5" />, href: "https://github.com/Shadownik-official", label: "GitHub" },
+                    { icon: <Twitter className="w-5 h-5" />, href: "https://x.com/Shadownik_ofc", label: "Twitter" },
+                    { icon: <Linkedin className="w-5 h-5" />, href: "https://www.linkedin.com/company/shadownik", label: "LinkedIn" },
+                    { icon: <Facebook className="w-5 h-5" />, href: "https://www.facebook.com/people/Shadownik/61562599613319", label: "Facebook" },
+                    { icon: <Instagram className="w-5 h-5" />, href: "https://instagram.com/Shadownik.official", label: "Instagram" },
+                    { icon: <Youtube className="w-5 h-5" />, href: "https://www.youtube.com/@Shadownik.official", label: "YouTube" },
+                    { icon: <MessageCircle className="w-5 h-5" />, href: "https://t.me/shadownikofficial", label: "Telegram" },
+                    { icon: <MessagesSquare className="w-5 h-5" />, href: "https://www.whatsapp.com/channel/0029VakSdtTfXUuURqTLgF3A", label: "WhatsApp" }
                   ].map((social, i) => (
                     <MotionA 
-                      key={social.platform}
+                      key={social.label}
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
                       whileHover={{ y: -5 }}
                       transition={{ type: 'spring', stiffness: 400, damping: 10 }}
                       className="bg-gradient-to-br from-gray-800 to-black p-3 rounded-full border border-white/10 hover:border-primary/50 transition-colors"
+                      aria-label={social.label}
                     >
-                      <img 
-                        src={`https://cdn.simpleicons.org/${social.platform}/ffffff`} 
-                        alt={social.platform} 
-                        className="w-5 h-5"
-                      />
+                      {social.icon}
                     </MotionA>
                   ))}
                 </div>

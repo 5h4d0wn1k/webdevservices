@@ -18,8 +18,8 @@ const SeoSchema = () => {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "Shadownik",
-    "url": "https://shadownik.com",
-    "logo": "https://shadownik.com/logo.png",
+    "url": "https://web.shadownik.online",
+    "logo": "https://web.shadownik.online/logo.png",
     "sameAs": [
       "https://github.com/Shadownik-official",
       "https://x.com/Shadownik_ofc",

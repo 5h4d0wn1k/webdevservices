@@ -179,7 +179,7 @@ const FeaturedProjects = () => {
             <span className="text-primary uppercase tracking-wider text-sm font-medium">Featured Work</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white via-primary to-accent bg-clip-text text-transparent animate-gradient">
-            Award-Winning Projects
+            Featured Projects
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto text-lg">
             Transforming visions into digital masterpieces. Each project represents our commitment to excellence and innovation.

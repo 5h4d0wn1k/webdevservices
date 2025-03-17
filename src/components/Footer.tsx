@@ -5,6 +5,10 @@ import {
   Twitter,
   Linkedin,
   Instagram,
+  Youtube,
+  MessageCircle,
+  MessagesSquare,
+  Facebook,
   ArrowUp,
   Sparkles
 } from 'lucide-react';
@@ -60,9 +64,14 @@ const Footer = () => {
             <div className="flex space-x-4">
               {[
                 { icon: <Github className="w-5 h-5" />, href: "https://github.com/Shadownik-official" },
-                { icon: <Twitter className="w-5 h-5" />, href: "https://x.com/Shadownik_ofc" },
-                { icon: <Linkedin className="w-5 h-5" />, href: "https://www.linkedin.com/company/shadownik" },
-                { icon: <Instagram className="w-5 h-5" />, href: "https://instagram.com/Shadownik.official" }
+                { icon: <Twitter className="w-5 h-5" />, href: "https://x.com/Shadownik_ofc", label: "Twitter" },
+                { icon: <Linkedin className="w-5 h-5" />, href: "https://www.linkedin.com/company/shadownik", label: "LinkedIn" },
+                { icon: <Facebook className="w-5 h-5" />, href: "https://www.facebook.com/people/Shadownik/61562599613319", label: "Facebook" },
+                { icon: <Instagram className="w-5 h-5" />, href: "https://instagram.com/Shadownik.official", label: "Instagram" },
+                { icon: <Youtube className="w-5 h-5" />, href: "https://www.youtube.com/@Shadownik.official", label: "YouTube" },
+                { icon: <MessageCircle className="w-5 h-5" />, href: "https://t.me/shadownikofficial", label: "Telegram" },
+                { icon: <MessagesSquare className="w-5 h-5" />, href: "https://www.whatsapp.com/channel/0029VakSdtTfXUuURqTLgF3A", label: "WhatsApp" }
+             
               ].map((social, index) => (
                 <MotionA
                   key={index}

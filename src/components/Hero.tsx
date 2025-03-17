@@ -2,6 +2,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles, Rocket, Star } from 'lucide-react';
 import { Scene } from './3d/Scene';
+import { Link } from 'react-router-dom';
+import { FaRocket } from 'react-icons/fa';
 
 const Hero = () => {
   return (
@@ -82,15 +84,13 @@ const Hero = () => {
               <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
             </motion.a>
 
-            <motion.a
-              href="#contact"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <Link
+              to="/onboarding"
               className="group inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-white/5 to-white/10 text-white font-medium rounded-full hover:from-white/10 hover:to-white/15 transition-all duration-300 border border-white/10 backdrop-blur-sm"
             >
-              <Sparkles className="w-6 h-6 text-primary group-hover:animate-pulse" />
+              <FaRocket className="w-6 h-6 text-primary group-hover:animate-pulse" />
               Start Your Project
-            </motion.a>
+            </Link>
           </motion.div>
         </div>
       </div>
