@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Star, Quote, User } from 'lucide-react';
 
 interface Testimonial {
   id: number;
@@ -12,7 +12,12 @@ interface Testimonial {
   quote: string;
 }
 
-const DEFAULT_AVATAR = "https://i.pravatar.cc/150?img=1";
+// Default avatar is now an inline component
+const DefaultAvatar = () => (
+  <div className="w-14 h-14 rounded-full border-2 border-primary/30 bg-gray-700 flex items-center justify-center">
+    <User className="w-8 h-8 text-gray-400" />
+  </div>
+);
 
 const testimonials: Testimonial[] = [
   {
@@ -20,7 +25,7 @@ const testimonials: Testimonial[] = [
     name: "Nikhil Nagpure",
     role: "Founder & CEO",
     company: "Shadownik",
-    avatar: "https://i.pravatar.cc/150?img=11",
+    avatar: "",
     rating: 5,
     quote: "As the founder of Shadownik, I'm proud to lead a team that's revolutionizing web development services. Our commitment to excellence and innovation drives us to deliver exceptional results for every client. We combine technical expertise with creative solutions to create digital experiences that make a difference."
   },
@@ -29,7 +34,7 @@ const testimonials: Testimonial[] = [
     name: "Vishwakarma",
     role: "Principal",
     company: "Sunrise Public School",
-    avatar: "https://i.pravatar.cc/150?img=5",
+    avatar: "",
     rating: 5,
     quote: "Leading both Shadownik and Sunrise Public School has given me unique insights into the importance of digital transformation in education. Our team's ability to create engaging educational platforms while maintaining high standards of excellence is truly remarkable."
   },
@@ -38,7 +43,7 @@ const testimonials: Testimonial[] = [
     name: "Manish Nagpure",
     role: "Network Engineer",
     company: "Shadownik",
-    avatar: "https://i.pravatar.cc/150?img=3",
+    avatar: "",
     rating: 5,
     quote: "Our technical infrastructure and network solutions are built on cutting-edge technology. We ensure robust, secure, and scalable systems that support our clients' growing needs. The combination of technical expertise and client-focused approach sets us apart in the industry."
   },
@@ -46,15 +51,15 @@ const testimonials: Testimonial[] = [
     id: 4,
     name: "Dinesh Nagpure",
     role: "Chemistry Teacher",
-    company: "Sunrise Public School",
-    avatar: "https://i.pravatar.cc/150?img=9",
+    company: "Govt. High School",
+    avatar: "",
     rating: 5,
     quote: "The integration of technology in education through Shadownik's solutions has transformed how we teach and learn. Our digital platforms make complex concepts more accessible and engaging for students, while providing teachers with powerful tools for effective instruction."
   }
 ];
 
 const TestimonialCard: React.FC<{ testimonial: Testimonial; isActive: boolean }> = ({ testimonial, isActive }) => {
-  const [imgError, setImgError] = useState(false);
+  const [imgError, setImgError] = useState(true); // Set to true by default since we start with empty avatar URLs
 
   return (
     <motion.div
@@ -72,12 +77,16 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial; isActive: boolean }>
       
       <div className="mb-6 flex items-center justify-between">
         <div className="flex items-center">
-          <img 
-            src={imgError ? DEFAULT_AVATAR : testimonial.avatar} 
-            alt={testimonial.name} 
-            className="w-14 h-14 rounded-full border-2 border-primary/30 object-cover"
-            onError={() => setImgError(true)}
-          />
+          {testimonial.avatar && !imgError ? (
+            <img 
+              src={testimonial.avatar} 
+              alt={testimonial.name} 
+              className="w-14 h-14 rounded-full border-2 border-primary/30 object-cover"
+              onError={() => setImgError(true)}
+            />
+          ) : (
+            <DefaultAvatar />
+          )}
           <div className="ml-4">
             <h4 className="text-lg font-semibold">{testimonial.name}</h4>
             <p className="text-sm text-gray-400">

@@ -30,13 +30,13 @@ const contactInfo = [
   {
     icon: <Phone className="w-6 h-6" />,
     title: "Phone",
-    value: "+1 (555) 123-4567",
+    value: "+91 9165644843",
     link: "tel:+15551234567"
   },
   {
     icon: <MapPin className="w-6 h-6" />,
     title: "Location",
-    value: "San Francisco, CA",
+    value: "Remote, India",
     link: "#"
   }
 ];
@@ -168,6 +168,7 @@ const Contact = () => {
         if (formRef.current) formRef.current.reset();
       }, 3000);
     } catch (error) {
+      console.error('Contact form error:', error);
       setSubmitStatus('error');
       setTimeout(() => {
         setSubmitStatus('idle');

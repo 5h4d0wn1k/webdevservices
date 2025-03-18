@@ -12,53 +12,53 @@ import {
 const categories = [
   { id: 'all', label: 'All Work' },
   { id: 'web', label: 'Web Development', icon: <Code2 className="w-4 h-4" /> },
-  { id: 'mobile', label: 'Mobile Apps', icon: <Smartphone className="w-4 h-4" /> },
-  { id: 'ecommerce', label: 'E-Commerce', icon: <ShoppingBag className="w-4 h-4" /> },
-  { id: 'enterprise', label: 'Enterprise', icon: <Globe2 className="w-4 h-4" /> }
+  { id: 'education', label: 'Education', icon: <Smartphone className="w-4 h-4" /> },
+  { id: 'app', label: 'Web Apps', icon: <ShoppingBag className="w-4 h-4" /> },
+  { id: 'ngo', label: 'Non-Profit', icon: <Globe2 className="w-4 h-4" /> }
 ];
 
 const projects = [
   {
-    title: "Global E-Commerce Platform",
-    category: "ecommerce",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200",
-    description: "A comprehensive e-commerce solution serving millions of customers worldwide.",
+    title: "Sunrise Public School",
+    category: "education",
+    image: "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&q=80&w=1200",
+    description: "Official website for Sunrise Public School featuring admissions, curriculum, and student portal.",
     link: "#"
   },
   {
-    title: "Financial Analytics Dashboard",
-    category: "enterprise",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1200",
-    description: "Real-time financial data visualization and analysis platform.",
-    link: "#"
-  },
-  {
-    title: "Healthcare Mobile App",
-    category: "mobile",
-    image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=1200",
-    description: "Revolutionary healthcare management application for patients and doctors.",
-    link: "#"
-  },
-  {
-    title: "Social Network Platform",
+    title: "Cybersecurity Services",
     category: "web",
-    image: "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?auto=format&fit=crop&q=80&w=1200",
-    description: "Feature-rich social platform connecting millions of users.",
-    link: "#"
+    image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&q=80&w=1200",
+    description: "Comprehensive cybersecurity services and product offerings for enterprises and SMBs.",
+    link: "https://cybersecurity.shadownik.online"
   },
   {
-    title: "Luxury Brand Website",
+    title: "NGO Social Projects",
+    category: "ngo",
+    image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=1200",
+    description: "Platform for social impact initiatives and community engagement projects.",
+    link: "https://ngo.shadownik.online"
+  },
+  {
+    title: "Metatask App",
+    category: "app",
+    image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&q=80&w=1200",
+    description: "Productivity and task management web application with enhanced collaboration features.",
+    link: "https://metatask.shadownik.online"
+  },
+  {
+    title: "Prize Payout Platform",
+    category: "app",
+    image: "https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?auto=format&fit=crop&q=80&w=1200",
+    description: "Secure platform for managing and distributing competition prizes and rewards.",
+    link: "https://prizepayout.vercel.app/"
+  },
+  {
+    title: "Portfolio - Nikhil Nagpure",
     category: "web",
-    image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=1200",
-    description: "Elegant, high-performance website for a luxury fashion brand.",
-    link: "#"
-  },
-  {
-    title: "Supply Chain Management",
-    category: "enterprise",
-    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=1200",
-    description: "End-to-end supply chain management system for global operations.",
-    link: "#"
+    image: "https://images.unsplash.com/photo-1545665277-5937489579f2?auto=format&fit=crop&q=80&w=1200",
+    description: "Professional portfolio showcasing the skills and projects of Nikhil Nagpure.",
+    link: "https://portfolio.shadownik.tech"
   }
 ];
 

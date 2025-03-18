@@ -40,7 +40,7 @@ const Hero = () => {
             <div className="flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-primary/20 to-accent/20 border border-white/10 backdrop-blur-sm">
               <Star className="w-5 h-5 text-primary animate-pulse" />
               <span className="text-primary uppercase tracking-wider text-sm font-medium">
-                Award Winning Digital Agency
+                Digital Agency
               </span>
             </div>
           </motion.div>
