@@ -8,22 +8,28 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const { name, email, service, message } = req.body;
 
-  // Create email transporter
+  // Create email transporter with secure configuration
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: process.env.SMTP_HOST,
+    port: Number(process.env.SMTP_PORT),
+    secure: true,
     auth: {
-      user: 'shadownik.official@gmail.com',
-      pass: 'ShadownikOfficial@24Google',
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASSWORD,
     },
   });
 
   try {
     console.log('Attempting to send email...');
     
+    // Verify transporter configuration
+    await transporter.verify();
+    console.log('Transporter verified successfully');
+
     // Send email to admin
-    await transporter.sendMail({
-      from: 'shadownik.official@gmail.com',
-      to: 'shadownik.official@gmail.com',
+    const adminMail = await transporter.sendMail({
+      from: `"Shadownik Contact" <${process.env.EMAIL_USER}>`,
+      to: process.env.EMAIL_USER,
       subject: `New Contact Form Submission from ${name}`,
       html: `
         <h2>New Contact Form Submission</h2>
@@ -34,11 +40,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       `,
     });
 
-    console.log('Admin email sent successfully');
+    console.log('Admin email sent successfully:', adminMail.messageId);
 
     // Send confirmation email to client
-    await transporter.sendMail({
-      from: 'shadownik.official@gmail.com',
+    const clientMail = await transporter.sendMail({
+      from: `"Shadownik Contact" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: 'Thank you for contacting Shadownik',
       html: `
@@ -49,7 +55,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       `,
     });
 
-    console.log('Client email sent successfully');
+    console.log('Client email sent successfully:', clientMail.messageId);
 
     return res.status(200).json({ message: 'Message sent successfully' });
   } catch (error) {
