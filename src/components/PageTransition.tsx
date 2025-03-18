@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Logo from './Logo';
 
 type PageTransitionProps = {
   children: React.ReactNode;
@@ -97,11 +98,7 @@ const PageTransition: React.FC<PageTransitionProps> = ({ children }) => {
             variants={logoVariants}
             className="mb-12"
           >
-            <img 
-              src="/src/assets/logo/shadownik-logo.svg" 
-              alt="Shadownik Logo"
-              className="w-32 h-32" 
-            />
+            <Logo className="w-32 h-32" />
           </motion.div>
           
           <div className="w-64 h-1 bg-gray-800 rounded-full overflow-hidden">

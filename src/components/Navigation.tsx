@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Logo from './Logo';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -56,7 +57,7 @@ const Navigation = () => {
             className="flex-shrink-0 flex items-center"
           >
             <a href="/" className="flex items-center gap-2">
-              <img src="/src/assets/logo/shadownik-logo.svg" alt="Shadownik Logo" className="h-10 w-10" />
+              <Logo className="h-10 w-10" />
               <span className="text-transparent bg-gradient-to-r from-primary via-accent to-neon-purple bg-clip-text text-2xl font-bold">
                 SHADOWNIK
               </span>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Loader2 } from 'lucide-react';
+import Logo from './Logo';
 
 interface LoadingScreenProps {
   progress: number;
@@ -30,11 +31,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ progress, isLoading }) =>
           }}
           className="mb-8"
         >
-          <img
-            src="/logo.png"
-            alt="Shadownik Logo"
-            className="w-24 h-24 object-contain"
-          />
+          <Logo className="w-24 h-24" />
         </motion.div>
 
         {/* Loading Text */}
