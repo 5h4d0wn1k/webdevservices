@@ -1,11 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="shadowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+    <!-- Primary gradient for the brackets -->
+    <linearGradient id="bracketGradient" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#4A00E0"/>
       <stop offset="100%" stop-color="#8E2DE2"/>
     </linearGradient>
+
+    <!-- Subtle accent gradient -->
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6D28D9"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
+    </linearGradient>
+    
+    <!-- Simplified glow effect -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
   </defs>
-  <rect width="32" height="32" fill="#111827" rx="6" ry="6"/>
-  <path d="M6 10 L26 10 L26 14 L19 14 L19 22 L16 22 L16 14 L9 14 L9 22 L6 22 Z" fill="url(#shadowGradient)"/>
-</svg> 
+
+  <!-- Main logo group - simplified -->
+  <g transform="translate(86, 156)">
+    <!-- Left bracket -->
+    <path 
+      d="M0 100 L100 0 L150 0 L50 100 L150 200 L100 200 Z" 
+      fill="url(#bracketGradient)"
+      filter="url(#glow)"/>
+
+    <!-- Center slash -->
+    <path 
+      d="M250 0 L150 200 L100 200 L200 0 Z" 
+      fill="url(#bracketGradient)"
+      filter="url(#glow)"/>
+
+    <!-- Right bracket -->
+    <path 
+      d="M340 100 L240 0 L190 0 L290 100 L190 200 L240 200 Z" 
+      fill="url(#bracketGradient)"
+      filter="url(#glow)"/>
+  </g>
+
+  <!-- Subtle decorative elements -->
+  <g transform="translate(256, 256)" stroke="url(#accentGradient)" stroke-opacity="0.15">
+    <circle r="180" fill="none" stroke-width="1.5"/>
+    <circle r="200" fill="none" stroke-width="1"/>
+    <circle r="220" fill="none" stroke-width="0.5"/>
+  </g>
+</svg>
