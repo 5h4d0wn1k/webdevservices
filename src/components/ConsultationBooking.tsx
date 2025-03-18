@@ -60,6 +60,7 @@ const ConsultationBooking = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitStatus('idle');
 
     try {
       const response = await fetch('/api/book-consultation', {
@@ -67,11 +68,16 @@ const ConsultationBooking = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(bookingData),
+        body: JSON.stringify({
+          ...bookingData,
+          date: bookingData.date?.toISOString(),
+        }),
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error('Failed to book consultation');
+        throw new Error(data.message || 'Failed to book consultation');
       }
 
       setSubmitStatus('success');
@@ -89,6 +95,7 @@ const ConsultationBooking = () => {
         setSubmitStatus('idle');
       }, 3000);
     } catch (error) {
+      console.error('Contact form error:', error);
       setSubmitStatus('error');
       setTimeout(() => setSubmitStatus('idle'), 3000);
     } finally {

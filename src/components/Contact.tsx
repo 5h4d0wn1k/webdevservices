@@ -145,6 +145,7 @@ const Contact = () => {
     if (!validateForm()) return;
     
     setIsSubmitting(true);
+    setSubmitStatus('idle');
     
     try {
       const response = await fetch('/api/contact', {
@@ -155,8 +156,10 @@ const Contact = () => {
         body: JSON.stringify(formData),
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error('Failed to send message');
+        throw new Error(data.message || 'Failed to send message');
       }
 
       setSubmitStatus('success');
