@@ -1,6 +1,27 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+import express from 'express';
+import cors from 'cors';
 import nodemailer from 'nodemailer';
 import { google } from 'googleapis';
+import dotenv from 'dotenv';
+
+// Load environment variables
+dotenv.config();
+
+const app = express();
+const port = 5173;
+
+// Enable CORS
+app.use(cors());
+app.use(express.json());
+
+// Create transporter for emails
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.GMAIL_USER || 'shadownik.official@gmail.com',
+    pass: process.env.EMAIL_PASSWORD,
+  },
+});
 
 // Set up Google Calendar API
 const setupGoogleCalendar = async () => {
@@ -13,32 +34,75 @@ const setupGoogleCalendar = async () => {
   return google.calendar({ version: 'v3', auth });
 };
 
-// Create transporter for emails
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.GMAIL_USER || 'shadownik.official@gmail.com',
-    pass: process.env.EMAIL_PASSWORD,
-  },
+// Contact form endpoint
+app.post('/api/contact', async (req, res) => {
+  try {
+    const { name, email, service, message } = req.body;
+
+    // Validate required fields
+    if (!name || !email || !service || !message) {
+      return res.status(400).json({ message: 'Missing required fields' });
+    }
+
+    // Validate email format
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ message: 'Invalid email address' });
+    }
+
+    // Send notification to admin
+    await transporter.sendMail({
+      from: '"Shadownik Contact Form" <shadownik.official@gmail.com>',
+      to: 'nikhilnagpure203@gmail.com',
+      subject: `New Contact Form Submission - ${service}`,
+      html: `
+        <h2>New Contact Form Submission</h2>
+        <h3>Client Information:</h3>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Service:</strong> ${service}</p>
+        
+        <h3>Message:</h3>
+        <p>${message}</p>
+      `,
+    });
+
+    // Send confirmation to client
+    await transporter.sendMail({
+      from: '"Shadownik Web Development" <info@shadownik.online>',
+      to: email,
+      subject: 'Thank You for Contacting Shadownik',
+      html: `
+        <h2>Thank you for contacting Shadownik!</h2>
+        <p>Dear ${name},</p>
+        
+        <p>We have received your message regarding ${service}. Our team will review your request and get back to you shortly.</p>
+        
+        <h3>Your Message:</h3>
+        <p>${message}</p>
+        
+        <p>In the meantime, you can:</p>
+        <ul>
+          <li>Check out our portfolio at <a href="https://shadownik.online">shadownik.online</a></li>
+          <li>Follow us on social media for updates</li>
+          <li>Schedule a free consultation call</li>
+        </ul>
+        
+        <p>If you have any urgent questions, please don't hesitate to call us.</p>
+        
+        <p>Best regards,<br>The Shadownik Team</p>
+      `,
+    });
+
+    res.status(200).json({ message: 'Message sent successfully' });
+  } catch (error) {
+    console.error('Error sending message:', error);
+    res.status(500).json({ message: 'Error sending message' });
+  }
 });
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  // Enable CORS
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
-  res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
-
-  // Handle preflight request
-  if (req.method === 'OPTIONS') {
-    res.status(200).end();
-    return;
-  }
-
-  if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Method not allowed' });
-  }
-
+// Consultation booking endpoint
+app.post('/api/book-consultation', async (req, res) => {
   try {
     const { name, email, phone, date, time, projectType, budget, message } = req.body;
 
@@ -88,6 +152,8 @@ Details: ${message}
       },
       attendees: [
         { email: 'nikhilnagpure203@gmail.com' },
+        { email: 'shadownik.official@gmail.com'
+        },
         { email: 'aniviss07@gmail.com' },
       ],
       conferenceData: {
@@ -108,7 +174,7 @@ Details: ${message}
 
     // Send notification to admin
     await transporter.sendMail({
-      from: '"Shadownik Booking System" <info@shadownik.online>',
+      from: '"Shadownik Booking System" <shadownik.official@gmail.com>',
       to: 'nikhilnagpure203@gmail.com',
       subject: `New Consultation Booking - ${projectType}`,
       html: `
@@ -132,7 +198,7 @@ Details: ${message}
 
     // Send confirmation to client
     await transporter.sendMail({
-      from: '"Shadownik Web Development" <info@shadownik.online>',
+      from: '"Shadownik Web Development" <shadownik.official@gmail.com>',
       to: email,
       subject: 'Your Consultation with Shadownik is Confirmed',
       html: `
@@ -180,4 +246,8 @@ Details: ${message}
     console.error('Error booking consultation:', error);
     res.status(500).json({ message: 'Error booking consultation' });
   }
-} 
+});
+
+app.listen(port, () => {
+  console.log(`Development server running at http://localhost:${port}`);
+}); 

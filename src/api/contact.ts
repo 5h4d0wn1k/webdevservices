@@ -17,7 +17,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // Create a transporter using SMTP
     const transporter = nodemailer.createTransport({
-      host: 'smtp.hostinger.com',
+      host: 'smtp.zoho.com',
       port: 465,
       secure: true,
       auth: {

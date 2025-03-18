@@ -3,11 +3,9 @@ import nodemailer from 'nodemailer';
 
 // Create transporter for emails
 const transporter = nodemailer.createTransport({
-  host: 'smtp.hostinger.com',
-  port: 465,
-  secure: true,
+  service: 'gmail',
   auth: {
-    user: 'info@shadownik.online',
+    user: process.env.GMAIL_USER || 'shadownik.official@gmail.com',
     pass: process.env.EMAIL_PASSWORD,
   },
 });

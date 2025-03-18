@@ -7,19 +7,19 @@ interface EmailOptions {
 }
 
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: Number(process.env.SMTP_PORT),
+  host: 'smtp.zoho.com',
+  port: 465,
   secure: true,
   auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
+    user: 'info@shadownik.online',
+    pass: process.env.EMAIL_PASSWORD,
   },
 });
 
 export const sendEmail = async ({ to, subject, html }: EmailOptions) => {
   try {
     const info = await transporter.sendMail({
-      from: `"WebDev Services" <${process.env.SMTP_USER}>`,
+      from: `"Shadownik Web Development" <info@shadownik.online>`,
       to,
       subject,
       html,

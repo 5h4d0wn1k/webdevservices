@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Calendar, Clock, User, Mail, Phone, MessageSquare, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import { API_ENDPOINTS } from '../config/api';
 
 interface BookingData {
   name: string;
@@ -63,7 +64,7 @@ const ConsultationBooking = () => {
     setSubmitStatus('idle');
 
     try {
-      const response = await fetch('https://web.shadownik.online/api/book-consultation', {
+      const response = await fetch(API_ENDPOINTS.bookConsultation, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -74,10 +75,17 @@ const ConsultationBooking = () => {
         }),
       });
 
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Server response:', errorText);
+        throw new Error('Failed to book consultation');
+      }
+
       const data = await response.json();
 
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to book consultation');
+      if (data.meetLink) {
+        // Store the meet link in localStorage for later use
+        localStorage.setItem('lastConsultationMeetLink', data.meetLink);
       }
 
       setSubmitStatus('success');
@@ -95,7 +103,7 @@ const ConsultationBooking = () => {
         setSubmitStatus('idle');
       }, 3000);
     } catch (error) {
-      console.error('Contact form error:', error);
+      console.error('Consultation booking error:', error);
       setSubmitStatus('error');
       setTimeout(() => setSubmitStatus('idle'), 3000);
     } finally {

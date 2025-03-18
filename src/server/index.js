@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 
 // Create a transporter using SMTP
 const transporter = nodemailer.createTransport({
-  host: 'smtp.hostinger.com', // Replace with your SMTP host
+  host: 'smtp.zoho.com', // Replace with your SMTP host
   port: 465,
   secure: true,
   auth: {

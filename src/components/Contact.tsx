@@ -19,6 +19,7 @@ import {
   MessageCircle,
   MessagesSquare
 } from 'lucide-react';
+import { API_ENDPOINTS } from '../config/api';
 
 const contactInfo = [
   {
@@ -148,7 +149,7 @@ const Contact = () => {
     setSubmitStatus('idle');
     
     try {
-      const response = await fetch('https://web.shadownik.online/api/contact', {
+      const response = await fetch(API_ENDPOINTS.contact, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -156,20 +157,26 @@ const Contact = () => {
         body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
-        throw new Error(data.message || 'Failed to send message');
+        const errorText = await response.text();
+        console.error('Server response:', errorText);
+        throw new Error('Failed to send message');
       }
 
-      setSubmitStatus('success');
-      // Reset form after successful submission
-      setTimeout(() => {
-        setFormData({ name: '', email: '', service: '', message: '' });
-        setIsTouched({});
-        setSubmitStatus('idle');
-        if (formRef.current) formRef.current.reset();
-      }, 3000);
+      const data = await response.json();
+
+      if (data.message === 'Message sent successfully') {
+        setSubmitStatus('success');
+        // Reset form after successful submission
+        setTimeout(() => {
+          setFormData({ name: '', email: '', service: '', message: '' });
+          setIsTouched({});
+          setSubmitStatus('idle');
+          if (formRef.current) formRef.current.reset();
+        }, 3000);
+      } else {
+        throw new Error('Unexpected response from server');
+      }
     } catch (error) {
       console.error('Contact form error:', error);
       setSubmitStatus('error');

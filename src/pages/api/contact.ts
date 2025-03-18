@@ -1,66 +1,62 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import type { NextApiRequest, NextApiResponse } from 'next';
 import nodemailer from 'nodemailer';
 
-// Create a transporter using SMTP
-const transporter = nodemailer.createTransport({
-  host: 'smtp.hostinger.com', // Replace with your SMTP host
-  port: 465,
-  secure: true,
-  auth: {
-    user: 'info@shadownik.online',
-    pass: process.env.EMAIL_PASSWORD, // Store this in environment variables
-  },
-});
-
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method not allowed' });
   }
 
+  const { name, email, service, message } = req.body;
+
+  // Create email transporter
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'shadownik.official@gmail.com',
+      pass: 'ShadownikOfficial@24Google',
+    },
+  });
+
   try {
-    const { name, email, service, message } = req.body;
-
-    // Validate the input
-    if (!name || !email || !service || !message) {
-      return res.status(400).json({ message: 'Missing required fields' });
-    }
-
-    // Send email
+    console.log('Attempting to send email...');
+    
+    // Send email to admin
     await transporter.sendMail({
-      from: '"Shadownik Contact Form" <info@shadownik.online>',
-      to: 'info@shadownik.online',
-      subject: `New Contact Form Submission - ${service}`,
+      from: 'shadownik.official@gmail.com',
+      to: 'shadownik.official@gmail.com',
+      subject: `New Contact Form Submission from ${name}`,
       html: `
         <h2>New Contact Form Submission</h2>
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Service:</strong> ${service}</p>
-        <p><strong>Message:</strong></p>
-        <p>${message}</p>
+        <p><strong>Message:</strong> ${message}</p>
       `,
     });
 
-    // Send auto-reply to the user
+    console.log('Admin email sent successfully');
+
+    // Send confirmation email to client
     await transporter.sendMail({
-      from: '"Shadownik Web Development" <info@shadownik.online>',
+      from: 'shadownik.official@gmail.com',
       to: email,
       subject: 'Thank you for contacting Shadownik',
       html: `
-        <h2>Thank you for reaching out!</h2>
+        <h2>Thank you for contacting Shadownik!</h2>
         <p>Dear ${name},</p>
-        <p>We have received your message regarding ${service}. Our team will review your inquiry and get back to you within 24 hours.</p>
-        <p>Here's a copy of your message:</p>
-        <blockquote>${message}</blockquote>
-        <p>Best regards,<br>The Shadownik Team</p>
+        <p>We have received your message and will get back to you shortly.</p>
+        <p>Best regards,<br>Team Shadownik</p>
       `,
     });
 
-    res.status(200).json({ message: 'Message sent successfully' });
+    console.log('Client email sent successfully');
+
+    return res.status(200).json({ message: 'Message sent successfully' });
   } catch (error) {
-    console.error('Error sending email:', error);
-    res.status(500).json({ message: 'Error sending message' });
+    console.error('Detailed email error:', error);
+    return res.status(500).json({ 
+      message: 'Failed to send email',
+      error: error instanceof Error ? error.message : 'Unknown error'
+    });
   }
 } 
