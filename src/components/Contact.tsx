@@ -148,7 +148,7 @@ const Contact = () => {
     setSubmitStatus('idle');
     
     try {
-      const response = await fetch('/api/contact', {
+      const response = await fetch('https://web.shadownik.online/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

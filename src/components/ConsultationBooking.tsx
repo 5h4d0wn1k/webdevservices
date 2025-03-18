@@ -63,7 +63,7 @@ const ConsultationBooking = () => {
     setSubmitStatus('idle');
 
     try {
-      const response = await fetch('/api/book-consultation', {
+      const response = await fetch('https://web.shadownik.online/api/book-consultation', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
