@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import nodemailer from 'nodemailer';
+import { sendEmail } from '../../utils/emailService';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
@@ -8,43 +8,59 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const { email } = req.body;
 
-  // Create email transporter with secure configuration
-  const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: Number(process.env.SMTP_PORT),
-    secure: true,
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASSWORD,
-    },
-  });
+  if (!email || !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
+    return res.status(400).json({ message: 'Valid email is required' });
+  }
 
   try {
-    console.log('Attempting to send newsletter confirmation email...');
-    
-    // Verify transporter configuration
-    await transporter.verify();
-    console.log('Transporter verified successfully');
+    console.log('Processing newsletter subscription for:', email);
 
-    // Send confirmation email to subscriber
-    const mail = await transporter.sendMail({
-      from: `"Shadownik Newsletter" <${process.env.EMAIL_USER}>`,
-      to: email,
-      subject: 'Welcome to Shadownik Newsletter!',
-      html: `
-        <h2>Welcome to Shadownik Newsletter!</h2>
-        <p>Thank you for subscribing to our newsletter. You will now receive updates about our latest services and promotions.</p>
-        <p>Best regards,<br>Team Shadownik</p>
-      `,
+    // Notify admin about new newsletter subscription
+    const adminHtml = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2 style="color: #4F46E5;">New Newsletter Subscription</h2>
+        <p>A new user has subscribed to the newsletter:</p>
+        <p><strong>Email:</strong> ${email}</p>
+      </div>
+    `;
+
+    const adminResult = await sendEmail({
+      to: ["shadownik.official@gmail.com"],
+      subject: 'New Newsletter Subscription',
+      html: adminHtml
     });
 
-    console.log('Newsletter confirmation email sent successfully:', mail.messageId);
+    // Send confirmation to subscriber
+    const subscriberHtml = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2 style="color: #4F46E5;">Welcome to Shadownik Newsletter!</h2>
+        <p>Thank you for subscribing to our newsletter. You'll now receive updates on:</p>
+        <ul>
+          <li>Web development trends</li>
+          <li>Special offers and discounts</li>
+          <li>Industry insights and tips</li>
+          <li>Company news and updates</li>
+        </ul>
+        <p>Best regards,<br>Team Shadownik</p>
+      </div>
+    `;
 
-    return res.status(200).json({ message: 'Subscribed successfully' });
+    const subscriberResult = await sendEmail({
+      to: email,
+      subject: 'Welcome to Shadownik Newsletter',
+      html: subscriberHtml
+    });
+
+    console.log('Newsletter email results:', { adminResult, subscriberResult });
+
+    return res.status(200).json({ 
+      message: 'Subscription successful',
+      success: true
+    });
   } catch (error) {
-    console.error('Detailed newsletter email error:', error);
+    console.error('Newsletter subscription error:', error);
     return res.status(500).json({ 
-      message: 'Failed to send confirmation email',
+      message: 'Failed to process newsletter subscription',
       error: error instanceof Error ? error.message : 'Unknown error'
     });
   }

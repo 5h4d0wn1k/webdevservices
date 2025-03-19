@@ -16,7 +16,12 @@ interface BookingData {
   message: string;
 }
 
-const ConsultationBooking = () => {
+interface ConsultationBookingProps {
+  onBookingComplete?: (data: BookingData & { meetLink?: string }) => void;
+  className?: string;
+}
+
+const ConsultationBooking: React.FC<ConsultationBookingProps> = ({ onBookingComplete, className }) => {
   const [bookingData, setBookingData] = useState<BookingData>({
     name: '',
     email: '',
@@ -30,6 +35,7 @@ const ConsultationBooking = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const projectTypes = [
     "Custom Website",
@@ -60,10 +66,25 @@ const ConsultationBooking = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!bookingData.date) {
+      setErrorMessage('Please select a date for your consultation');
+      setSubmitStatus('error');
+      setTimeout(() => setSubmitStatus('idle'), 3000);
+      return;
+    }
+    
     setIsSubmitting(true);
     setSubmitStatus('idle');
+    setErrorMessage('');
 
     try {
+      // Format the date to ISO string
+      const formattedDate = bookingData.date.toISOString();
+      
+      // Ensure time is in correct format (e.g., "11:00 AM")
+      const formattedTime = bookingData.time;
+
       const response = await fetch(API_ENDPOINTS.bookConsultation, {
         method: 'POST',
         headers: {
@@ -71,24 +92,33 @@ const ConsultationBooking = () => {
         },
         body: JSON.stringify({
           ...bookingData,
-          date: bookingData.date?.toISOString(),
+          date: formattedDate,
+          time: formattedTime,
         }),
       });
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Server response:', errorText);
-        throw new Error('Failed to book consultation');
-      }
-
       const data = await response.json();
 
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to book consultation');
+      }
+
+      // Store the meet link in localStorage for later use if needed
       if (data.meetLink) {
-        // Store the meet link in localStorage for later use
         localStorage.setItem('lastConsultationMeetLink', data.meetLink);
       }
 
       setSubmitStatus('success');
+      
+      // Call the onBookingComplete callback if provided
+      if (onBookingComplete) {
+        onBookingComplete({
+          ...bookingData,
+          meetLink: data.meetLink
+        });
+      }
+      
+      // Reset form after success (with a delay for user feedback)
       setTimeout(() => {
         setBookingData({
           name: '',
@@ -104,15 +134,16 @@ const ConsultationBooking = () => {
       }, 3000);
     } catch (error) {
       console.error('Consultation booking error:', error);
+      setErrorMessage(error instanceof Error ? error.message : 'An unexpected error occurred');
       setSubmitStatus('error');
-      setTimeout(() => setSubmitStatus('idle'), 3000);
+      setTimeout(() => setSubmitStatus('idle'), 5000);
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <section className="py-20 relative">
+    <section className={`py-20 relative ${className || ''}`}>
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute w-full h-1/2 bg-gradient-to-b from-black to-transparent" />
         <div className="absolute bottom-0 w-full h-1/2 bg-gradient-to-t from-black to-transparent" />
@@ -145,7 +176,7 @@ const ConsultationBooking = () => {
                 className="bg-green-900/30 border border-green-500/30 rounded-lg p-4 flex items-center space-x-3"
               >
                 <CheckCircle className="text-green-500 w-5 h-5 flex-shrink-0" />
-                <p className="text-green-100">Consultation booked successfully! We'll send you a confirmation email shortly.</p>
+                <p className="text-green-100">Consultation booked successfully! We've sent you a confirmation email with all the details.</p>
               </motion.div>
             )}
 
@@ -157,7 +188,10 @@ const ConsultationBooking = () => {
                 className="bg-red-900/30 border border-red-500/30 rounded-lg p-4 flex items-center space-x-3"
               >
                 <AlertCircle className="text-red-500 w-5 h-5 flex-shrink-0" />
-                <p className="text-red-100">There was an error booking your consultation. Please try again.</p>
+                <div>
+                  <p className="text-red-100">There was an error booking your consultation.</p>
+                  {errorMessage && <p className="text-red-200 text-sm mt-1">{errorMessage}</p>}
+                </div>
               </motion.div>
             )}
 
@@ -219,6 +253,7 @@ const ConsultationBooking = () => {
                     onChange={(date) => setBookingData({ ...bookingData, date })}
                     minDate={new Date()}
                     className="w-full px-4 py-3 bg-black/30 border border-white/10 rounded-lg focus:outline-none focus:border-primary/50 transition-colors"
+                    placeholderText="Select a date"
                     required
                   />
                 </div>

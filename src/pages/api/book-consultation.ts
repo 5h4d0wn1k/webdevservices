@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import nodemailer from 'nodemailer';
+import { sendEmail } from '../../utils/emailService';
 import { google } from 'googleapis';
 import { JWT } from 'google-auth-library';
 
@@ -10,50 +10,72 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const { name, email, phone, date, time, projectType, budget, message } = req.body;
 
-  // Create email transporter with secure configuration
-  const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false, // true for 465, false for other ports like 587
-    auth: {
-      user: 'shadownik.official@gmail.com',
-      pass: 'ShadownikOfficial@24Google',
-    },
-  });
-
   try {
     console.log('Setting up email and calendar...');
-    
-    // Verify transporter configuration
-    await transporter.verify();
-    console.log('Transporter verified successfully');
 
-    // Create JWT client for Google Calendar
+    // Create JWT client for Google Calendar using the service account
     const auth = new JWT({
-      email: 'shadownik-calender@web-dev-services-454105.iam.gserviceaccount.com',
-      key: '-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCSj53CADluZ+8+\nO+TGxFirGPdyOqMj7w6FmZ0kSYqeShQV7QDJkBml6rmDvQ+V+KHjo2QYPqYZr9Q2\n4kU/cNOJYN5qaAqV0Cde1EDm1LkDXpEmPklJzEHJkF+k44L31I4b6TdyOp0B5Ujz\nWC19QwKibKIth1lLXoS3YqbSn3oIzcd+FjNm4r1HvIuGiGf0Dvxzwc0aFy+/iKGs\n1kL5bSZImnPV9aDo4P+QDVG+fmGrSAzeBdGzY6buxGhBDK9VSL2t6dm4X6XD01Uv\n3RTcVbQ8SOmNI3FN0ZPyLqBC+vL5Kz7oYHTYoj4OAV4Z2TwCuUlEaxdpySriJX7U\neVboSVRpAgMBAAECggEAHz3B8SK/G0vIccmuoLgl9oLh7FWXhQdmXxA5sQyEIe3E\njk/xBQZUkUuRtAVPFzbiu3WO1qQ0H/GdGP3uqPFSBkzB3IjFCN5QJiS0mP/rWE6G\nPlK0qKiDtYWy/aEJv+5tRIHYMd9QrKDFhinbuIHaQ+lIQNBDNo+1VqoOyYL5Lnrs\nU9uwX99qah38QDJbc9gWmMraT6t/QoisAw3j8pv4Tw6oUmpeiKc35M1HbmVAu3Ff\nr1ByE2x+9vgA+acu/6nsAxzl1SGT9Lg5Vui26EE3Vn8NjK9W1RZOU4SUj5Y0oSd7\nVzRI0N83TsHD/rcI+G5oPvCTg+WPC/Zn8N3wzNq8yQKBgQDIob2DOU+NqP2PCT6Z\ng1/U4RXxwu0eWP2FFp2XFDpVrHRJ4/ZVEuN6ZKzmU01CaRDyXjHV6WBbzmGYmirP\nTb41C70H0pbejtOYAumFacHuIBSZBTaTRbLRURAgsNZrNFcqhfB6MipP6tBfL2za\nV0XLtuzmohxfwiNJpIHXtqALcwKBgQC7AeAtyRWnlYC/dsDjeTtn6gStFCKTB+oZ\nLvGNW1KlmckoWYVOySrYnvxcZfA7IvNtUM3DpM179D3edvpYaLhQwo6VrmFeYfcW\np29B4OQw/JrcPtQ18nnPPXzoPXecoml+EgjFvkDztXEVMKmXvPsxXpDfqjmx/e8m\nzBkJpJqhswKBgERn6R65xqcNLE69nytmQKFrkTjZ9lD3lJDxEhA15GHbp9adtBpz\nkz3i35S0aE4xVobcmO9PX/xNVLdcMSZ3YlfhxbTKF4iQeBKHQ6mqUmXnaD54KZBz\nHjICCpaq1KC+us2T11dCjWysKhmaKOoVAYYgu4szUKtRnQh53492BAGDAoGACGi+\nLvDi42VKo9FwPQpfjH2udiX4pAnwEe/VdtjLb5zpucHEx9Ut8w27JWCEG/SnY5wF\nlK2de9xwx8cr3LvgxejpxntP75GSLdebnifBux4wzISawE5GAfau3jadYVLAUaX3\n9QRoIU1gZ2aHycX6ua6Z7yTVcVaM4X6+BXv8ZBcCgYEAxpzD/sHR+9ozjbCITjto\nBYGdcpCRBBmIP7NtdjGyaDkf2V9yuu6GLdZ1TG8hkt57Cy0JZi7PhQ7ko0TcUUBg\n0kwD4jbEM5nVdGhVLdXA8yg6smKcc2h9B+W8l1JRCjfquhVL/9EsPeRgupbDCruP\nUOIP34CJGYGlY2OFL6KwzsU=\n-----END PRIVATE KEY-----\n',
+      email: "shadownik-calender@web-dev-services-454105.iam.gserviceaccount.com",
+      key: process.env.GOOGLE_CALENDAR_KEY?.replace(/\\n/g, '\n'),
       scopes: ['https://www.googleapis.com/auth/calendar'],
+      subject: "shadownik.official@gmail.com" // Impersonate this user to make them the host
     });
 
     const calendar = google.calendar({ version: 'v3', auth });
 
     console.log('Creating calendar event...');
 
-    // Create Google Meet event
+    // Parse date and time for event
     const eventStartTime = new Date(date);
-    const [hours, minutes] = time.split(':');
-    eventStartTime.setHours(parseInt(hours), parseInt(minutes), 0);
-
+    const [hoursStr, minutesStr] = time.split(':');
+    let [hours, minutes] = [parseInt(hoursStr), 0];
+    
+    // Handle time format like "10:00 AM"
+    if (time.includes('AM') || time.includes('PM')) {
+      const timeParts = time.replace(/\s/g, '').match(/(\d+):(\d+)([AP]M)/i);
+      if (timeParts) {
+        hours = parseInt(timeParts[1]);
+        minutes = parseInt(timeParts[2]);
+        
+        // Convert PM to 24-hour format
+        if (timeParts[3].toUpperCase() === 'PM' && hours < 12) {
+          hours += 12;
+        }
+        // Convert 12 AM to 0
+        if (timeParts[3].toUpperCase() === 'AM' && hours === 12) {
+          hours = 0;
+        }
+      }
+    }
+    
+    eventStartTime.setHours(hours, minutes, 0);
+    
     const eventEndTime = new Date(eventStartTime);
     eventEndTime.setMinutes(eventEndTime.getMinutes() + 30);
 
+    // Attendees for the meeting
+    const attendees = [
+      { email: "shadownik.official@gmail.com" }, // Host
+      { email: "nikhilnagpure203@gmail.com", displayName: "Nikhil Nagpure (Founder & CEO)" },
+      { email: "aniwiss07@gmail.com", displayName: "Web Development Lead" },
+      { email: email, displayName: name } // Client
+    ];
+
+    // Create an event with Google Meet integration
     const event = {
-      summary: `Consultation with ${name}`,
+      summary: `Shadownik Consultation with ${name}`,
       description: `
-        Project Type: ${projectType}
-        Budget: ${budget}
-        Message: ${message}
-      `,
+Client Consultation Details:
+---------------------------
+Name: ${name}
+Email: ${email}
+Phone: ${phone}
+Project Type: ${projectType}
+Budget: ${budget}
+
+Project Details:
+${message}
+`,
       start: {
         dateTime: eventStartTime.toISOString(),
         timeZone: 'Asia/Kolkata',
@@ -62,15 +84,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         dateTime: eventEndTime.toISOString(),
         timeZone: 'Asia/Kolkata',
       },
-      attendees: [
-        { email: 'shadownik.official@gmail.com' }, // Admin
-        { email: email }, // Client
-      ],
+      attendees: attendees,
       conferenceData: {
         createRequest: {
-          requestId: `${Date.now()}`,
+          requestId: `shadownik-${Date.now()}`,
           conferenceSolutionKey: { type: 'hangoutsMeet' }
         }
+      },
+      // Add these settings to ensure invites are sent
+      sendUpdates: 'all',
+      reminders: {
+        useDefault: false,
+        overrides: [
+          { method: 'email', minutes: 60 * 24 }, // 1 day before
+          { method: 'popup', minutes: 30 } // 30 minutes before
+        ]
       }
     };
 
@@ -78,60 +106,279 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       calendarId: 'primary',
       requestBody: event,
       conferenceDataVersion: 1,
+      sendNotifications: true // Ensure Google Calendar sends notifications
     });
 
-    console.log('Calendar event created successfully');
+    console.log('Calendar event created successfully:', response.data.id);
 
-    const meetLink = response.data.conferenceData?.entryPoints?.[0]?.uri;
+    const meetLink = response.data.conferenceData?.entryPoints?.[0]?.uri || '';
+    const eventHtmlLink = response.data.htmlLink;
 
-    // Send confirmation email to admin
-    const adminMail = await transporter.sendMail({
-      from: '"Shadownik Booking" <shadownik.official@gmail.com>',
-      to: 'shadownik.official@gmail.com',
-      subject: `New Consultation Booking with ${name}`,
-      html: `
-        <h2>New Consultation Booking</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Phone:</strong> ${phone}</p>
-        <p><strong>Date:</strong> ${new Date(date).toLocaleDateString()}</p>
-        <p><strong>Time:</strong> ${time}</p>
-        <p><strong>Project Type:</strong> ${projectType}</p>
-        <p><strong>Budget:</strong> ${budget}</p>
-        <p><strong>Message:</strong> ${message}</p>
-        <p><strong>Meet Link:</strong> <a href="${meetLink}">${meetLink}</a></p>
-      `,
+    // Format date and time for email
+    const formattedDate = new Date(date).toLocaleDateString('en-US', {
+      weekday: 'long',
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric'
     });
+    
+    // Common HTML styles for emails
+    const emailStyles = `
+      body { font-family: 'Arial', sans-serif; color: #333; line-height: 1.6; }
+      .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+      .header { background: linear-gradient(90deg, #4F46E5, #7C3AED); padding: 30px 20px; border-radius: 10px 10px 0 0; text-align: center; }
+      .header h1 { color: white; margin: 0; font-size: 24px; }
+      .content { background-color: #fff; padding: 30px; border-radius: 0 0 10px 10px; border: 1px solid #eaeaea; border-top: none; }
+      .meeting-box { background-color: #f9f9f9; border: 1px solid #eaeaea; border-radius: 8px; padding: 20px; margin: 20px 0; }
+      .meeting-details { margin-bottom: 20px; }
+      .join-button { display: inline-block; background: linear-gradient(90deg, #4F46E5, #7C3AED); color: white; padding: 12px 24px; border-radius: 5px; text-decoration: none; font-weight: bold; margin-top: 10px; }
+      table { width: 100%; border-collapse: collapse; }
+      table td { padding: 8px; border-bottom: 1px solid #eaeaea; }
+      table td:first-child { font-weight: bold; width: 150px; }
+      .footer { text-align: center; margin-top: 30px; font-size: 14px; color: #666; }
+    `;
 
-    console.log('Admin email sent successfully:', adminMail.messageId);
+    // Template for admin email
+    const adminHtml = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <style>${emailStyles}</style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <h1>New Client Consultation Booking</h1>
+        </div>
+        <div class="content">
+          <p>A new client has booked a consultation with Shadownik.</p>
+          
+          <h2>Client Information</h2>
+          <table>
+            <tr>
+              <td>Name:</td>
+              <td>${name}</td>
+            </tr>
+            <tr>
+              <td>Email:</td>
+              <td>${email}</td>
+            </tr>
+            <tr>
+              <td>Phone:</td>
+              <td>${phone}</td>
+            </tr>
+          </table>
+          
+          <h2>Project Information</h2>
+          <table>
+            <tr>
+              <td>Project Type:</td>
+              <td>${projectType}</td>
+            </tr>
+            <tr>
+              <td>Budget:</td>
+              <td>${budget}</td>
+            </tr>
+          </table>
+          
+          <h2>Project Details</h2>
+          <p>${message || 'No additional details provided'}</p>
+          
+          <div class="meeting-box">
+            <h2>Meeting Information</h2>
+            <div class="meeting-details">
+              <p><strong>Date:</strong> ${formattedDate}</p>
+              <p><strong>Time:</strong> ${time}</p>
+              <p><strong>Duration:</strong> 30 minutes</p>
+            </div>
+            <p>This meeting has been added to your Google Calendar.</p>
+            <a href="${meetLink}" class="join-button">Join Google Meet</a>
+            <p><small>Or copy this link: ${meetLink}</small></p>
+          </div>
+        </div>
+        <div class="footer">
+          <p>© ${new Date().getFullYear()} Shadownik Web Development Services</p>
+        </div>
+      </div>
+    </body>
+    </html>
+    `;
 
-    // Send confirmation email to client
-    const clientMail = await transporter.sendMail({
-      from: '"Shadownik Booking" <shadownik.official@gmail.com>',
+    // Template for team member email (CEO and Web Dev Lead)
+    const teamMemberHtml = (memberName: string) => `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <style>${emailStyles}</style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <h1>Upcoming Client Consultation</h1>
+        </div>
+        <div class="content">
+          <p>Dear ${memberName},</p>
+          
+          <p>You have an upcoming consultation scheduled with a potential client. Please review the details below and be prepared for the discussion.</p>
+          
+          <h2>Client Information</h2>
+          <table>
+            <tr>
+              <td>Name:</td>
+              <td>${name}</td>
+            </tr>
+            <tr>
+              <td>Email:</td>
+              <td>${email}</td>
+            </tr>
+            <tr>
+              <td>Phone:</td>
+              <td>${phone}</td>
+            </tr>
+          </table>
+          
+          <h2>Project Information</h2>
+          <table>
+            <tr>
+              <td>Project Type:</td>
+              <td>${projectType}</td>
+            </tr>
+            <tr>
+              <td>Budget:</td>
+              <td>${budget}</td>
+            </tr>
+          </table>
+          
+          ${message ? `
+          <h2>Client Message</h2>
+          <p>${message}</p>
+          ` : ''}
+          
+          <div class="meeting-box">
+            <h2>Meeting Information</h2>
+            <div class="meeting-details">
+              <p><strong>Date:</strong> ${formattedDate}</p>
+              <p><strong>Time:</strong> ${time}</p>
+              <p><strong>Duration:</strong> 30 minutes</p>
+            </div>
+            <a href="${meetLink}" class="join-button">Join Google Meet</a>
+            <p><small>Or copy this link: ${meetLink}</small></p>
+          </div>
+          
+          <p>Please make sure to prepare for this consultation by:</p>
+          <ul>
+            <li>Reviewing any related projects in our portfolio</li>
+            <li>Preparing a rough estimate based on the client's project type and budget</li>
+            <li>Checking your equipment before the meeting (camera, microphone, etc.)</li>
+          </ul>
+          
+          <p>Best regards,<br>Shadownik Team</p>
+        </div>
+        <div class="footer">
+          <p>© ${new Date().getFullYear()} Shadownik Web Development Services</p>
+        </div>
+      </div>
+    </body>
+    </html>
+    `;
+
+    // Template for client email
+    const clientHtml = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <style>${emailStyles}</style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <h1>Your Consultation with Shadownik</h1>
+        </div>
+        <div class="content">
+          <p>Dear ${name},</p>
+          
+          <p>Thank you for booking a consultation with Shadownik. We're looking forward to discussing your ${projectType} project with you.</p>
+          
+          <div class="meeting-box">
+            <h2>Meeting Details</h2>
+            <div class="meeting-details">
+              <p><strong>Date:</strong> ${formattedDate}</p>
+              <p><strong>Time:</strong> ${time}</p>
+              <p><strong>Duration:</strong> 30 minutes</p>
+              <p><strong>Platform:</strong> Google Meet (video conference)</p>
+            </div>
+            <p>You'll be meeting with our team including our Founder & CEO and Web Development Lead.</p>
+            <a href="${meetLink}" class="join-button">Join Google Meet</a>
+            <p><small>Or copy this link: ${meetLink}</small></p>
+            <p><small>This meeting has also been added to your Google Calendar.</small></p>
+          </div>
+          
+          <h2>Preparing for your consultation</h2>
+          <p>To make the most of our time together, please:</p>
+          <ul>
+            <li>Prepare any specific questions you have about your project</li>
+            <li>Consider having examples of websites or designs you like</li>
+            <li>Think about your project goals, timeline, and specific requirements</li>
+          </ul>
+          
+          <p>If you need to reschedule or have any questions before our meeting, please contact us at <a href="mailto:info@shadownik.online">info@shadownik.online</a>.</p>
+          
+          <p>We're looking forward to speaking with you!</p>
+          
+          <p>Best regards,<br>Team Shadownik</p>
+        </div>
+        <div class="footer">
+          <p>© ${new Date().getFullYear()} Shadownik Web Development Services</p>
+        </div>
+      </div>
+    </body>
+    </html>
+    `;
+
+    // Send email to admin
+    const adminEmailResult = await sendEmail({
+      to: "shadownik.official@gmail.com",
+      subject: `New Consultation: ${name} - ${formattedDate}`,
+      html: adminHtml
+    });
+    
+    console.log('Admin email sent:', adminEmailResult);
+
+    // Send email to CEO
+    const ceoEmailResult = await sendEmail({
+      to: "nikhilnagpure203@gmail.com",
+      subject: `Upcoming Consultation: ${name} - ${formattedDate}`,
+      html: teamMemberHtml("Nikhil")
+    });
+    
+    console.log('CEO email sent:', ceoEmailResult);
+
+    // Send email to Web Development Lead
+    const devLeadEmailResult = await sendEmail({
+      to: "aniwiss07@gmail.com",
+      subject: `Upcoming Consultation: ${name} - ${formattedDate}`,
+      html: teamMemberHtml("Web Development Lead")
+    });
+    
+    console.log('Web Dev Lead email sent:', devLeadEmailResult);
+
+    // Send email to client
+    const clientEmailResult = await sendEmail({
       to: email,
-      subject: 'Your Consultation is Scheduled - Shadownik',
-      html: `
-        <h2>Your Consultation is Scheduled!</h2>
-        <p>Dear ${name},</p>
-        <p>Your consultation with Shadownik has been scheduled for:</p>
-        <p><strong>Date:</strong> ${new Date(date).toLocaleDateString()}</p>
-        <p><strong>Time:</strong> ${time}</p>
-        <p><strong>Project Type:</strong> ${projectType}</p>
-        <p><strong>Meet Link:</strong> <a href="${meetLink}">${meetLink}</a></p>
-        <p>We look forward to meeting you!</p>
-        <p>Best regards,<br>Team Shadownik</p>
-      `,
+      subject: 'Your Consultation with Shadownik - Confirmation',
+      html: clientHtml
     });
-
-    console.log('Client email sent successfully:', clientMail.messageId);
+    
+    console.log('Client email sent:', clientEmailResult);
 
     return res.status(200).json({ 
       message: 'Consultation booked successfully',
-      meetLink 
+      meetLink,
+      success: true
     });
   } catch (error) {
-    console.error('Detailed booking error:', error);
-    return res.status(500).json({ 
+    console.error('Consultation booking error:', error);
+    return res.status(500).json({
       message: 'Failed to book consultation',
       error: error instanceof Error ? error.message : 'Unknown error'
     });

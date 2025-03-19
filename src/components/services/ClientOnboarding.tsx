@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaArrowRight, FaCheck, FaFileUpload, FaInfoCircle, FaRocket, FaLightbulb, FaCode, FaCog, FaCalendarAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import ConsultationBooking from '../ConsultationBooking';
+import { API_ENDPOINTS } from '../../config/api';
 
 interface FormData {
   projectType: string;
@@ -145,12 +146,43 @@ export const ClientOnboarding = () => {
     setSubmitStatus('idle');
 
     try {
-      const response = await fetch('/api/submit-project', {
+      const response = await fetch(API_ENDPOINTS.submitProject, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit project');
+      }
+
+      setSubmitStatus('success');
+      setTimeout(() => {
+        setFormData(initialFormData);
+        setStep(1);
+        setSubmitStatus('idle');
+      }, 3000);
+    } catch (error) {
+      setSubmitStatus('error');
+      setTimeout(() => setSubmitStatus('idle'), 3000);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const submitProjectData = async (data: FormData) => {
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      const response = await fetch(API_ENDPOINTS.submitProject, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       });
 
       if (!response.ok) {
@@ -587,8 +619,22 @@ export const ClientOnboarding = () => {
                         time: bookingData.time
                       }
                     });
-                    handleConsultationSubmit(new Event('submit') as any);
+                    
+                    // Send the combined data to the backend
+                    submitProjectData({
+                      ...formData,
+                      consultation: {
+                        date: bookingData.date,
+                        time: bookingData.time,
+                        name: bookingData.name,
+                        email: bookingData.email,
+                        phone: bookingData.phone,
+                        message: bookingData.message,
+                        meetLink: bookingData.meetLink
+                      }
+                    });
                   }}
+                  className="py-0"
                 />
               </div>
             </motion.div>

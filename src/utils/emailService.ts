@@ -1,37 +1,92 @@
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 
 interface EmailOptions {
-  to: string;
+  to: string | string[];
   subject: string;
   html: string;
+  cc?: string | string[];
+  bcc?: string | string[];
+  replyTo?: string;
 }
 
-const transporter = nodemailer.createTransport({
-  host: 'smtp.zoho.com',
-  port: 465,
-  secure: true,
-  auth: {
-    user: 'info@shadownik.online',
-    pass: process.env.EMAIL_PASSWORD,
-  },
-});
+interface SendEmailResult {
+  success: boolean;
+  messageId?: string;
+  error?: string;
+}
 
-export const sendEmail = async ({ to, subject, html }: EmailOptions) => {
+// Initialize Resend
+const resend = new Resend(process.env.RESEND_API_KEY);
+const domain = process.env.EMAIL_DOMAIN || 'shadownik.online';
+
+/**
+ * Sends an email using Resend
+ * @param options Email options including recipients, subject, and HTML content
+ * @returns Object with success status and messageId or error message
+ */
+export const sendEmail = async (options: EmailOptions): Promise<SendEmailResult> => {
   try {
-    const info = await transporter.sendMail({
-      from: `"Shadownik Web Development" <info@shadownik.online>`,
+    // Prepare recipients
+    const { to, cc, bcc, subject, html, replyTo } = options;
+    
+    const emailResponse = await resend.emails.send({
+      from: `Shadownik Web Development <projects@${domain}>`,
       to,
+      cc,
+      bcc,
+      replyTo,
       subject,
       html,
     });
-    console.log('Email sent:', info.messageId);
-    return true;
+    
+    console.log('Email sent successfully:', emailResponse);
+    return { 
+      success: true, 
+      messageId: 'unknown' // Since we can't reliably type the response, we'll use a default value
+    };
   } catch (error) {
     console.error('Error sending email:', error);
-    return false;
+    return { 
+      success: false, 
+      error: error instanceof Error ? error.message : 'Unknown error occurred' 
+    };
   }
 };
 
+/**
+ * Sends an email to multiple recipients individually
+ * @param options Email options including recipients, subject, and HTML content
+ * @returns Array of results for each recipient
+ */
+export const sendEmailToMultipleRecipients = async (options: EmailOptions): Promise<SendEmailResult[]> => {
+  const { to, ...restOptions } = options;
+  const recipients = Array.isArray(to) ? to : [to];
+  
+  const results = await Promise.all(
+    recipients.map(async (recipient) => {
+      try {
+        const result = await sendEmail({
+          ...restOptions,
+          to: recipient,
+        });
+        return result;
+      } catch (error) {
+        return {
+          success: false,
+          error: error instanceof Error ? error.message : 'Unknown error occurred'
+        };
+      }
+    })
+  );
+  
+  return results;
+};
+
+/**
+ * Generates HTML for a project submission email
+ * @param formData Project submission form data
+ * @returns HTML string for the email
+ */
 export const generateProjectSubmissionEmail = (formData: any) => {
   return `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -71,6 +126,11 @@ export const generateProjectSubmissionEmail = (formData: any) => {
   `;
 };
 
+/**
+ * Generates HTML for a consultation confirmation email
+ * @param bookingData Consultation booking data
+ * @returns HTML string for the email
+ */
 export const generateConsultationConfirmationEmail = (bookingData: any) => {
   return `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">

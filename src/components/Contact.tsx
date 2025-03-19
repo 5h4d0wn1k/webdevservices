@@ -157,26 +157,28 @@ const Contact = () => {
         body: JSON.stringify(formData),
       });
 
+      let responseData;
+      try {
+        responseData = await response.json();
+      } catch (parseError) {
+        console.error('Error parsing JSON response:', parseError);
+        throw new Error('Invalid response format');
+      }
+
       if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Server response:', errorText);
-        throw new Error('Failed to send message');
+        console.error('Server error response:', responseData);
+        throw new Error(responseData.message || 'Failed to send message');
       }
 
-      const data = await response.json();
-
-      if (data.message === 'Message sent successfully') {
-        setSubmitStatus('success');
-        // Reset form after successful submission
-        setTimeout(() => {
-          setFormData({ name: '', email: '', service: '', message: '' });
-          setIsTouched({});
-          setSubmitStatus('idle');
-          if (formRef.current) formRef.current.reset();
-        }, 3000);
-      } else {
-        throw new Error('Unexpected response from server');
-      }
+      // Success - don't check for exact message text to make it more flexible
+      setSubmitStatus('success');
+      // Reset form after successful submission
+      setTimeout(() => {
+        setFormData({ name: '', email: '', service: '', message: '' });
+        setIsTouched({});
+        setSubmitStatus('idle');
+        if (formRef.current) formRef.current.reset();
+      }, 3000);
     } catch (error) {
       console.error('Contact form error:', error);
       setSubmitStatus('error');
