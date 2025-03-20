@@ -167,10 +167,13 @@ Domain Status: ${bookingData.technical?.domain || 'Not specified'}
     // Send emails with the meet link
     const adminEmails = [
       'shadownik.official@gmail.com', // Always include main admin email
+      process.env.INFO_EMAIL || 'info@shadownik.online', // Always include info email
       process.env.ADMIN_EMAIL,
       process.env.FOUNDER_EMAIL,
       process.env.LEAD_EMAIL
-    ].filter(Boolean);
+    ].filter(Boolean); // Remove any undefined/empty entries
+    
+    console.log('Sending consultation notification to:', adminEmails);
     
     // Send admin emails
     await Promise.all(adminEmails.map(email => 
@@ -233,6 +236,56 @@ const generateConsultationEmail = (bookingData: BookingData, meetLink: string | 
     </div>
   `;
 
+  // Build detailed description for the admin email
+  const buildDetailedProjectInfo = () => {
+    let detailedInfo = '';
+    
+    if (bookingData.requirements) {
+      detailedInfo += `
+      <!-- Project Requirements -->
+      <div style="margin-bottom: 30px;">
+        <h2 style="color: #333; font-size: 20px; font-weight: 600; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 12px;">Project Requirements</h2>
+        
+        <h3 style="color: #4F46E5; margin: 20px 0 10px; font-size: 16px;">Features Needed:</h3>
+        <ul style="margin: 0; padding: 0 0 0 20px;">
+          ${bookingData.requirements?.features?.map(feature => `<li style="padding: 4px 0; font-size: 15px;">${feature}</li>`).join('') || '<li style="padding: 4px 0; font-size: 15px;">None specified</li>'}
+        </ul>
+        
+        <h3 style="color: #4F46E5; margin: 20px 0 10px; font-size: 16px;">Design Preferences:</h3>
+        <p style="margin: 0; font-size: 15px;">${bookingData.requirements?.design || 'None specified'}</p>
+        
+        <h3 style="color: #4F46E5; margin: 20px 0 10px; font-size: 16px;">Timeline:</h3>
+        <p style="margin: 0; font-size: 15px;">${bookingData.requirements?.timeline || 'Not specified'}</p>
+      </div>
+      `;
+    }
+    
+    if (bookingData.technical) {
+      detailedInfo += `
+      <!-- Technical Requirements -->
+      <div style="margin-bottom: 30px;">
+        <h2 style="color: #333; font-size: 20px; font-weight: 600; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 12px;">Technical Requirements</h2>
+        <table style="width: 100%; border-collapse: collapse;">
+          <tr>
+            <td style="padding: 8px 0; width: 170px; color: #666; font-size: 15px;">Technologies:</td>
+            <td style="padding: 8px 0; font-size: 15px;">${bookingData.technical?.technologies?.join(', ') || 'Not specified'}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 0; color: #666; font-size: 15px;">Hosting Preference:</td>
+            <td style="padding: 8px 0; font-size: 15px;">${bookingData.technical?.hosting || 'Not specified'}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 0; color: #666; font-size: 15px;">Domain Status:</td>
+            <td style="padding: 8px 0; font-size: 15px;">${bookingData.technical?.domain || 'Not specified'}</td>
+          </tr>
+        </table>
+      </div>
+      `;
+    }
+    
+    return detailedInfo;
+  };
+
   if (isAdmin) {
     return `
       <!DOCTYPE html>
@@ -246,7 +299,7 @@ const generateConsultationEmail = (bookingData: BookingData, meetLink: string | 
         <div style="max-width: 650px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);">
           <!-- Header with gradient -->
           <div style="background: linear-gradient(135deg, #4F46E5, #7C3AED); padding: 35px 20px; text-align: center;">
-            <img src="https://i.ibb.co/GQpSCMT/logo.png" alt="Shadownik Logo" style="height: 40px; margin-bottom: 20px;">
+            <img src="/src/assets/logo/shadownik-logo.svg" alt="Shadownik Logo" style="height: 40px; margin-bottom: 20px;">
             <h1 style="margin: 0; color: white; font-size: 28px; font-weight: 600; letter-spacing: -0.5px;">New Consultation Booking</h1>
             <p style="color: rgba(255, 255, 255, 0.9); margin: 8px 0 0; font-size: 16px;">A new client has scheduled a consultation with you</p>
           </div>
@@ -341,40 +394,7 @@ const generateConsultationEmail = (bookingData: BookingData, meetLink: string | 
               </table>
             </div>
             
-            <!-- Project Requirements -->
-            <div style="margin-bottom: 30px;">
-              <h2 style="color: #333; font-size: 20px; font-weight: 600; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 12px;">Project Requirements</h2>
-              
-              <h3 style="color: #4F46E5; margin: 20px 0 10px; font-size: 16px;">Features Needed:</h3>
-              <ul style="margin: 0; padding: 0 0 0 20px;">
-                ${bookingData.requirements?.features.map(feature => `<li style="padding: 4px 0; font-size: 15px;">${feature}</li>`).join('') || '<li style="padding: 4px 0; font-size: 15px;">None specified</li>'}
-              </ul>
-              
-              <h3 style="color: #4F46E5; margin: 20px 0 10px; font-size: 16px;">Design Preferences:</h3>
-              <p style="margin: 0; font-size: 15px;">${bookingData.requirements?.design || 'None specified'}</p>
-              
-              <h3 style="color: #4F46E5; margin: 20px 0 10px; font-size: 16px;">Timeline:</h3>
-              <p style="margin: 0; font-size: 15px;">${bookingData.requirements?.timeline || 'Not specified'}</p>
-            </div>
-            
-            <!-- Technical Requirements -->
-            <div style="margin-bottom: 30px;">
-              <h2 style="color: #333; font-size: 20px; font-weight: 600; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 12px;">Technical Requirements</h2>
-              <table style="width: 100%; border-collapse: collapse;">
-                <tr>
-                  <td style="padding: 8px 0; width: 170px; color: #666; font-size: 15px;">Technologies:</td>
-                  <td style="padding: 8px 0; font-size: 15px;">${bookingData.technical?.technologies.join(', ') || 'Not specified'}</td>
-                </tr>
-                <tr>
-                  <td style="padding: 8px 0; color: #666; font-size: 15px;">Hosting Preference:</td>
-                  <td style="padding: 8px 0; font-size: 15px;">${bookingData.technical?.hosting || 'Not specified'}</td>
-                </tr>
-                <tr>
-                  <td style="padding: 8px 0; color: #666; font-size: 15px;">Domain Status:</td>
-                  <td style="padding: 8px 0; font-size: 15px;">${bookingData.technical?.domain || 'Not specified'}</td>
-                </tr>
-              </table>
-            </div>
+            ${buildDetailedProjectInfo()}
             ` : ''}
             
             <!-- Next Steps -->
@@ -391,7 +411,7 @@ const generateConsultationEmail = (bookingData: BookingData, meetLink: string | 
           
           <!-- Footer -->
           <div style="padding: 30px; background-color: #f6f6f9; text-align: center; border-top: 1px solid #eee;">
-            <img src="https://i.ibb.co/GQpSCMT/logo.png" alt="Shadownik" style="height: 28px; margin-bottom: 20px;">
+            <img src="/src/assets/logo/shadownik-logo.svg" alt="Shadownik" style="height: 28px; margin-bottom: 20px;">
             <p style="margin: 0 0 15px; color: #666; font-size: 14px;">
               Crafting exceptional digital experiences through innovative design and cutting-edge technology.
             </p>
@@ -422,7 +442,7 @@ const generateConsultationEmail = (bookingData: BookingData, meetLink: string | 
         <div style="max-width: 650px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);">
           <!-- Header with gradient -->
           <div style="background: linear-gradient(135deg, #4F46E5, #7C3AED); padding: 35px 20px; text-align: center;">
-            <img src="https://i.ibb.co/GQpSCMT/logo.png" alt="Shadownik Logo" style="height: 40px; margin-bottom: 20px;">
+            <img src="/src/assets/logo/shadownik-logo.svg" alt="Shadownik Logo" style="height: 40px; margin-bottom: 20px;">
             <h1 style="margin: 0; color: white; font-size: 28px; font-weight: 600; letter-spacing: -0.5px;">Your Consultation is Confirmed!</h1>
             <p style="color: rgba(255, 255, 255, 0.9); margin: 8px 0 0; font-size: 16px;">Thank you for scheduling a consultation with Shadownik</p>
           </div>
@@ -499,7 +519,7 @@ const generateConsultationEmail = (bookingData: BookingData, meetLink: string | 
           
           <!-- Footer -->
           <div style="padding: 30px; background-color: #f6f6f9; text-align: center; border-top: 1px solid #eee;">
-            <img src="https://i.ibb.co/GQpSCMT/logo.png" alt="Shadownik" style="height: 28px; margin-bottom: 20px;">
+            <img src="/src/assets/logo/shadownik-logo.svg" alt="Shadownik" style="height: 28px; margin-bottom: 20px;">
             <p style="margin: 0 0 15px; color: #666; font-size: 14px;">
               Crafting exceptional digital experiences through innovative design and cutting-edge technology.
             </p>
@@ -584,22 +604,22 @@ export default defineConfig({
                 const { meetLink, eventId } = await createCalendarEvent(formData);
                 
                 // Return success response with meet link
-                res.statusCode = 200;
-                res.setHeader('Content-Type', 'application/json');
-                res.end(JSON.stringify({ 
+              res.statusCode = 200;
+              res.setHeader('Content-Type', 'application/json');
+              res.end(JSON.stringify({ 
                   message: 'Project submitted successfully',
                   meetLink,
                   eventId
-                }));
-              } catch (error) {
+              }));
+            } catch (error) {
                 console.error('Error processing project submission:', error);
-                res.statusCode = 500;
-                res.setHeader('Content-Type', 'application/json');
-                res.end(JSON.stringify({ 
+              res.statusCode = 500;
+              res.setHeader('Content-Type', 'application/json');
+              res.end(JSON.stringify({ 
                   message: 'Failed to submit project',
-                  error: error instanceof Error ? error.message : 'Unknown error'
-                }));
-              }
+                error: error instanceof Error ? error.message : 'Unknown error'
+              }));
+            }
             });
             
             return;
@@ -634,7 +654,7 @@ export default defineConfig({
                       <div style="max-width: 650px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);">
                         <!-- Header with gradient -->
                         <div style="background: linear-gradient(135deg, #4F46E5, #7C3AED); padding: 35px 20px; text-align: center;">
-                          <img src="https://i.ibb.co/GQpSCMT/logo.png" alt="Shadownik Logo" style="height: 40px; margin-bottom: 20px;">
+                          <img src="/src/assets/logo/shadownik-logo.svg" alt="Shadownik Logo" style="height: 40px; margin-bottom: 20px;">
                           <h1 style="margin: 0; color: white; font-size: 28px; font-weight: 600; letter-spacing: -0.5px;">New Contact Inquiry</h1>
                           <p style="color: rgba(255, 255, 255, 0.9); margin: 8px 0 0; font-size: 16px;">A potential client has submitted a contact form</p>
                         </div>
@@ -682,7 +702,7 @@ export default defineConfig({
                         
                         <!-- Footer -->
                         <div style="padding: 30px; background-color: #f6f6f9; text-align: center; border-top: 1px solid #eee;">
-                          <img src="https://i.ibb.co/GQpSCMT/logo.png" alt="Shadownik" style="height: 28px; margin-bottom: 20px;">
+                          <img src="/src/assets/logo/shadownik-logo.svg" alt="Shadownik" style="height: 28px; margin-bottom: 20px;">
                           <p style="margin: 0 0 15px; color: #666; font-size: 14px;">
                             Crafting exceptional digital experiences through innovative design and cutting-edge technology.
                           </p>
@@ -735,7 +755,7 @@ export default defineConfig({
                       <div style="max-width: 650px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);">
                         <!-- Header with gradient -->
                         <div style="background: linear-gradient(135deg, #4F46E5, #7C3AED); padding: 35px 20px; text-align: center;">
-                          <img src="https://i.ibb.co/GQpSCMT/logo.png" alt="Shadownik Logo" style="height: 40px; margin-bottom: 20px;">
+                          <img src="/src/assets/logo/shadownik-logo.svg" alt="Shadownik Logo" style="height: 40px; margin-bottom: 20px;">
                           <h1 style="margin: 0; color: white; font-size: 28px; font-weight: 600; letter-spacing: -0.5px;">Thank You for Reaching Out!</h1>
                           <p style="color: rgba(255, 255, 255, 0.9); margin: 8px 0 0; font-size: 16px;">We've received your message and will be in touch soon</p>
                         </div>
@@ -766,7 +786,7 @@ export default defineConfig({
                           </div>
                           
                           <p style="font-size: 16px; line-height: 1.6; margin-bottom: 25px;">
-                            If you have any urgent questions in the meantime, please feel free to call us at <a href="tel:+917057219663" style="color: #4F46E5; text-decoration: none; font-weight: 500;">+91 7057219663</a> or reply directly to this email.
+                            If you have any urgent questions in the meantime, please feel free to call us at <a href="tel:+919165644843" style="color: #4F46E5; text-decoration: none; font-weight: 500;">+91 9165644843</a> or reply directly to this email.
                           </p>
                           
                           <p style="font-size: 16px; line-height: 1.6; margin-bottom: 10px;">
@@ -779,7 +799,7 @@ export default defineConfig({
                         
                         <!-- Footer -->
                         <div style="padding: 30px; background-color: #f6f6f9; text-align: center; border-top: 1px solid #eee;">
-                          <img src="https://i.ibb.co/GQpSCMT/logo.png" alt="Shadownik" style="height: 28px; margin-bottom: 20px;">
+                          <img src="/src/assets/logo/shadownik-logo.svg" alt="Shadownik" style="height: 28px; margin-bottom: 20px;">
                           <p style="margin: 0 0 15px; color: #666; font-size: 14px;">
                             Crafting exceptional digital experiences through innovative design and cutting-edge technology.
                           </p>
@@ -844,10 +864,18 @@ export default defineConfig({
                 const { email } = JSON.parse(body);
                 console.log('Newsletter subscription:', email);
                 
+                // Get admin recipients from environment variables
+                const adminRecipients = [
+                  process.env.ADMIN_EMAIL || 'shadownik.official@gmail.com',
+                  process.env.INFO_EMAIL || 'info@shadownik.online'
+                ].filter(Boolean); // Filter out any undefined values
+                
+                console.log('Sending newsletter notification to:', adminRecipients);
+                
                 // Send notification to admin
                 await resend.emails.send({
                   from: `Shadownik Newsletter <newsletter@${String(process.env.EMAIL_DOMAIN || 'shadownik.com')}>`,
-                  to: 'shadownik.official@gmail.com',
+                  to: adminRecipients,
                   subject: 'New Newsletter Subscription',
                   html: `
                     <!DOCTYPE html>
@@ -861,7 +889,7 @@ export default defineConfig({
                       <div style="max-width: 650px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);">
                         <!-- Header with gradient -->
                         <div style="background: linear-gradient(135deg, #4F46E5, #7C3AED); padding: 35px 20px; text-align: center;">
-                          <img src="https://i.ibb.co/GQpSCMT/logo.png" alt="Shadownik Logo" style="height: 40px; margin-bottom: 20px;">
+                          <img src="/src/assets/logo/shadownik-logo.svg" alt="Shadownik Logo" style="height: 40px; margin-bottom: 20px;">
                           <h1 style="margin: 0; color: white; font-size: 28px; font-weight: 600; letter-spacing: -0.5px;">New Newsletter Subscription</h1>
                           <p style="color: rgba(255, 255, 255, 0.9); margin: 8px 0 0; font-size: 16px;">A new subscriber has joined your mailing list</p>
                         </div>
@@ -900,7 +928,7 @@ export default defineConfig({
                         
                         <!-- Footer -->
                         <div style="padding: 30px; background-color: #f6f6f9; text-align: center; border-top: 1px solid #eee;">
-                          <img src="https://i.ibb.co/GQpSCMT/logo.png" alt="Shadownik" style="height: 28px; margin-bottom: 20px;">
+                          <img src="/src/assets/logo/shadownik-logo.svg" alt="Shadownik" style="height: 28px; margin-bottom: 20px;">
                           <p style="margin: 0 0 15px; color: #666; font-size: 14px;">
                             Crafting exceptional digital experiences through innovative design and cutting-edge technology.
                           </p>
@@ -953,7 +981,7 @@ export default defineConfig({
                       <div style="max-width: 650px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);">
                         <!-- Header with gradient -->
                         <div style="background: linear-gradient(135deg, #4F46E5, #7C3AED); padding: 35px 20px; text-align: center;">
-                          <img src="https://i.ibb.co/GQpSCMT/logo.png" alt="Shadownik Logo" style="height: 40px; margin-bottom: 20px;">
+                          <img src="/src/assets/logo/shadownik-logo.svg" alt="Shadownik Logo" style="height: 40px; margin-bottom: 20px;">
                           <h1 style="margin: 0; color: white; font-size: 28px; font-weight: 600; letter-spacing: -0.5px;">Welcome to Our Newsletter!</h1>
                           <p style="color: rgba(255, 255, 255, 0.9); margin: 8px 0 0; font-size: 16px;">Thank you for subscribing to Shadownik updates</p>
                         </div>
@@ -1016,7 +1044,7 @@ export default defineConfig({
                         
                         <!-- Footer -->
                         <div style="padding: 30px; background-color: #f6f6f9; text-align: center; border-top: 1px solid #eee;">
-                          <img src="https://i.ibb.co/GQpSCMT/logo.png" alt="Shadownik" style="height: 28px; margin-bottom: 20px;">
+                          <img src="/src/assets/logo/shadownik-logo.svg" alt="Shadownik" style="height: 28px; margin-bottom: 20px;">
                           <p style="margin: 0 0 15px; color: #666; font-size: 14px;">
                             Crafting exceptional digital experiences through innovative design and cutting-edge technology.
                           </p>

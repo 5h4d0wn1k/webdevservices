@@ -15,6 +15,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     console.log('Processing contact form submission from:', email);
+    
+    // Make sure we always send to these two main emails
+    const primaryRecipients = [
+      process.env.ADMIN_EMAIL || 'shadownik.official@gmail.com',
+      'info@shadownik.online'
+    ];
+    
+    // Add additional team recipients if needed
+    if (process.env.INCLUDE_TEAM_MEMBERS === 'true') {
+      primaryRecipients.push('nikhilnagpure203@gmail.com', 'aniwiss07@gmail.com');
+    }
 
     // Send email to admin
     const adminHtml = `
@@ -28,7 +39,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     `;
 
     const adminEmailResult = await sendEmail({
-      to: ["shadownik.official@gmail.com", "nikhilnagpure203@gmail.com", "aniwiss07@gmail.com"],
+      to: primaryRecipients,
       subject: `New Contact Form Submission from ${name}`,
       html: adminHtml,
     });

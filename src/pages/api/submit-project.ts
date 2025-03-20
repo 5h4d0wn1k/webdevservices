@@ -22,11 +22,29 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return technologies.map(tech => `<li>${tech}</li>`).join('');
     };
 
+    // Get admin recipients from environment variables with fallbacks
+    const adminRecipients = [
+      'shadownik.official@gmail.com', // Always include main admin email
+      process.env.INFO_EMAIL || 'info@shadownik.online'
+    ];
+    
+    // Include team members if configured
+    if (process.env.INCLUDE_TEAM_MEMBERS === 'true' && process.env.TEAM_EMAILS) {
+      const teamEmails = process.env.TEAM_EMAILS.split(',');
+      adminRecipients.push(...teamEmails);
+    }
+    
+    console.log('Sending project submission notification to:', adminRecipients);
+
+    // Use environment variable for logo URL with a fallback
+    const logoUrl = process.env.LOGO_URL || 'https://shadownik.online/logo.svg';
+
     // Common HTML styles for emails
     const emailStyles = `
       body { font-family: 'Arial', sans-serif; color: #333; line-height: 1.6; }
       .container { max-width: 600px; margin: 0 auto; padding: 20px; }
       .header { background: linear-gradient(90deg, #4F46E5, #7C3AED); padding: 30px 20px; border-radius: 10px 10px 0 0; text-align: center; }
+      .header img { height: 40px; margin-bottom: 15px; }
       .header h1 { color: white; margin: 0; font-size: 24px; }
       .content { background-color: #fff; padding: 30px; border-radius: 0 0 10px 10px; border: 1px solid #eaeaea; border-top: none; }
       .section { margin-bottom: 20px; }
@@ -37,6 +55,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       .features-list, .technologies-list { padding-left: 20px; margin: 5px 0 15px 0; }
       .features-list li, .technologies-list li { margin-bottom: 5px; }
       .footer { text-align: center; margin-top: 30px; font-size: 14px; color: #666; }
+      .footer img { height: 28px; margin-bottom: 15px; }
       .meeting-box { background-color: #f9f9f9; border: 1px solid #eaeaea; border-radius: 8px; padding: 20px; margin: 20px 0; }
       .meeting-details { margin-bottom: 20px; }
       .join-button { display: inline-block; background: linear-gradient(90deg, #4F46E5, #7C3AED); color: white; padding: 12px 24px; border-radius: 5px; text-decoration: none; font-weight: bold; margin-top: 10px; }
@@ -47,36 +66,35 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     <!DOCTYPE html>
     <html>
     <head>
-      <style>${emailStyles}</style>
+      <meta charset="UTF-8">
+      <title>New Project Submission</title>
+      <style>
+        body { font-family: 'Arial', sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }
+        .container { max-width: 650px; margin: 0 auto; background-color: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .header { background: linear-gradient(135deg, #4F46E5, #7C3AED); padding: 25px; text-align: center; color: white; }
+        .content { padding: 30px; }
+        .section { margin-bottom: 25px; }
+        .section h2 { color: #4F46E5; border-bottom: 1px solid #eee; padding-bottom: 8px; margin-top: 0; }
+        table { width: 100%; border-collapse: collapse; }
+        table td { padding: 8px 0; }
+        table td:first-child { font-weight: bold; width: 200px; color: #555; }
+        .footer { background-color: #f8f9fa; padding: 20px; text-align: center; font-size: 14px; color: #666; }
+      </style>
     </head>
     <body>
       <div class="container">
         <div class="header">
-          <h1>New Project Submission</h1>
+          <img src="${logoUrl}" alt="Shadownik Logo" style="height: 40px; margin-bottom: 15px;">
+          <h1 style="margin: 0; font-size: 24px;">New Project Submission</h1>
         </div>
+        
         <div class="content">
-          <p>A new client has submitted a project for Shadownik Web Development Services.</p>
-          
-          <div class="section">
-            <h2>Project Overview</h2>
-            <table>
-              <tr>
-                <td>Project Type:</td>
-                <td>${formData.projectType}</td>
-              </tr>
-            </table>
-          </div>
-          
           <div class="section">
             <h2>Business Information</h2>
             <table>
               <tr>
                 <td>Business Name:</td>
                 <td>${formData.businessInfo.name}</td>
-              </tr>
-              <tr>
-                <td>Email:</td>
-                <td>${formData.businessInfo.email}</td>
               </tr>
               <tr>
                 <td>Industry:</td>
@@ -142,53 +160,32 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           </div>
           
           ${formData.consultation && formData.consultation.date ? `
-          <div class="section">
-            <h2>Consultation Details</h2>
-            <table>
-              <tr>
-                <td>Name:</td>
-                <td>${formData.consultation.name}</td>
-              </tr>
-              <tr>
-                <td>Email:</td>
-                <td>${formData.consultation.email}</td>
-              </tr>
-              <tr>
-                <td>Phone:</td>
-                <td>${formData.consultation.phone}</td>
-              </tr>
-              <tr>
-                <td>Date:</td>
-                <td>${new Date(formData.consultation.date).toLocaleDateString('en-US', {
-                  weekday: 'long',
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric'
-                })}</td>
-              </tr>
-              <tr>
-                <td>Time:</td>
-                <td>${formData.consultation.time}</td>
-              </tr>
-              <tr>
-                <td>Message:</td>
-                <td>${formData.consultation.message || 'None provided'}</td>
-              </tr>
-            </table>
+          <div class="section meeting-box">
+            <h2>Consultation Scheduled</h2>
+            <div class="meeting-details">
+              <p><strong>Date:</strong> ${new Date(formData.consultation.date).toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              })}</p>
+              <p><strong>Time:</strong> ${formData.consultation.time}</p>
+              <p><strong>Client Name:</strong> ${formData.consultation.name || formData.businessInfo.name}</p>
+              <p><strong>Client Email:</strong> ${formData.consultation.email || formData.businessInfo.email}</p>
+              <p><strong>Client Phone:</strong> ${formData.consultation.phone || 'Not provided'}</p>
+            </div>
             
             ${formData.consultation.meetLink ? `
-            <div class="meeting-box">
-              <h2>Google Meet Link</h2>
-              <p>A Google Meet has been scheduled for this consultation.</p>
-              <a href="${formData.consultation.meetLink}" class="join-button">Join Google Meet</a>
-              <p><small>Or copy this link: ${formData.consultation.meetLink}</small></p>
-            </div>
+            <p>Google Meet Link: <a href="${formData.consultation.meetLink}">${formData.consultation.meetLink}</a></p>
             ` : ''}
           </div>
           ` : ''}
+          
+          <p>This submission requires action. Please review the requirements and follow up with the client.</p>
         </div>
         <div class="footer">
-          <p>© ${new Date().getFullYear()} Shadownik Web Development Services</p>
+          <img src="${logoUrl}" alt="Shadownik">
+          <p>© ${new Date().getFullYear()} Shadownik Web Development Services. All rights reserved.</p>
         </div>
       </div>
     </body>
@@ -200,17 +197,34 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     <!DOCTYPE html>
     <html>
     <head>
-      <style>${emailStyles}</style>
+      <meta charset="UTF-8">
+      <title>Your Project Submission</title>
+      <style>
+        body { font-family: 'Arial', sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }
+        .container { max-width: 650px; margin: 0 auto; background-color: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .header { background: linear-gradient(135deg, #4F46E5, #7C3AED); padding: 25px; text-align: center; color: white; }
+        .content { padding: 30px; }
+        .section { margin-bottom: 25px; }
+        .section h2 { color: #4F46E5; border-bottom: 1px solid #eee; padding-bottom: 8px; margin-top: 0; }
+        .next-steps { background-color: #f0f4ff; padding: 20px; border-radius: 8px; margin-top: 30px; }
+        .next-steps h2 { color: #4F46E5; margin-top: 0; }
+        .next-steps ul { margin: 15px 0 0; padding: 0 0 0 20px; }
+        .next-steps li { padding: 5px 0; }
+        .button { display: inline-block; background: linear-gradient(to right, #4F46E5, #7C3AED); color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 20px; }
+        .footer { background-color: #f8f9fa; padding: 20px; text-align: center; font-size: 14px; color: #666; }
+      </style>
     </head>
     <body>
       <div class="container">
         <div class="header">
-          <h1>Your Project Request - Shadownik</h1>
+          <img src="${logoUrl}" alt="Shadownik Logo" style="height: 40px; margin-bottom: 15px;">
+          <h1 style="margin: 0; font-size: 24px;">Thank You for Your Project Submission</h1>
         </div>
+        
         <div class="content">
           <p>Dear ${formData.businessInfo.name},</p>
           
-          <p>Thank you for submitting your project details to Shadownik Web Development Services. We've received your information and are excited to help bring your vision to life!</p>
+          <p>Thank you for submitting your project details to Shadownik. We're excited to learn more about your project and help bring your vision to life.</p>
           
           <div class="section">
             <h2>Project Summary</h2>
@@ -265,57 +279,49 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             </ol>
           </div>
           
-          <p>If you have any questions or need to provide additional information before our consultation, please don't hesitate to reach out to us at <a href="mailto:info@shadownik.online">info@shadownik.online</a>.</p>
+          <p>If you have any questions before then, feel free to reach out to us at <a href="mailto:info@shadownik.online">info@shadownik.online</a>.</p>
           
-          <p>We're looking forward to working with you!</p>
+          <p>We look forward to working with you!</p>
           
-          <p>Best regards,<br>Team Shadownik</p>
+          <p>Best regards,<br>The Shadownik Team</p>
         </div>
         <div class="footer">
-          <p>© ${new Date().getFullYear()} Shadownik Web Development Services</p>
+          <img src="${logoUrl}" alt="Shadownik">
+          <p>© ${new Date().getFullYear()} Shadownik Web Development Services. All rights reserved.</p>
         </div>
       </div>
     </body>
     </html>
     `;
 
-    // Send email to admin team members individually
-    const adminRecipients = [
-      "shadownik.official@gmail.com",
-      "nikhilnagpure203@gmail.com",
-      "aniwiss07@gmail.com"
-    ];
-
-    // Send emails to all admin recipients
-    for (const recipient of adminRecipients) {
-      const adminEmailResult = await sendEmail({
-        to: recipient,
-        subject: `New Project Submission: ${formData.projectType} - ${formData.businessInfo.name}`,
-        html: adminHtml
-      });
-      
-      console.log(`Admin email sent to ${recipient}:`, adminEmailResult);
-    }
-
-    // Send confirmation email to client
-    const clientEmailResult = await sendEmail({
-      to: formData.businessInfo.email,
-      subject: 'Your Project Request Confirmation - Shadownik',
-      html: clientHtml
+    // Send admin notification
+    const adminResult = await sendEmail({
+      to: adminRecipients,
+      subject: `New Project Submission: ${formData.businessInfo.name} - ${formData.projectType}`,
+      html: adminHtml,
     });
-    
-    console.log('Client confirmation email sent:', clientEmailResult);
 
-    // Return success response
-    return res.status(200).json({ 
-      message: 'Project submitted successfully',
+    console.log('Admin notification result:', adminResult);
+
+    // Send confirmation to client
+    const clientResult = await sendEmail({
+      to: formData.businessInfo.email,
+      subject: 'Your Project Request - Shadownik Web Development Services',
+      html: clientHtml,
+    });
+
+    console.log('Client confirmation result:', clientResult);
+
+    return res.status(200).json({
+      message: 'Project submission received successfully',
       success: true
     });
   } catch (error) {
-    console.error('Project submission error:', error);
-    return res.status(500).json({ 
-      message: 'Failed to submit project', 
-      error: error instanceof Error ? error.message : 'Unknown error'
+    console.error('Error processing project submission:', error);
+    return res.status(500).json({
+      message: 'Failed to process project submission',
+      error: error instanceof Error ? error.message : 'Unknown error',
+      success: false
     });
   }
 } 

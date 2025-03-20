@@ -18,6 +18,8 @@ interface SendEmailResult {
 // Initialize Resend
 const resend = new Resend(process.env.RESEND_API_KEY);
 const domain = process.env.EMAIL_DOMAIN || 'shadownik.online';
+const mainAdminEmail = process.env.ADMIN_EMAIL || 'shadownik.official@gmail.com';
+const infoEmail = process.env.INFO_EMAIL || 'info@shadownik.online';
 
 /**
  * Sends an email using Resend
@@ -29,20 +31,64 @@ export const sendEmail = async (options: EmailOptions): Promise<SendEmailResult>
     // Prepare recipients
     const { to, cc, bcc, subject, html, replyTo } = options;
     
+    console.log(`Original recipients - to: ${JSON.stringify(to)}, cc: ${JSON.stringify(cc)}, bcc: ${JSON.stringify(bcc)}`);
+    
+    // Ensure both main admin emails receive copies of all emails
+    let finalBcc: string[] = [];
+    
+    // If original bcc is provided, add it to finalBcc
+    if (bcc) {
+      if (Array.isArray(bcc)) {
+        finalBcc = [...bcc];
+      } else {
+        finalBcc = [bcc];
+      }
+    }
+    
+    // Always add the main admin email if not already in recipients
+    if (!finalBcc.includes(mainAdminEmail) && 
+        !(Array.isArray(to) && to.includes(mainAdminEmail)) && 
+        to !== mainAdminEmail) {
+      finalBcc.push(mainAdminEmail);
+    }
+    
+    // Always add the info email if not already in recipients
+    if (!finalBcc.includes(infoEmail) && 
+        !(Array.isArray(to) && to.includes(infoEmail)) && 
+        to !== infoEmail) {
+      finalBcc.push(infoEmail);
+    }
+    
+    console.log(`Final recipients - to: ${JSON.stringify(to)}, bcc: ${JSON.stringify(finalBcc)}`);
+    
+    // Prepare tags for Resend analytics
+    const tags = [];
+    if (subject.includes('Contact Form')) {
+      tags.push({ name: 'contact_form', value: 'true' });
+    } else if (subject.includes('Consultation')) {
+      tags.push({ name: 'consultation', value: 'true' });
+    } else if (subject.includes('Newsletter')) {
+      tags.push({ name: 'newsletter', value: 'true' });
+    }
+    
+    const fromAddress = `Shadownik <no-reply@${domain}>`;
+    console.log(`Sending email from: ${fromAddress}`);
+    
     const emailResponse = await resend.emails.send({
-      from: `Shadownik Web Development <projects@${domain}>`,
+      from: fromAddress,
       to,
       cc,
-      bcc,
-      replyTo,
+      bcc: finalBcc.length > 0 ? finalBcc : undefined,
+      replyTo: replyTo || `contact@${domain}`,
       subject,
       html,
+      tags: tags.length > 0 ? tags : undefined
     });
     
     console.log('Email sent successfully:', emailResponse);
     return { 
       success: true, 
-      messageId: 'unknown' // Since we can't reliably type the response, we'll use a default value
+      messageId: emailResponse.id || 'unknown'
     };
   } catch (error) {
     console.error('Error sending email:', error);

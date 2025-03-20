@@ -122,6 +122,9 @@ ${message}
       day: 'numeric'
     });
     
+    // Use environment variable for logo URL with a fallback
+    const logoUrl = process.env.LOGO_URL || 'https://shadownik.online/logo.svg';
+    
     // Common HTML styles for emails
     const emailStyles = `
       body { font-family: 'Arial', sans-serif; color: #333; line-height: 1.6; }
@@ -148,6 +151,7 @@ ${message}
     <body>
       <div class="container">
         <div class="header">
+          <img src="${logoUrl}" alt="Shadownik Logo" style="height: 40px; margin-bottom: 15px;">
           <h1>New Client Consultation Booking</h1>
         </div>
         <div class="content">
@@ -197,6 +201,7 @@ ${message}
           </div>
         </div>
         <div class="footer">
+          <img src="${logoUrl}" alt="Shadownik Logo" style="height: 30px; margin-bottom: 15px;">
           <p>© ${new Date().getFullYear()} Shadownik Web Development Services</p>
         </div>
       </div>
@@ -214,6 +219,7 @@ ${message}
     <body>
       <div class="container">
         <div class="header">
+          <img src="${logoUrl}" alt="Shadownik Logo" style="height: 40px; margin-bottom: 15px;">
           <h1>Upcoming Client Consultation</h1>
         </div>
         <div class="content">
@@ -275,6 +281,7 @@ ${message}
           <p>Best regards,<br>Shadownik Team</p>
         </div>
         <div class="footer">
+          <img src="${logoUrl}" alt="Shadownik Logo" style="height: 30px; margin-bottom: 15px;">
           <p>© ${new Date().getFullYear()} Shadownik Web Development Services</p>
         </div>
       </div>
@@ -292,6 +299,7 @@ ${message}
     <body>
       <div class="container">
         <div class="header">
+          <img src="${logoUrl}" alt="Shadownik Logo" style="height: 40px; margin-bottom: 15px;">
           <h1>Your Consultation with Shadownik</h1>
         </div>
         <div class="content">
@@ -328,6 +336,7 @@ ${message}
           <p>Best regards,<br>Team Shadownik</p>
         </div>
         <div class="footer">
+          <img src="${logoUrl}" alt="Shadownik Logo" style="height: 30px; margin-bottom: 15px;">
           <p>© ${new Date().getFullYear()} Shadownik Web Development Services</p>
         </div>
       </div>
