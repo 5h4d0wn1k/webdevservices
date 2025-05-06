@@ -114,7 +114,7 @@ const PageTransition: React.FC<PageTransitionProps> = ({ children }) => {
             transition={{ delay: 0.5 }}
             className="mt-8 text-2xl font-light text-white"
           >
-            SHADOWNIK
+            swnk
           </motion.h2>
         </motion.div>
       ) : (

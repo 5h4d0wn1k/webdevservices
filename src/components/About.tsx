@@ -80,7 +80,7 @@ const About = () => {
               Crafting Digital Excellence Since 2024
             </h2>
             <p className="text-gray-400 text-lg mb-8">
-              At Shadownik, we're more than just developers – we're digital craftsmen obsessed with perfection. Our journey began with a simple mission: to create exceptional digital experiences that push the boundaries of what's possible.
+              At shadownik (swnk), we're more than just developers – we're digital craftsmen obsessed with perfection. Our journey began with a simple mission: to create exceptional digital experiences that push the boundaries of what's possible.
             </p>
             
             <div className="space-y-6 mb-12">

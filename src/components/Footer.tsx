@@ -56,20 +56,20 @@ const Footer = () => {
               whileHover={{ scale: 1.05 }}
               className="text-2xl font-bold mb-6 inline-block bg-gradient-to-r from-primary via-accent to-neon-purple bg-clip-text text-transparent"
             >
-              SHADOWNIK
+              swnk
             </MotionA>
             <p className="text-gray-400 mb-6 max-w-md">
               Crafting exceptional digital experiences through innovative design and cutting-edge technology.
             </p>
             <div className="flex space-x-4">
               {[
-                { icon: <Github className="w-5 h-5" />, href: "https://github.com/Shadownik-official" },
-                { icon: <Twitter className="w-5 h-5" />, href: "https://x.com/Shadownik_ofc", label: "Twitter" },
-                { icon: <Linkedin className="w-5 h-5" />, href: "https://www.linkedin.com/company/shadownik", label: "LinkedIn" },
-                { icon: <Facebook className="w-5 h-5" />, href: "https://www.facebook.com/people/Shadownik/61562599613319", label: "Facebook" },
-                { icon: <Instagram className="w-5 h-5" />, href: "https://instagram.com/Shadownik.official", label: "Instagram" },
-                { icon: <Youtube className="w-5 h-5" />, href: "https://www.youtube.com/@Shadownik.official", label: "YouTube" },
-                { icon: <MessageCircle className="w-5 h-5" />, href: "https://t.me/shadownikofficial", label: "Telegram" },
+                { icon: <Github className="w-5 h-5" />, href: "https://github.com/swnk-official" },
+                { icon: <Twitter className="w-5 h-5" />, href: "https://x.com/swnk_ofc", label: "Twitter" },
+                { icon: <Linkedin className="w-5 h-5" />, href: "https://www.linkedin.com/company/swnk", label: "LinkedIn" },
+                { icon: <Facebook className="w-5 h-5" />, href: "https://www.facebook.com/people/swnk/61562599613319", label: "Facebook" },
+                { icon: <Instagram className="w-5 h-5" />, href: "https://instagram.com/swnk.official", label: "Instagram" },
+                { icon: <Youtube className="w-5 h-5" />, href: "https://www.youtube.com/@swnk.official", label: "YouTube" },
+                { icon: <MessageCircle className="w-5 h-5" />, href: "https://t.me/swnkofficial", label: "Telegram" },
                 { icon: <MessagesSquare className="w-5 h-5" />, href: "https://www.whatsapp.com/channel/0029VakSdtTfXUuURqTLgF3A", label: "WhatsApp" }
              
               ].map((social, index) => (
@@ -143,7 +143,7 @@ const Footer = () => {
 
         <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/10">
           <p className="text-gray-400 text-sm mb-4 md:mb-0">
-            © 2024 Shadownik. All rights reserved.
+            © 2024 swnk. All rights reserved.
           </p>
           
           <div className="flex items-center gap-8">

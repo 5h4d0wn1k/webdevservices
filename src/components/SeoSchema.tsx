@@ -4,12 +4,12 @@ const SeoSchema = () => {
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "Shadownik Web Development Services",
-    "url": "https://web.shadownik.online",
+    "name": "shadownik (swnk) Web Development Services",
+    "url": "https://web.swnk.in",
     "description": "Professional web development services including custom websites, e-commerce solutions, web applications, and digital transformation services. Get a free consultation today.",
     "potentialAction": {
       "@type": "SearchAction",
-      "target": "https://web.shadownik.online/search?q={search_term_string}",
+      "target": "https://web.swnk.in/search?q={search_term_string}",
       "query-input": "required name=search_term_string"
     }
   };
@@ -17,26 +17,26 @@ const SeoSchema = () => {
   const organizationData = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "Shadownik",
-    "url": "https://web.shadownik.online",
-    "logo": "https://web.shadownik.online/logo.png",
+    "name": "shadownik (swnk)",
+    "url": "https://web.swnk.in",
+    "logo": "https://web.swnk.in/logo.png",
     "sameAs": [
-      "https://github.com/Shadownik-official",
-      "https://x.com/Shadownik_ofc",
-      "https://www.linkedin.com/company/shadownik",
+      "https://github.com/swnk-official",
+      "https://x.com/swnk_ofc",
+      "https://www.linkedin.com/company/swnk",
       "https://discord.gg/UA4yYEGx",
-      "https://www.facebook.com/people/Shadownik/61562599613319",
-      "https://instagram.com/Shadownik.official",
-      "https://www.youtube.com/@Shadownik.official",
-      "https://t.me/shadownikofficial",
+      "https://www.facebook.com/people/swnk/61562599613319",
+      "https://instagram.com/swnk.official",
+      "https://www.youtube.com/@swnk.official",
+      "https://t.me/swnkofficial",
       "https://www.whatsapp.com/channel/0029VakSdtTfXUuURqTLgF3A"
     ],
     "contactPoint": {
       "@type": "ContactPoint",
-      "telephone": "+1-555-123-4567",
+      "telephone": "+91 9165644843",
       "contactType": "customer service",
-      "email": "info@shadownik.online",
-      "availableLanguage": ["English"]
+      "email": "support@swnk.in",
+      "availableLanguage": ["English", "Hindi"]
     },
     "slogan": "Transforming Ideas into Digital Reality",
     "description": "Expert web development company specializing in custom solutions that drive business growth and digital transformation.",
@@ -46,26 +46,25 @@ const SeoSchema = () => {
   const professionalServiceData = {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
-    "name": "Shadownik Web Development",
-    "image": "https://web.shadownik.online/logo.png",
+    "name": "shadownik (swnk) Web Development",
+    "image": "https://web.swnk.in/logo.png",
     "address": {
       "@type": "PostalAddress",
-      "addressLocality": "San Francisco",
-      "addressRegion": "CA",
-      "addressCountry": "US"
+      "addressLocality": "Remote",
+      "addressCountry": "IN"
     },
-    "telephone": "+1-555-123-4567",
-    "email": "info@shadownik.online",
-    "url": "https://web.shadownik.online",
-    "description": "Shadownik provides premium web development services including custom websites, e-commerce, web applications, and digital marketing solutions. Schedule a free consultation to discuss your project.",
+    "telephone": "+91-9165644843",
+    "email": "info@swnk.in",
+    "url": "https://web.swnk.in",
+    "description": "shadownik (swnk) provides premium web development services including custom websites, e-commerce, web applications, and digital marketing solutions. Schedule a free consultation to discuss your project.",
     "priceRange": "$$-$$$",
     "openingHours": "Mo-Fr 09:00-18:00",
     "areaServed": {
       "@type": "GeoCircle",
       "geoMidpoint": {
         "@type": "GeoCoordinates",
-        "latitude": "37.7749",
-        "longitude": "-122.4194"
+        "latitude": "20.5937",
+        "longitude": "78.9629"
       },
       "geoRadius": "50000"
     },
@@ -80,37 +79,7 @@ const SeoSchema = () => {
       "Cloud Solutions",
       "API Integration",
       "Website Maintenance"
-    ],
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "Web Development Services",
-      "itemListElement": [
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Custom Website Development",
-            "description": "Professional custom website development tailored to your business needs"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "E-commerce Solutions",
-            "description": "Full-featured online store development with secure payment integration"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Web Application Development",
-            "description": "Custom web application development for business process automation"
-          }
-        }
-      ]
-    }
+    ]
   };
 
   const faqData = {
@@ -119,10 +88,10 @@ const SeoSchema = () => {
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "What web development services does Shadownik offer?",
+        "name": "What web development services does shadownik (swnk) offer?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Shadownik offers a comprehensive range of web development services including custom website development, e-commerce solutions, web applications, mobile app development, UI/UX design, and digital marketing services."
+          "text": "shadownik (swnk) offers a comprehensive range of web development services including custom website development, e-commerce solutions, web applications, mobile app development, UI/UX design, and digital marketing services."
         }
       },
       {
@@ -154,10 +123,18 @@ const SeoSchema = () => {
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationData) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(professionalServiceData) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData) }} />
+      <script type="application/ld+json">
+        {JSON.stringify(schemaData)}
+      </script>
+      <script type="application/ld+json">
+        {JSON.stringify(organizationData)}
+      </script>
+      <script type="application/ld+json">
+        {JSON.stringify(professionalServiceData)}
+      </script>
+      <script type="application/ld+json">
+        {JSON.stringify(faqData)}
+      </script>
     </>
   );
 };

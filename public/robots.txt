@@ -2,5 +2,16 @@
 User-agent: *
 Allow: /
 
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /private/
+Disallow: /api/
+
+# Crawl-delay for all bots
+Crawl-delay: 10
+
 # Sitemap location
-Sitemap: https://shadownik.com/sitemap.xml 
+Sitemap: https://web.swnk.in/sitemap.xml
+
+# Host
+Host: https://web.swnk.in 

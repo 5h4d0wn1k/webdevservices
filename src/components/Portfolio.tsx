@@ -30,21 +30,21 @@ const projects = [
     category: "web",
     image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&q=80&w=1200",
     description: "Comprehensive cybersecurity services and product offerings for enterprises and SMBs.",
-    link: "https://cybersecurity.shadownik.online"
+    link: "https://cybersecurity.swnk.in"
   },
   {
     title: "NGO Social Projects",
     category: "ngo",
     image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=1200",
     description: "Platform for social impact initiatives and community engagement projects.",
-    link: "https://ngo.shadownik.online"
+    link: "https://ngo.swnk.in"
   },
   {
     title: "Metatask App",
     category: "app",
     image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&q=80&w=1200",
     description: "Productivity and task management web application with enhanced collaboration features.",
-    link: "https://metatask.shadownik.online"
+    link: "https://metatask.swnk.in"
   },
   {
     title: "Prize Payout Platform",
@@ -58,7 +58,7 @@ const projects = [
     category: "web",
     image: "https://images.unsplash.com/photo-1545665277-5937489579f2?auto=format&fit=crop&q=80&w=1200",
     description: "Professional portfolio showcasing the skills and projects of Nikhil Nagpure.",
-    link: "https://portfolio.shadownik.tech"
+    link: "https://portfolio.swnk.tech"
   }
 ];
 

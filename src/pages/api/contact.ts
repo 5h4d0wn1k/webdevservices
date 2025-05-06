@@ -18,8 +18,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     
     // Make sure we always send to these two main emails
     const primaryRecipients = [
-      process.env.ADMIN_EMAIL || 'shadownik.official@gmail.com',
-      'info@shadownik.online'
+      process.env.ADMIN_EMAIL || 'swnk.official@gmail.com',
+      'info@swnk.in'
     ];
     
     // Add additional team recipients if needed
@@ -49,18 +49,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Send confirmation email to client
     const clientHtml = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #4F46E5;">Thank you for contacting Shadownik!</h2>
+        <h2 style="color: #4F46E5;">Thank you for contacting swnk!</h2>
         <p>Dear ${name},</p>
         <p>We have received your message regarding <strong>${service}</strong> and will get back to you shortly.</p>
         <p>Here's a copy of your message:</p>
         <p style="background-color: #f4f4f8; padding: 15px; border-left: 4px solid #4F46E5;">${message}</p>
-        <p>Best regards,<br>Team Shadownik</p>
+        <p>Best regards,<br>Team swnk</p>
       </div>
     `;
 
     const clientEmailResult = await sendEmail({
       to: email,
-      subject: 'Thank you for contacting Shadownik',
+      subject: 'Thank you for contacting swnk',
       html: clientHtml,
     });
 

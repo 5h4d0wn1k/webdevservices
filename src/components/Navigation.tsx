@@ -59,7 +59,7 @@ const Navigation = () => {
             <a href="/" className="flex items-center gap-2">
               <Logo className="h-10 w-10" />
               <span className="text-transparent bg-gradient-to-r from-primary via-accent to-neon-purple bg-clip-text text-2xl font-bold">
-                SHADOWNIK
+                shadownik (swnk)
               </span>
             </a>
           </motion.div>

@@ -42,7 +42,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ progress, isLoading }) =>
           className="text-center mb-8"
         >
           <h2 className="text-2xl font-bold mb-2 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-            Shadownik
+            swnk
           </h2>
           <p className="text-gray-400 flex items-center">
             <Loader2 className="w-4 h-4 mr-2 animate-spin" />

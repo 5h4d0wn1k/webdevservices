@@ -82,7 +82,7 @@ const Newsletter = () => {
               </div>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">Subscribe to Our Newsletter</h2>
               <p className="text-gray-400 mb-6">
-                Get the latest web development insights, trends, and Shadownik news delivered directly to your inbox.
+                Get the latest web development insights, trends, and swnk news delivered directly to your inbox.
               </p>
               <ul className="space-y-2">
                 {['Early access to new content', 'Web development tips & tricks', 'Industry insights & trends', 'Exclusive offers & updates'].map((item, index) => (
@@ -165,7 +165,7 @@ const Newsletter = () => {
                     </div>
                     
                     <p className="text-xs text-gray-500 pt-2">
-                      By subscribing, you agree to our <a href="/privacy-policy" className="text-primary hover:underline">Privacy Policy</a> and consent to receive updates from Shadownik.
+                      By subscribing, you agree to our <a href="/privacy-policy" className="text-primary hover:underline">Privacy Policy</a> and consent to receive updates from swnk.
                     </p>
                   </form>
                 )}

@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Simple HTML for test email
     const html = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #4F46E5;">Test Email from Shadownik</h2>
+        <h2 style="color: #4F46E5;">Test Email from swnk</h2>
         <p>This is a test email to verify that the email sending functionality is working correctly.</p>
         <p>If you received this email, it means that your email configuration is working properly!</p>
         <p>Timestamp: ${new Date().toISOString()}</p>
@@ -19,11 +19,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     `;
 
     // Send test email to each recipient individually using the emailService utility
-    const recipients = ["shadownik.official@gmail.com", "nikhilnagpure203@gmail.com", "aniwiss07@gmail.com"];
+    const recipients = ["swnk.official@gmail.com", "nikhilnagpure203@gmail.com", "aniwiss07@gmail.com"];
     
     const emailResults = await sendEmailToMultipleRecipients({
       to: recipients,
-      subject: 'Test Email from Shadownik API',
+      subject: 'Test Email from swnk API',
       html: html,
     });
 

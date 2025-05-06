@@ -9,15 +9,37 @@ const getPort = () => {
   return '5173'; // Fallback for SSR
 };
 
-// In development, use the current host and port
-// In production, use the actual domain
+// Base URL configuration
 export const API_BASE_URL = isDevelopment 
   ? `${window?.location?.protocol || 'http:'}//${window?.location?.hostname || 'localhost'}:${getPort()}`
-  : 'https://web.shadownik.online';
+  : 'https://web.swnk.in';
 
+// API endpoints configuration
 export const API_ENDPOINTS = {
   contact: `/api/contact`,
   bookConsultation: `/api/book-consultation`,
   submitProject: `/api/submit-project`,
   newsletter: `/api/newsletter`,
+};
+
+// API configuration
+export const API_CONFIG = {
+  baseURL: API_BASE_URL,
+  timeout: 30000, // 30 seconds
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+  },
+  withCredentials: true,
+};
+
+// API error messages
+export const API_ERROR_MESSAGES = {
+  networkError: 'Network error. Please check your internet connection.',
+  timeoutError: 'Request timed out. Please try again.',
+  serverError: 'Server error. Please try again later.',
+  unauthorized: 'Unauthorized access. Please login again.',
+  forbidden: 'Access forbidden. Please check your permissions.',
+  notFound: 'Resource not found.',
+  validationError: 'Please check your input and try again.',
 }; 

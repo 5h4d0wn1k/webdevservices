@@ -254,7 +254,7 @@ const Services = () => {
             href="#contact" 
             className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white font-medium shadow-lg shadow-primary/30 transition-all duration-300 hover:scale-105"
           >
-            Get Started with Shadownik
+            Get Started with swnk
             <ArrowRight size={16} className="ml-2" />
           </a>
         </motion.div>

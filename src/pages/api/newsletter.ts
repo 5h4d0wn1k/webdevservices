@@ -17,14 +17,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     
     // Get admin recipients from environment variables
     const adminRecipients = [
-      process.env.ADMIN_EMAIL || 'shadownik.official@gmail.com',
-      process.env.INFO_EMAIL || 'info@shadownik.online'
+      process.env.ADMIN_EMAIL || 'swnk.official@gmail.com',
+      process.env.INFO_EMAIL || 'info@swnk.in'
     ];
     
     console.log('Sending newsletter notification to:', adminRecipients);
 
     // Use environment variable for logo URL with a fallback
-    const logoUrl = process.env.LOGO_URL || 'https://shadownik.online/logo.svg';
+    const logoUrl = process.env.LOGO_URL || 'https://swnk.in/logo.svg';
 
     // Notify admin about new newsletter subscription
     const adminHtml = `
@@ -48,7 +48,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       <body style="background-color: #f5f5f7; margin: 0; padding: 20px;">
         <div class="container">
           <div class="header">
-            <img src="${logoUrl}" alt="Shadownik Logo">
+            <img src="${logoUrl}" alt="swnk Logo">
             <h1>New Newsletter Subscription</h1>
           </div>
           <div class="content">
@@ -67,8 +67,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             </div>
           </div>
           <div class="footer">
-            <img src="${logoUrl}" alt="Shadownik">
-            <p>© ${new Date().getFullYear()} Shadownik. All rights reserved.</p>
+            <img src="${logoUrl}" alt="swnk">
+            <p>© ${new Date().getFullYear()} swnk. All rights reserved.</p>
           </div>
         </div>
       </body>
@@ -88,7 +88,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Welcome to Shadownik Newsletter</title>
+        <title>Welcome to swnk Newsletter</title>
         <style>
           body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; }
           .container { max-width: 600px; margin: 0 auto; }
@@ -105,8 +105,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       <body style="background-color: #f5f5f7; margin: 0; padding: 20px;">
         <div class="container">
           <div class="header">
-            <img src="${logoUrl}" alt="Shadownik Logo">
-            <h1>Welcome to Shadownik Newsletter!</h1>
+            <img src="${logoUrl}" alt="swnk Logo">
+            <h1>Welcome to swnk Newsletter!</h1>
           </div>
           <div class="content">
             <p>Hello,</p>
@@ -125,15 +125,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             <p>We send newsletters approximately twice a month and promise not to spam your inbox.</p>
             
             <div style="text-align: center; margin-top: 30px;">
-              <a href="https://www.shadownik.online" class="button">Explore Our Services</a>
+              <a href="https://www.swnk.in" class="button">Explore Our Services</a>
             </div>
             
             <p style="margin-top: 30px;">Looking forward to sharing valuable insights with you,</p>
-            <p style="margin: 0; font-weight: bold;">The Shadownik Team</p>
+            <p style="margin: 0; font-weight: bold;">The swnk Team</p>
           </div>
           <div class="footer">
-            <img src="${logoUrl}" alt="Shadownik">
-            <p>© ${new Date().getFullYear()} Shadownik. All rights reserved.</p>
+            <img src="${logoUrl}" alt="swnk">
+            <p>© ${new Date().getFullYear()} swnk. All rights reserved.</p>
             <p style="font-size: 12px; color: #999;">To unsubscribe, please reply to this email with "UNSUBSCRIBE" in the subject line.</p>
           </div>
         </div>
@@ -143,7 +143,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const subscriberResult = await sendEmail({
       to: email,
-      subject: 'Welcome to Shadownik Newsletter',
+      subject: 'Welcome to swnk Newsletter',
       html: subscriberHtml
     });
 

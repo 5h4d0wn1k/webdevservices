@@ -62,7 +62,7 @@ const TermsOfService = () => {
               3. Intellectual Property
             </h2>
             <p className="text-gray-300 mb-4">
-              All content, features, and functionality are owned by Shadownik and are protected by international copyright, trademark, and other intellectual property laws.
+              All content, features, and functionality are owned by shadownik (swnk) and are protected by international copyright, trademark, and other intellectual property laws.
             </p>
             <ul className="list-disc list-inside text-gray-300 space-y-2">
               <li>You may not copy, modify, or distribute our content</li>
@@ -76,7 +76,7 @@ const TermsOfService = () => {
               4. Limitation of Liability
             </h2>
             <p className="text-gray-300 mb-4">
-              In no event shall Shadownik be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses.
+              In no event shall shadownik (swnk) be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses.
             </p>
           </div>
 
@@ -97,7 +97,7 @@ const TermsOfService = () => {
               For any questions about these Terms, please contact us at:
             </p>
             <div className="mt-4">
-              <p className="text-gray-300">Email: legal@shadownik.com</p>
+              <p className="text-gray-300">Email: legal@swnk.in</p>
               <p className="text-gray-300">Phone: +1 (555) 123-4567</p>
             </div>
           </div>

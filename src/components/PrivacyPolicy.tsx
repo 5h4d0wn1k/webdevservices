@@ -95,7 +95,7 @@ const PrivacyPolicy = () => {
               If you have any questions about this Privacy Policy, please contact us at:
             </p>
             <div className="mt-4">
-              <p className="text-gray-300">Email: privacy@shadownik.com</p>
+              <p className="text-gray-300">Email: privacy@swnk.in</p>
               <p className="text-gray-300">Phone: +1 (555) 123-4567</p>
             </div>
           </div>

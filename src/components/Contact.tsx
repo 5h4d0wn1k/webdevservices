@@ -23,16 +23,16 @@ import { API_ENDPOINTS } from '../config/api';
 
 const contactInfo = [
   {
-    icon: <Mail className="w-6 h-6" />,
-    title: "Email",
-    value: "info@shadownik.online",
-    link: "mailto:info@shadownik.online"
+    icon: <Mail className="w-5 h-5" />,
+    label: "Email",
+    value: "support@swnk.in",
+    link: "mailto:support@swnk.in"
   },
   {
     icon: <Phone className="w-6 h-6" />,
     title: "Phone",
     value: "+91 9165644843",
-    link: "tel:+15551234567"
+    link: "tel:+919165644843"
   },
   {
     icon: <MapPin className="w-6 h-6" />,
@@ -227,7 +227,7 @@ const Contact = () => {
           </div>
           <h2 className="text-4xl md:text-5xl font-bold mb-4">Ready to Transform Your Digital Presence?</h2>
           <p className="max-w-2xl mx-auto text-xl text-gray-400">
-            Contact us today to discuss your project and discover how Shadownik can elevate your web presence
+            Contact us today to discuss your project and discover how swnk can elevate your web presence
           </p>
         </motion.div>
 
@@ -272,13 +272,13 @@ const Contact = () => {
                 <h3 className="text-lg font-semibold mb-4">Connect With Us</h3>
                 <div className="flex flex-wrap gap-4">
                   {[
-                    { icon: <Github className="w-5 h-5" />, href: "https://github.com/Shadownik-official", label: "GitHub" },
-                    { icon: <Twitter className="w-5 h-5" />, href: "https://x.com/Shadownik_ofc", label: "Twitter" },
-                    { icon: <Linkedin className="w-5 h-5" />, href: "https://www.linkedin.com/company/shadownik", label: "LinkedIn" },
-                    { icon: <Facebook className="w-5 h-5" />, href: "https://www.facebook.com/people/Shadownik/61562599613319", label: "Facebook" },
-                    { icon: <Instagram className="w-5 h-5" />, href: "https://instagram.com/Shadownik.official", label: "Instagram" },
-                    { icon: <Youtube className="w-5 h-5" />, href: "https://www.youtube.com/@Shadownik.official", label: "YouTube" },
-                    { icon: <MessageCircle className="w-5 h-5" />, href: "https://t.me/shadownikofficial", label: "Telegram" },
+                    { icon: <Github className="w-5 h-5" />, href: "https://github.com/swnk-official", label: "GitHub" },
+                    { icon: <Twitter className="w-5 h-5" />, href: "https://x.com/swnk_ofc", label: "Twitter" },
+                    { icon: <Linkedin className="w-5 h-5" />, href: "https://www.linkedin.com/company/swnk", label: "LinkedIn" },
+                    { icon: <Facebook className="w-5 h-5" />, href: "https://www.facebook.com/people/swnk/61562599613319", label: "Facebook" },
+                    { icon: <Instagram className="w-5 h-5" />, href: "https://instagram.com/swnk.official", label: "Instagram" },
+                    { icon: <Youtube className="w-5 h-5" />, href: "https://www.youtube.com/@swnk.official", label: "YouTube" },
+                    { icon: <MessageCircle className="w-5 h-5" />, href: "https://t.me/swnkofficial", label: "Telegram" },
                     { icon: <MessagesSquare className="w-5 h-5" />, href: "https://www.whatsapp.com/channel/0029VakSdtTfXUuURqTLgF3A", label: "WhatsApp" }
                   ].map((social, i) => (
                     <MotionA 

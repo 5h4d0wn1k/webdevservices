@@ -24,10 +24,10 @@ const testimonials: Testimonial[] = [
     id: 1,
     name: "Nikhil Nagpure",
     role: "Founder & CEO",
-    company: "Shadownik",
+    company: "shadownik (swnk)",
     avatar: "",
     rating: 5,
-    quote: "As the founder of Shadownik, I'm proud to lead a team that's revolutionizing web development services. Our commitment to excellence and innovation drives us to deliver exceptional results for every client. We combine technical expertise with creative solutions to create digital experiences that make a difference."
+    quote: "As the founder of shadownik (swnk), I'm proud to lead a team that's revolutionizing web development services. Our commitment to excellence and innovation drives us to deliver exceptional results for every client. We combine technical expertise with creative solutions to create digital experiences that make a difference."
   },
   {
     id: 2,
@@ -36,13 +36,13 @@ const testimonials: Testimonial[] = [
     company: "Sunrise Public School",
     avatar: "",
     rating: 5,
-    quote: "Leading both Shadownik and Sunrise Public School has given me unique insights into the importance of digital transformation in education. Our team's ability to create engaging educational platforms while maintaining high standards of excellence is truly remarkable."
+    quote: "Leading both shadownik (swnk) and Sunrise Public School has given me unique insights into the importance of digital transformation in education. Our team's ability to create engaging educational platforms while maintaining high standards of excellence is truly remarkable."
   },
   {
     id: 3,
     name: "Manish Nagpure",
     role: "Network Engineer",
-    company: "Shadownik",
+    company: "shadownik (swnk)",
     avatar: "",
     rating: 5,
     quote: "Our technical infrastructure and network solutions are built on cutting-edge technology. We ensure robust, secure, and scalable systems that support our clients' growing needs. The combination of technical expertise and client-focused approach sets us apart in the industry."
@@ -54,7 +54,7 @@ const testimonials: Testimonial[] = [
     company: "Govt. High School",
     avatar: "",
     rating: 5,
-    quote: "The integration of technology in education through Shadownik's solutions has transformed how we teach and learn. Our digital platforms make complex concepts more accessible and engaging for students, while providing teachers with powerful tools for effective instruction."
+    quote: "The integration of technology in education through shadownik (swnk)'s solutions has transformed how we teach and learn. Our digital platforms make complex concepts more accessible and engaging for students, while providing teachers with powerful tools for effective instruction."
   }
 ];
 
