@@ -97,8 +97,8 @@ const TermsOfService = () => {
               For any questions about these Terms, please contact us at:
             </p>
             <div className="mt-4">
-              <p className="text-gray-300">Email: legal@swnk.in</p>
-              <p className="text-gray-300">Phone: +1 (555) 123-4567</p>
+              <p className="text-gray-300">Email: support@swnk.in</p>
+              <p className="text-gray-300">Phone: +91 9165644843</p>
             </div>
           </div>
         </motion.div>
