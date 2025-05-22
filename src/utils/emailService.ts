@@ -17,9 +17,9 @@ interface SendEmailResult {
 
 // Initialize Resend
 const resend = new Resend(process.env.RESEND_API_KEY);
-const domain = process.env.EMAIL_DOMAIN || 'swnk.in';
-const mainAdminEmail = process.env.ADMIN_EMAIL || 'swnk.official@gmail.com';
-const infoEmail = process.env.INFO_EMAIL || 'info@swnk.in';
+const domain = process.env.EMAIL_DOMAIN || 'shadownik.online';
+const mainAdminEmail = process.env.ADMIN_EMAIL || 'Shadownik(Swnk).official@gmail.com';
+const infoEmail = process.env.INFO_EMAIL || 'info@shadownik.online';
 
 /**
  * Sends an email using Resend
@@ -71,7 +71,7 @@ export const sendEmail = async (options: EmailOptions): Promise<SendEmailResult>
       tags.push({ name: 'newsletter', value: 'true' });
     }
     
-    const fromAddress = `swnk <no-reply@${domain}>`;
+    const fromAddress = `Shadownik(Swnk) <no-reply@${domain}>`;
     console.log(`Sending email from: ${fromAddress}`);
     
     const emailResponse = await resend.emails.send({

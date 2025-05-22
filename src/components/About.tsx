@@ -9,50 +9,11 @@ import {
   Trophy,
   Sparkles
 } from 'lucide-react';
-
-const stats = [
-  {
-    icon: <Trophy className="w-6 h-6 text-primary" />,
-    value: "4",
-    label: "Happy Clients"
-  },
-  {
-    icon: <Users className="w-6 h-6 text-primary" />,
-    value: "8",
-    label: "Projects Launched"
-  },
-  {
-    icon: <Globe2 className="w-6 h-6 text-primary" />,
-    value: "3",
-    label: "Countries Served"
-  },
-  {
-    icon: <Rocket className="w-6 h-6 text-primary" />,
-    value: "100%",
-    label: "Client Satisfaction"
-  }
-];
-
-const values = [
-  {
-    title: "Innovation First",
-    description: "Pushing boundaries with cutting-edge technology and creative solutions."
-  },
-  {
-    title: "Quality Obsessed",
-    description: "Maintaining the highest standards in every line of code we write."
-  },
-  {
-    title: "Client Success",
-    description: "Your success is our success. We're invested in your growth."
-  },
-  {
-    title: "Global Excellence",
-    description: "Bringing world-class expertise to every project, anywhere."
-  }
-];
+import { aboutData } from '../data/aboutData';
 
 const About = () => {
+  const { stats, values, introText, spanText, headingText, imageSrc, imageAlt } = aboutData;
+
   return (
     <section id="about" className="py-24 px-4 relative overflow-hidden">
       {/* Background Elements */}
@@ -74,14 +35,12 @@ const About = () => {
           >
             <div className="flex items-center gap-2 mb-6">
               <Sparkles className="w-6 h-6 text-primary" />
-              <span className="text-primary uppercase tracking-wider text-sm font-medium">About Us</span>
+              <span className="text-primary uppercase tracking-wider text-sm font-medium">{spanText}</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-neon-purple bg-clip-text text-transparent">
-              Crafting Digital Excellence Since 2024
+              {headingText}
             </h2>
-            <p className="text-gray-400 text-lg mb-8">
-              At shadownik (swnk), we're more than just developers – we're digital craftsmen obsessed with perfection. Our journey began with a simple mission: to create exceptional digital experiences that push the boundaries of what's possible.
-            </p>
+            <p className="text-gray-400 text-lg mb-8" dangerouslySetInnerHTML={{ __html: introText }} />
             
             <div className="space-y-6 mb-12">
               {values.map((value, index) => (
@@ -114,8 +73,8 @@ const About = () => {
           >
             <div className="aspect-w-4 aspect-h-3 rounded-2xl overflow-hidden">
               <img
-                src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200"
-                alt="Team collaboration"
+                src={imageSrc}
+                alt={imageAlt}
                 className="object-cover filter brightness-75"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-60" />

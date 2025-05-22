@@ -12,7 +12,7 @@ interface Message {
 const defaultMessages: Message[] = [
   {
     id: '1',
-    content: "Hi there! I'm the shadownik (swnk) assistant. How can I help you today?",
+    content: "Hi there! I'm the shadownik (Shadownik(Swnk)) assistant. How can I help you today?",
     sender: 'bot',
     timestamp: new Date()
   }
@@ -25,7 +25,7 @@ const botResponses: Record<string, string[]> = {
     "Would you like to schedule a free consultation to discuss your project in detail?"
   ],
   contact: [
-    "You can reach our team at support@swnk.in or call us at +91 9165644843.",
+    "You can reach our team at support@shadownik.online or call us at +91 9165644843.",
     "Alternatively, you can fill out the contact form on our website and we'll get back to you within 24 hours."
   ],
   services: [
@@ -179,7 +179,7 @@ const ChatBot = () => {
                   <Bot size={20} />
                 </div>
                 <div>
-                  <h3 className="font-semibold">shadownik (swnk) Assistant</h3>
+                  <h3 className="font-semibold">shadownik (Shadownik(Swnk)) Assistant</h3>
                   <p className="text-xs opacity-80">Online | Typically replies instantly</p>
                 </div>
               </div>
@@ -278,7 +278,7 @@ const ChatBot = () => {
                 </button>
               </div>
               <div className="mt-2 text-center text-xs text-gray-500">
-                Powered by shadownik (swnk) AI
+                Powered by shadownik (Shadownik(Swnk)) AI
               </div>
             </div>
           </motion.div>

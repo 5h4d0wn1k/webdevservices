@@ -1,51 +1,16 @@
 import React, { useState, forwardRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Code2, Layers, Cpu, Trophy, Users, Rocket } from 'lucide-react';
-
-const projects = [
-  {
-    title: "E-Commerce Revolution",
-    description: "A cutting-edge platform transforming online retail with AI-powered recommendations and real-time inventory management.",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200",
-    category: "E-Commerce",
-    link: "#",
-    stats: {
-      conversion: "+150%",
-      performance: "99/100",
-      users: "1M+"
-    },
-    tags: ["React", "Node.js", "AWS", "AI/ML"],
-    icon: <Layers className="w-6 h-6" />
-  },
-  {
-    title: "AI-Powered Analytics",
-    description: "Enterprise-grade analytics platform processing billions of data points in real-time with predictive insights.",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1200",
-    category: "Data Analytics",
-    link: "#",
-    stats: {
-      dataPoints: "5B+",
-      accuracy: "99.9%",
-      clients: "500+"
-    },
-    tags: ["Python", "TensorFlow", "BigQuery", "Kubernetes"],
-    icon: <Cpu className="w-6 h-6" />
-  },
-  {
-    title: "Web3 Innovation",
-    description: "Revolutionary blockchain interface bridging traditional finance with decentralized technologies.",
-    image: "https://images.unsplash.com/photo-1639322537228-f710d846310a?auto=format&fit=crop&q=80&w=1200",
-    category: "Blockchain",
-    link: "#",
-    stats: {
-      transactions: "10M+",
-      security: "Military-grade",
-      chains: "15+"
-    },
-    tags: ["Solidity", "Web3.js", "React", "TypeScript"],
-    icon: <Code2 className="w-6 h-6" />
-  }
-];
+import {
+  Code2,
+  Smartphone,
+  ShoppingBag,
+  Globe2,
+  ExternalLink,
+  Sparkles,
+  Trophy,
+  Rocket
+} from 'lucide-react';
+import { featuredProjectsData, FeaturedProject } from '../data/featuredProjectsData';
 
 // Create motion components with forwardRef
 const MotionDiv = motion(forwardRef((props: any, ref) => (
@@ -56,11 +21,14 @@ const MotionA = motion(forwardRef((props: any, ref) => (
   <a ref={ref} {...props} />
 )));
 
-const ProjectCard = ({ project, index }: { project: typeof projects[0], index: number }) => {
+// Wrap PortfolioCard with forwardRef
+const ProjectCard = forwardRef(({ project, index }: { project: FeaturedProject, index: number }, ref: React.Ref<HTMLDivElement>) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
     <MotionDiv
+      ref={ref}
+      layout
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -113,7 +81,7 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0], index: n
                   {Object.entries(project.stats).map(([key, value]) => (
                     <div key={key} className="text-center p-2 bg-white/5 rounded-lg backdrop-blur-sm border border-white/10">
                       <div className="text-white font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                        {value}
+                        {value as string}
                       </div>
                       <div className="text-gray-400 text-xs capitalize">{key}</div>
                     </div>
@@ -121,7 +89,7 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0], index: n
                 </div>
 
                 <div className="flex flex-wrap gap-2 mb-6">
-                  {project.tags.map((tag) => (
+                  {project.tags.map((tag: string) => (
                     <span
                       key={tag}
                       className="px-3 py-1 text-xs font-medium bg-gradient-to-r from-primary/20 to-accent/20 rounded-full text-white/80 border border-white/10 backdrop-blur-sm"
@@ -146,9 +114,14 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0], index: n
       </div>
     </MotionDiv>
   );
-};
+});
+
+// Add display name for the forwarded ref component
+ProjectCard.displayName = 'PortfolioCard';
 
 const FeaturedProjects = () => {
+  const { spanText, headingText, descriptionText, viewAllButtonText, projects } = featuredProjectsData;
+
   return (
     <section className="py-24 px-4 relative overflow-hidden">
       {/* Animated Background */}
@@ -176,21 +149,26 @@ const FeaturedProjects = () => {
         >
           <div className="flex items-center justify-center gap-2 mb-4">
             <Trophy className="w-6 h-6 text-primary animate-pulse" />
-            <span className="text-primary uppercase tracking-wider text-sm font-medium">Featured Work</span>
+            <span className="text-primary uppercase tracking-wider text-sm font-medium">{spanText}</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white via-primary to-accent bg-clip-text text-transparent animate-gradient">
-            Featured Projects
+            {headingText}
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-            Transforming visions into digital masterpieces. Each project represents our commitment to excellence and innovation.
+            {descriptionText}
           </p>
         </MotionDiv>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
-            <ProjectCard key={project.title} project={project} index={index} />
-          ))}
-        </div>
+        <MotionDiv
+          layout
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          <AnimatePresence mode="popLayout">
+            {projects.map((project: FeaturedProject, index: number) => (
+              <ProjectCard key={project.title} project={project} index={index} />
+            ))}
+          </AnimatePresence>
+        </MotionDiv>
 
         <MotionDiv
           initial={{ opacity: 0, y: 20 }}
@@ -206,7 +184,7 @@ const FeaturedProjects = () => {
             className="inline-flex items-center gap-2 bg-gradient-to-r from-primary/20 to-accent/20 px-6 py-3 rounded-full hover:from-primary/30 hover:to-accent/30 transition-all duration-300 border border-white/10 backdrop-blur-sm group"
           >
             <Rocket className="w-5 h-5 group-hover:animate-pulse" />
-            <span>View All Projects</span>
+            <span>{viewAllButtonText}</span>
           </MotionA>
         </MotionDiv>
       </div>

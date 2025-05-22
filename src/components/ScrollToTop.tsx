@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronUp } from 'lucide-react';
+import { scrollToTopData } from '../data/scrollToTopData';
 
 const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const { scrollThreshold, ariaLabel } = scrollToTopData;
 
   // Show button when page is scrolled down
   const toggleVisibility = () => {
-    if (window.pageYOffset > 300) {
+    if (window.pageYOffset > scrollThreshold) {
       setIsVisible(true);
     } else {
       setIsVisible(false);
@@ -38,7 +40,7 @@ const ScrollToTop = () => {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           className="fixed z-50 bottom-8 right-8 p-3 bg-gradient-to-r from-primary to-accent rounded-full shadow-lg shadow-primary/30 text-white focus:outline-none"
-          aria-label="Scroll to top"
+          aria-label={ariaLabel}
         >
           <ChevronUp size={24} />
         </motion.button>

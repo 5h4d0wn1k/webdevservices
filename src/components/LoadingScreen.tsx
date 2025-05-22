@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Loader2 } from 'lucide-react';
 import Logo from './Logo';
+import { loadingScreenData } from '../data/loadingScreenData';
 
 interface LoadingScreenProps {
   progress: number;
@@ -9,6 +10,8 @@ interface LoadingScreenProps {
 }
 
 const LoadingScreen: React.FC<LoadingScreenProps> = ({ progress, isLoading }) => {
+  const { headingText, loadingText, loadingTip } = loadingScreenData;
+
   return (
     <motion.div
       initial={{ opacity: 1 }}
@@ -42,11 +45,11 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ progress, isLoading }) =>
           className="text-center mb-8"
         >
           <h2 className="text-2xl font-bold mb-2 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-            swnk
+            {headingText}
           </h2>
           <p className="text-gray-400 flex items-center">
             <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-            Loading Experience
+            {loadingText}
           </p>
         </motion.div>
 
@@ -69,7 +72,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ progress, isLoading }) =>
           className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center"
         >
           <p className="text-sm text-gray-500 max-w-sm">
-            Crafting digital experiences that push boundaries...
+            {loadingTip}
           </p>
         </motion.div>
       </div>

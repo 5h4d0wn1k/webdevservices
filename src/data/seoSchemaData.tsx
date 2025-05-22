@@ -1,23 +1,111 @@
 import React from 'react';
 
-const SeoSchema = () => {
-  const schemaData = {
+interface SchemaWebSite {
+  '@context': string;
+  '@type': string;
+  name: string;
+  url: string;
+  description: string;
+  potentialAction: {
+    '@type': string;
+    target: string;
+    'query-input': string;
+  };
+}
+
+interface SchemaContactPoint {
+  '@type': string;
+  telephone: string;
+  contactType: string;
+  email: string;
+  availableLanguage: string[];
+}
+
+interface SchemaPostalAddress {
+  '@type': string;
+  addressLocality: string;
+  addressCountry: string;
+}
+
+interface SchemaGeoCoordinates {
+  '@type': string;
+  latitude: string;
+  longitude: string;
+}
+
+interface SchemaGeoCircle {
+  '@type': string;
+  geoMidpoint: SchemaGeoCoordinates;
+  geoRadius: string;
+}
+
+interface SchemaOrganization {
+  '@context': string;
+  '@type': string;
+  name: string;
+  url: string;
+  logo: string;
+  sameAs: string[];
+  contactPoint: SchemaContactPoint;
+  slogan: string;
+  description: string;
+  keywords: string;
+}
+
+interface SchemaProfessionalService {
+  '@context': string;
+  '@type': string;
+  name: string;
+  image: string;
+  address: SchemaPostalAddress;
+  telephone: string;
+  email: string;
+  url: string;
+  description: string;
+  priceRange: string;
+  openingHours: string;
+  areaServed: SchemaGeoCircle;
+  services: string[];
+}
+
+interface SchemaFAQPage {
+  '@context': string;
+  '@type': string;
+  mainEntity: {
+    '@type': string;
+    name: string;
+    acceptedAnswer: {
+      '@type': string;
+      text: string;
+    };
+  }[];
+}
+
+interface SeoSchemaDataType {
+  schemaData: SchemaWebSite;
+  organizationData: SchemaOrganization;
+  professionalServiceData: SchemaProfessionalService;
+  faqData: SchemaFAQPage;
+}
+
+export const seoSchemaData: SeoSchemaDataType = {
+  schemaData: {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "shadownik (Shadownik(Swnk)) Web Development Services",
+    "name": "Shadownik(Swnk) Web Development Services",
     "url": "https://web.shadownik.online",
-    "description": "Professional web development services including custom websites, e-commerce solutions, web applications, and digital transformation services. Get a free consultation today.",
+    "description": "Professional web development services from Shadownik(Swnk), the specialized sub-division of Shadownik in IT. We offer custom websites, e-commerce solutions, web applications, and digital transformation services. Get a free consultation today.",
     "potentialAction": {
       "@type": "SearchAction",
       "target": "https://web.shadownik.online/search?q={search_term_string}",
       "query-input": "required name=search_term_string"
     }
-  };
+  },
 
-  const organizationData = {
+  organizationData: {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "shadownik (Shadownik(Swnk))",
+    "name": "Shadownik(Swnk)",
     "url": "https://web.shadownik.online",
     "logo": "https://web.shadownik.online/logo.png",
     "sameAs": [
@@ -29,7 +117,8 @@ const SeoSchema = () => {
       "https://instagram.com/Shadownik(Swnk).official",
       "https://www.youtube.com/@Shadownik(Swnk).official",
       "https://t.me/Shadownik(Swnk)official",
-      "https://www.whatsapp.com/channel/0029VakSdtTfXUuURqTLgF3A"
+      "https://www.whatsapp.com/channel/0029VakSdtTfXUuURqTLgF3A",
+      "https://shadownik.online"
     ],
     "contactPoint": {
       "@type": "ContactPoint",
@@ -39,14 +128,14 @@ const SeoSchema = () => {
       "availableLanguage": ["English", "Hindi"]
     },
     "slogan": "Transforming Ideas into Digital Reality",
-    "description": "Expert web development company specializing in custom solutions that drive business growth and digital transformation.",
-    "keywords": "web development, custom websites, e-commerce, web applications, digital transformation, SEO services, mobile apps"
-  };
+    "description": "Shadownik(Swnk) is the specialized web development services division of Shadownik, an IT leader. We provide expert custom solutions that drive business growth and digital transformation.",
+    "keywords": "web development, custom websites, e-commerce, web applications, digital transformation, SEO services, mobile apps, Shadownik(Swnk), Shadownik"
+  },
 
-  const professionalServiceData = {
+  professionalServiceData: {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
-    "name": "shadownik (Shadownik(Swnk)) Web Development",
+    "name": "Shadownik(Swnk) Web Development",
     "image": "https://web.shadownik.online/logo.png",
     "address": {
       "@type": "PostalAddress",
@@ -56,7 +145,7 @@ const SeoSchema = () => {
     "telephone": "+91-9165644843",
     "email": "info@shadownik.online",
     "url": "https://web.shadownik.online",
-    "description": "shadownik (Shadownik(Swnk)) provides premium web development services including custom websites, e-commerce, web applications, and digital marketing solutions. Schedule a free consultation to discuss your project.",
+    "description": "Shadownik(Swnk), a specialized web development division of Shadownik, provides premium web development services including custom websites, e-commerce, web applications, and digital marketing solutions. Schedule a free consultation to discuss your project.",
     "priceRange": "$$-$$$",
     "openingHours": "Mo-Fr 09:00-18:00",
     "areaServed": {
@@ -80,18 +169,18 @@ const SeoSchema = () => {
       "API Integration",
       "Website Maintenance"
     ]
-  };
+  },
 
-  const faqData = {
+  faqData: {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "What web development services does shadownik (Shadownik(Swnk)) offer?",
+        "name": "What web development services does Shadownik(Swnk) offer?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "shadownik (Shadownik(Swnk)) offers a comprehensive range of web development services including custom website development, e-commerce solutions, web applications, mobile app development, UI/UX design, and digital marketing services."
+          "text": "Shadownik(Swnk), the web development services division of Shadownik, offers a comprehensive range of web development services including custom website development, e-commerce solutions, web applications, mobile app development, UI/UX design, and digital marketing services."
         }
       },
       {
@@ -119,24 +208,5 @@ const SeoSchema = () => {
         }
       }
     ]
-  };
-
-  return (
-    <>
-      <script type="application/ld+json">
-        {JSON.stringify(schemaData)}
-      </script>
-      <script type="application/ld+json">
-        {JSON.stringify(organizationData)}
-      </script>
-      <script type="application/ld+json">
-        {JSON.stringify(professionalServiceData)}
-      </script>
-      <script type="application/ld+json">
-        {JSON.stringify(faqData)}
-      </script>
-    </>
-  );
-};
-
-export default SeoSchema; 
+  }
+}; 

@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { FaCode, FaServer, FaMobile, FaShoppingCart, FaWordpress, FaTools } from 'react-icons/fa';
 import { SiWebpack, SiNextdotjs, SiReact, SiTypescript } from 'react-icons/si';
+import { webDevServicesData } from '../../data/webDevServicesData';
 
 interface ServiceTier {
   name: string;
@@ -20,107 +21,14 @@ interface ServiceCategory {
   technologies: string[];
 }
 
-const serviceTiers: ServiceTier[] = [
-  {
-    name: "Basic Website Package",
-    price: "Starting at $999",
-    features: [
-      "5-7 Pages Website",
-      "Mobile Responsive Design",
-      "Basic SEO Setup",
-      "Contact Form Integration",
-      "Social Media Integration",
-      "2 Rounds of Revisions",
-      "1 Month Support"
-    ],
-    description: "Perfect for small businesses looking to establish their online presence",
-    deliveryTime: "2-3 weeks"
-  },
-  {
-    name: "Professional Business Solution",
-    price: "Starting at $2,499",
-    features: [
-      "10-15 Pages Website",
-      "Advanced Responsive Design",
-      "Complete SEO Optimization",
-      "Custom Forms & Features",
-      "CMS Integration",
-      "Analytics Setup",
-      "Payment Gateway Integration",
-      "3 Rounds of Revisions",
-      "3 Months Support"
-    ],
-    description: "Ideal for growing businesses requiring advanced functionality",
-    deliveryTime: "4-6 weeks",
-    recommended: true
-  },
-  {
-    name: "Enterprise E-commerce",
-    price: "Starting at $4,999",
-    features: [
-      "Unlimited Pages",
-      "Full E-commerce Functionality",
-      "Custom Product Management",
-      "Multiple Payment Gateways",
-      "Inventory Management",
-      "Order Tracking System",
-      "Customer Portal",
-      "Advanced Security Features",
-      "6 Months Support"
-    ],
-    description: "Complete solution for businesses selling products online",
-    deliveryTime: "8-12 weeks"
-  }
-];
-
-const serviceCategories: ServiceCategory[] = [
-  {
-    title: "Custom Web Development",
-    description: "Tailored web solutions built from scratch using modern technologies",
-    icon: <FaCode className="text-4xl text-primary" />,
-    features: [
-      "Custom Frontend Development",
-      "Backend API Development",
-      "Database Design & Integration",
-      "Third-party API Integration",
-      "Performance Optimization"
-    ],
-    technologies: ["React", "Next.js", "Node.js", "TypeScript", "MongoDB"]
-  },
-  {
-    title: "E-commerce Solutions",
-    description: "Full-featured online stores with secure payment processing",
-    icon: <FaShoppingCart className="text-4xl text-primary" />,
-    features: [
-      "Product Catalog Management",
-      "Shopping Cart Implementation",
-      "Payment Gateway Integration",
-      "Order Management System",
-      "Inventory Tracking"
-    ],
-    technologies: ["Shopify", "WooCommerce", "Stripe", "PayPal", "Square"]
-  },
-  {
-    title: "CMS Development",
-    description: "Content management systems for easy website updates",
-    icon: <FaWordpress className="text-4xl text-primary" />,
-    features: [
-      "Custom Theme Development",
-      "Plugin Development",
-      "Content Migration",
-      "Multi-language Support",
-      "User Management"
-    ],
-    technologies: ["WordPress", "Drupal", "Contentful", "Strapi", "Ghost"]
-  }
-];
-
 export const WebDevServices = () => {
+  const { serviceCategoriesHeading, pricingTiersHeading, serviceTiers, serviceCategories } = webDevServicesData;
+
   return (
     <div className="container mx-auto px-4 py-16">
       {/* Service Categories */}
       <section className="mb-20">
-        <h2 className="text-4xl font-bold text-center mb-12">Our Web Development Services</h2>
+        <h2 className="text-4xl font-bold text-center mb-12">{serviceCategoriesHeading}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {serviceCategories.map((category, index) => (
             <motion.div
@@ -163,7 +71,7 @@ export const WebDevServices = () => {
 
       {/* Pricing Tiers */}
       <section>
-        <h2 className="text-4xl font-bold text-center mb-12">Pricing Plans</h2>
+        <h2 className="text-4xl font-bold text-center mb-12">{pricingTiersHeading}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {serviceTiers.map((tier, index) => (
             <motion.div

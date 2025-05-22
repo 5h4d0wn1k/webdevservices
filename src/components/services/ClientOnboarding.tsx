@@ -4,6 +4,7 @@ import { FaArrowRight, FaCheck, FaFileUpload, FaInfoCircle, FaRocket, FaLightbul
 import { Link } from 'react-router-dom';
 import ConsultationBooking from '../ConsultationBooking';
 import { API_ENDPOINTS } from '../../config/api';
+import { clientOnboardingData } from '../../data/clientOnboardingData';
 
 interface FormData {
   projectType: string;
@@ -119,6 +120,7 @@ export const ClientOnboarding = () => {
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const { sectionHeading, sectionDescription, stepTexts, step1, step2, step3, step4, step5, successMessage, errorMessage, nextButtonText } = clientOnboardingData;
 
   const handleProjectTypeSelect = (type: string) => {
     setFormData({ ...formData, projectType: type });
@@ -250,11 +252,11 @@ export const ClientOnboarding = () => {
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             <span className="bg-gradient-to-r from-primary via-accent to-neon-purple bg-clip-text text-transparent animate-gradient">
-              Start Your Project
+              {sectionHeading}
             </span>
           </h2>
           <p className="text-gray-300 text-lg max-w-2xl mx-auto">
-            Let's bring your vision to life. Follow these steps to get started with your web development project.
+            {sectionDescription}
           </p>
         </motion.div>
 
@@ -271,7 +273,7 @@ export const ClientOnboarding = () => {
                     step >= num ? 'bg-primary text-white' : 'bg-gray-800 text-gray-400'
                   }`}
                 >
-                  {step > num ? <FaCheck /> : num}
+                  {step > num ? <FaCheck /> : stepTexts[num - 1]}
                 </motion.div>
                 {num < 5 && (
                   <motion.div
@@ -298,10 +300,10 @@ export const ClientOnboarding = () => {
               className="max-w-4xl mx-auto"
             >
               <h3 className="text-2xl font-semibold mb-8 text-center">
-                What type of project are you looking to build?
+                {step1.heading}
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {projectTypes.map((type) => {
+                {step1.projectTypes.map((type) => {
                   const Icon = type.icon;
                   return (
                     <motion.button
@@ -330,12 +332,12 @@ export const ClientOnboarding = () => {
               className="max-w-2xl mx-auto"
             >
               <h3 className="text-2xl font-semibold mb-8 text-center">
-                Tell us about your business
+                {step2.heading}
               </h3>
               <form onSubmit={handleBusinessInfoSubmit} className="space-y-6">
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-gray-300 mb-2">Business Name</label>
+                    <label className="block text-gray-300 mb-2">{step2.formLabels.businessName}</label>
                     <input
                       type="text"
                       className="w-full p-4 bg-gray-800/50 border border-gray-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-white"
@@ -350,7 +352,7 @@ export const ClientOnboarding = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-gray-300 mb-2">Industry</label>
+                    <label className="block text-gray-300 mb-2">{step2.formLabels.industry}</label>
                     <input
                       type="text"
                       className="w-full p-4 bg-gray-800/50 border border-gray-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-white"
@@ -365,7 +367,7 @@ export const ClientOnboarding = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-gray-300 mb-2">Company Size</label>
+                    <label className="block text-gray-300 mb-2">{step2.formLabels.companySize}</label>
                     <select
                       className="w-full p-4 bg-gray-800/50 border border-gray-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-white"
                       value={formData.businessInfo.size}
@@ -377,15 +379,13 @@ export const ClientOnboarding = () => {
                       }
                       required
                     >
-                      <option value="">Select size</option>
-                      <option value="1-10">1-10 employees</option>
-                      <option value="11-50">11-50 employees</option>
-                      <option value="51-200">51-200 employees</option>
-                      <option value="201+">201+ employees</option>
+                      {step2.companySizeOptions.map(option => (
+                        <option key={option.value} value={option.value}>{option.label}</option>
+                      ))}
                     </select>
                   </div>
                   <div>
-                    <label className="block text-gray-300 mb-2">Current Website (if any)</label>
+                    <label className="block text-gray-300 mb-2">{step2.formLabels.website}</label>
                     <input
                       type="url"
                       className="w-full p-4 bg-gray-800/50 border border-gray-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-white"
@@ -403,7 +403,7 @@ export const ClientOnboarding = () => {
                   type="submit"
                   className="w-full py-4 bg-gradient-to-r from-primary to-accent text-white rounded-lg hover:from-primary-dark hover:to-accent-dark transition-all duration-300 shadow-lg shadow-primary/25"
                 >
-                  Next Step
+                  {nextButtonText}
                 </button>
               </form>
             </motion.div>
@@ -418,15 +418,15 @@ export const ClientOnboarding = () => {
               className="max-w-3xl mx-auto"
             >
               <h3 className="text-2xl font-semibold mb-8 text-center">
-                Project Requirements
+                {step3.heading}
               </h3>
               <form onSubmit={handleRequirementsSubmit} className="space-y-8">
                 <div>
                   <label className="block text-gray-300 mb-4">
-                    Select Required Features
+                    {step3.labels.features}
                   </label>
                   <div className="grid grid-cols-2 gap-4">
-                    {featureOptions.map((feature) => (
+                    {step3.featureOptions.map((feature) => (
                       <motion.label
                         key={feature}
                         whileHover={{ scale: 1.02 }}
@@ -445,7 +445,7 @@ export const ClientOnboarding = () => {
                   </div>
                 </div>
                 <div>
-                  <label className="block text-gray-300 mb-2">Design Preferences</label>
+                  <label className="block text-gray-300 mb-2">{step3.labels.design}</label>
                   <textarea
                     className="w-full p-4 bg-gray-800/50 border border-gray-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-white"
                     rows={4}
@@ -456,13 +456,13 @@ export const ClientOnboarding = () => {
                         requirements: { ...formData.requirements, design: e.target.value }
                       })
                     }
-                    placeholder="Describe your design preferences, brand guidelines, or reference websites..."
+                    placeholder={step3.designPlaceholder}
                     required
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-gray-300 mb-2">Timeline</label>
+                    <label className="block text-gray-300 mb-2">{step3.labels.timeline}</label>
                     <select
                       className="w-full p-4 bg-gray-800/50 border border-gray-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-white"
                       value={formData.requirements.timeline}
@@ -474,15 +474,13 @@ export const ClientOnboarding = () => {
                       }
                       required
                     >
-                      <option value="">Select timeline</option>
-                      <option value="1-2">1-2 months</option>
-                      <option value="3-4">3-4 months</option>
-                      <option value="5-6">5-6 months</option>
-                      <option value="6+">6+ months</option>
+                      {step3.timelineOptions.map(option => (
+                        <option key={option.value} value={option.value}>{option.label}</option>
+                      ))}
                     </select>
                   </div>
                   <div>
-                    <label className="block text-gray-300 mb-2">Budget Range</label>
+                    <label className="block text-gray-300 mb-2">{step3.labels.budget}</label>
                     <select
                       className="w-full p-4 bg-gray-800/50 border border-gray-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-white"
                       value={formData.requirements.budget}
@@ -494,11 +492,9 @@ export const ClientOnboarding = () => {
                       }
                       required
                     >
-                      <option value="">Select budget</option>
-                      <option value="5k-10k">$5,000 - $10,000</option>
-                      <option value="10k-25k">$10,000 - $25,000</option>
-                      <option value="25k-50k">$25,000 - $50,000</option>
-                      <option value="50k+">$50,000+</option>
+                      {step3.budgetOptions.map(option => (
+                        <option key={option.value} value={option.value}>{option.label}</option>
+                      ))}
                     </select>
                   </div>
                 </div>
@@ -506,7 +502,7 @@ export const ClientOnboarding = () => {
                   type="submit"
                   className="w-full py-4 bg-gradient-to-r from-primary to-accent text-white rounded-lg hover:from-primary-dark hover:to-accent-dark transition-all duration-300 shadow-lg shadow-primary/25"
                 >
-                  Next Step
+                  {nextButtonText}
                 </button>
               </form>
             </motion.div>
@@ -521,15 +517,15 @@ export const ClientOnboarding = () => {
               className="max-w-3xl mx-auto"
             >
               <h3 className="text-2xl font-semibold mb-8 text-center">
-                Technical Requirements
+                {step4.heading}
               </h3>
               <form onSubmit={handleTechnicalSubmit} className="space-y-8">
                 <div>
                   <label className="block text-gray-300 mb-4">
-                    Preferred Technologies
+                    {step4.labels.technologies}
                   </label>
                   <div className="grid grid-cols-2 gap-4">
-                    {technologyOptions.map((tech) => (
+                    {step4.technologyOptions.map((tech) => (
                       <motion.label
                         key={tech}
                         whileHover={{ scale: 1.02 }}
@@ -549,7 +545,7 @@ export const ClientOnboarding = () => {
                 </div>
                 <div className="grid grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-gray-300 mb-2">Hosting Preference</label>
+                    <label className="block text-gray-300 mb-2">{step4.labels.hosting}</label>
                     <select
                       className="w-full p-4 bg-gray-800/50 border border-gray-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-white"
                       value={formData.technical.hosting}
@@ -561,15 +557,13 @@ export const ClientOnboarding = () => {
                       }
                       required
                     >
-                      <option value="">Select hosting</option>
-                      <option value="aws">AWS</option>
-                      <option value="vercel">Vercel</option>
-                      <option value="netlify">Netlify</option>
-                      <option value="other">Other</option>
+                      {step4.hostingOptions.map(option => (
+                        <option key={option.value} value={option.value}>{option.label}</option>
+                      ))}
                     </select>
                   </div>
                   <div>
-                    <label className="block text-gray-300 mb-2">Domain Status</label>
+                    <label className="block text-gray-300 mb-2">{step4.labels.domain}</label>
                     <select
                       className="w-full p-4 bg-gray-800/50 border border-gray-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-white"
                       value={formData.technical.domain}
@@ -581,10 +575,9 @@ export const ClientOnboarding = () => {
                       }
                       required
                     >
-                      <option value="">Select status</option>
-                      <option value="have">I have a domain</option>
-                      <option value="need">Need to purchase</option>
-                      <option value="transfer">Need to transfer</option>
+                      {step4.domainOptions.map(option => (
+                        <option key={option.value} value={option.value}>{option.label}</option>
+                      ))}
                     </select>
                   </div>
                 </div>
@@ -592,7 +585,7 @@ export const ClientOnboarding = () => {
                   type="submit"
                   className="w-full py-4 bg-gradient-to-r from-primary to-accent text-white rounded-lg hover:from-primary-dark hover:to-accent-dark transition-all duration-300 shadow-lg shadow-primary/25"
                 >
-                  Next Step
+                  {nextButtonText}
                 </button>
               </form>
             </motion.div>
@@ -607,7 +600,7 @@ export const ClientOnboarding = () => {
               className="max-w-3xl mx-auto"
             >
               <h3 className="text-2xl font-semibold mb-8 text-center">
-                Schedule a Consultation
+                {step5.heading}
               </h3>
               <div className="bg-gray-800/50 border border-gray-700 rounded-xl p-8">
                 <ConsultationBooking
@@ -652,9 +645,9 @@ export const ClientOnboarding = () => {
                 <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
                   <FaCheck className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold mb-2">Thank You!</h3>
+                <h3 className="text-2xl font-bold mb-2">{successMessage.heading}</h3>
                 <p className="text-gray-300 mb-6">
-                  Your project details have been submitted successfully. We'll be in touch shortly.
+                  {successMessage.text}
                 </p>
                 <button
                   onClick={() => {
@@ -664,7 +657,7 @@ export const ClientOnboarding = () => {
                   }}
                   className="w-full py-3 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
                 >
-                  Start New Project
+                  {successMessage.buttonText}
                 </button>
               </div>
             </motion.div>
@@ -682,15 +675,15 @@ export const ClientOnboarding = () => {
                 <div className="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
                   <FaInfoCircle className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold mb-2">Oops!</h3>
+                <h3 className="text-2xl font-bold mb-2">{errorMessage.heading}</h3>
                 <p className="text-gray-300 mb-6">
-                  There was an error submitting your project. Please try again.
+                  {errorMessage.text}
                 </p>
                 <button
                   onClick={() => setSubmitStatus('idle')}
                   className="w-full py-3 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
                 >
-                  Try Again
+                  {errorMessage.buttonText}
                 </button>
               </div>
             </motion.div>

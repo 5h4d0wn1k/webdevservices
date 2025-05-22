@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Cookie, Shield, Settings } from 'lucide-react';
+import { cookieConsentData } from '../data/cookieConsentData';
 
 const CookieConsent = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -78,6 +79,8 @@ const CookieConsent = () => {
     setShowDetails(!showDetails);
   };
 
+  const { headingText, mainDescription, cookieTypes, buttonLabels, privacyFooter } = cookieConsentData;
+
   return (
     <AnimatePresence>
       {isVisible && (
@@ -96,20 +99,19 @@ const CookieConsent = () => {
                   <div className="p-2 bg-primary/20 rounded-full mr-4">
                     <Cookie className="w-6 h-6 text-primary" />
                   </div>
-                  <h3 className="text-xl font-semibold">Cookie Preferences</h3>
+                  <h3 className="text-xl font-semibold">{headingText}</h3>
                 </div>
                 <button 
                   onClick={() => setIsVisible(false)}
                   className="p-1 hover:bg-white/10 rounded-full transition-colors"
-                  aria-label="Close cookie consent dialog"
+                  aria-label={buttonLabels.close}
                 >
                   <X size={20} />
                 </button>
               </div>
               
               <p className="text-gray-300 mb-6">
-                We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic. 
-                By clicking "Accept All", you consent to our use of cookies.
+                {mainDescription}
               </p>
 
               {/* Preference toggles - shown only when details are expanded */}
@@ -122,33 +124,27 @@ const CookieConsent = () => {
                     transition={{ duration: 0.3 }}
                     className="mb-6 space-y-4"
                   >
-                    {Object.entries(preferences).map(([key, value]) => (
-                      <div key={key} className="flex items-center justify-between p-3 bg-black/20 rounded-lg">
+                    {cookieTypes.map((cookie) => (
+                      <div key={cookie.key} className="flex items-center justify-between p-3 bg-black/20 rounded-lg">
                         <div>
-                          <div className="font-medium capitalize">{key}</div>
+                          <div className="font-medium capitalize">{cookie.label}</div>
                           <div className="text-sm text-gray-400">
-                            {key === 'necessary' 
-                              ? 'Essential for the website to function properly.' 
-                              : key === 'analytics' 
-                                ? 'Helps us understand how visitors interact with our website.'
-                                : key === 'marketing'
-                                  ? 'Used to track visitors across websites for advertising purposes.'
-                                  : 'Enables the website to remember your preferences.'}
+                            {cookie.description}
                           </div>
                         </div>
                         <label className="relative inline-flex items-center cursor-pointer">
                           <input 
                             type="checkbox" 
                             className="sr-only peer"
-                            checked={value}
-                            disabled={key === 'necessary'}
-                            onChange={() => handleTogglePreference(key as keyof typeof preferences)}
+                            checked={preferences[cookie.key]}
+                            disabled={cookie.key === 'necessary'}
+                            onChange={() => handleTogglePreference(cookie.key)}
                           />
                           <div className={`w-11 h-6 bg-gray-700 peer-focus:ring-2 peer-focus:ring-primary/50 rounded-full peer 
-                            ${value ? 'after:translate-x-full after:border-white bg-primary' : 'after:border-gray-300'} 
+                            ${preferences[cookie.key] ? 'after:translate-x-full after:border-white bg-primary' : 'after:border-gray-300'} 
                             after:content-[''] after:absolute after:top-[2px] after:left-[2px] 
                             after:bg-white after:border after:rounded-full after:h-5 after:w-5 
-                            after:transition-all ${key === 'necessary' ? 'opacity-60' : ''}`}></div>
+                            after:transition-all ${cookie.key === 'necessary' ? 'opacity-60' : ''}`}></div>
                         </label>
                       </div>
                     ))}
@@ -162,14 +158,14 @@ const CookieConsent = () => {
                   className="flex items-center px-4 py-2 text-sm bg-white/5 hover:bg-white/10 rounded-lg transition-colors"
                 >
                   <Settings size={16} className="mr-2" />
-                  {showDetails ? 'Hide Details' : 'Customize'}
+                  {showDetails ? buttonLabels.hideDetails : buttonLabels.customize}
                 </button>
                 
                 <button
                   onClick={handleRejectAll}
                   className="px-4 py-2 text-sm bg-white/5 hover:bg-white/10 rounded-lg transition-colors"
                 >
-                  Reject All
+                  {buttonLabels.rejectAll}
                 </button>
                 
                 {showDetails && (
@@ -177,7 +173,7 @@ const CookieConsent = () => {
                     onClick={handleAcceptSelected}
                     className="px-4 py-2 text-sm bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
                   >
-                    Save Preferences
+                    {buttonLabels.savePreferences}
                   </button>
                 )}
                 
@@ -185,7 +181,7 @@ const CookieConsent = () => {
                   onClick={handleAcceptAll}
                   className="px-4 py-2 text-sm bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white rounded-lg transition-colors"
                 >
-                  Accept All
+                  {buttonLabels.acceptAll}
                 </button>
               </div>
             </div>
@@ -194,11 +190,11 @@ const CookieConsent = () => {
             <div className="px-6 py-3 bg-black/30 flex flex-wrap items-center justify-between text-xs text-gray-400">
               <div className="flex items-center">
                 <Shield size={14} className="mr-2" />
-                <span>Your privacy is important to us</span>
+                <span>{privacyFooter.text}</span>
               </div>
               <div className="flex space-x-4">
-                <a href="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</a>
-                <a href="/terms-of-service" className="hover:text-primary transition-colors">Terms of Service</a>
+                <a href={privacyFooter.privacyPolicyLinkHref} className="hover:text-primary transition-colors">{privacyFooter.privacyPolicyLinkText}</a>
+                <a href={privacyFooter.termsOfServiceLinkHref} className="hover:text-primary transition-colors">{privacyFooter.termsOfServiceLinkText}</a>
               </div>
             </div>
           </div>

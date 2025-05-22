@@ -7,35 +7,9 @@ import {
   BookOpen,
   Sparkles
 } from 'lucide-react';
+import { blogData } from '../data/blogData';
 
-const posts = [
-  {
-    title: "The Future of Web Development: AI-Driven Interfaces",
-    excerpt: "Explore how artificial intelligence is revolutionizing the way we build and interact with web applications.",
-    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1200",
-    category: "Technology",
-    readTime: "5 min read",
-    date: "Mar 15, 2024"
-  },
-  {
-    title: "Optimizing Performance in Modern Web Apps",
-    excerpt: "Learn the latest techniques and best practices for building lightning-fast web applications.",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200",
-    category: "Development",
-    readTime: "8 min read",
-    date: "Mar 12, 2024"
-  },
-  {
-    title: "Design Systems: Building for Scale",
-    excerpt: "A comprehensive guide to creating and maintaining design systems that scale with your organization.",
-    image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&q=80&w=1200",
-    category: "Design",
-    readTime: "6 min read",
-    date: "Mar 10, 2024"
-  }
-];
-
-const BlogCard = ({ post, index }: { post: typeof posts[0], index: number }) => {
+const BlogCard = ({ post, index }: { post: typeof blogData.posts[0], index: number }) => {
   return (
     <motion.article
       initial={{ opacity: 0, y: 20 }}
@@ -89,6 +63,8 @@ const BlogCard = ({ post, index }: { post: typeof posts[0], index: number }) => 
 };
 
 const Blog = () => {
+  const { spanText, headingText, descriptionText, viewAllButtonText, posts } = blogData;
+
   return (
     <section id="blog" className="py-24 px-4 relative overflow-hidden">
       <div className="absolute inset-0">
@@ -109,13 +85,13 @@ const Blog = () => {
         >
           <div className="flex items-center justify-center gap-2 mb-4">
             <Sparkles className="w-6 h-6 text-primary" />
-            <span className="text-primary uppercase tracking-wider text-sm font-medium">Our Blog</span>
+            <span className="text-primary uppercase tracking-wider text-sm font-medium">{spanText}</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-neon-purple bg-clip-text text-transparent">
-            Latest Insights
+            {headingText}
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-            Stay updated with the latest trends, insights, and best practices in web development and design.
+            {descriptionText}
           </p>
         </motion.div>
 
@@ -138,8 +114,8 @@ const Blog = () => {
             whileTap={{ scale: 0.95 }}
             className="inline-flex items-center gap-2 bg-gradient-to-r from-primary/20 to-accent/20 px-6 py-3 rounded-full hover:from-primary/30 hover:to-accent/30 transition-colors border border-white/10"
           >
-            View All Posts
-            <ArrowRight className="w-5 h-5" />
+            {viewAllButtonText}
+            <ArrowRight className="ml-2 w-5 h-5" />
           </motion.a>
         </motion.div>
       </div>

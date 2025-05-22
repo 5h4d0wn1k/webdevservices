@@ -20,27 +20,9 @@ import {
   MessagesSquare
 } from 'lucide-react';
 import { API_ENDPOINTS } from '../config/api';
+import { contactData } from '../data/contactData';
 
-const contactInfo = [
-  {
-    icon: <Mail className="w-5 h-5" />,
-    label: "Email",
-    value: "support@swnk.in",
-    link: "mailto:support@swnk.in"
-  },
-  {
-    icon: <Phone className="w-6 h-6" />,
-    title: "Phone",
-    value: "+91 9165644843",
-    link: "tel:+919165644843"
-  },
-  {
-    icon: <MapPin className="w-6 h-6" />,
-    title: "Location",
-    value: "Remote, India",
-    link: "#"
-  }
-];
+const { spanText, headingText, descriptionText, contactInfo, services } = contactData;
 
 // Create motion components with forwardRef
 const MotionDiv = motion(forwardRef((props: any, ref) => (
@@ -190,19 +172,6 @@ const Contact = () => {
     }
   };
 
-  const services = [
-    "Web Development",
-    "Mobile App Development",
-    "E-commerce Solutions",
-    "UI/UX Design",
-    "Custom Software",
-    "Digital Marketing",
-    "SEO Services",
-    "Cloud Solutions",
-    "AI Integration",
-    "Other Services"
-  ];
-
   return (
     <section id="contact" className="py-20 relative">
       {/* Background Effects */}
@@ -223,11 +192,11 @@ const Contact = () => {
         >
           <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/20 border border-primary/30 mb-4">
             <MessageSquare size={14} className="text-primary mr-2" />
-            <span className="text-sm font-medium text-primary">Get in Touch</span>
+            <span className="text-sm font-medium text-primary">{spanText}</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">Ready to Transform Your Digital Presence?</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">{headingText}</h2>
           <p className="max-w-2xl mx-auto text-xl text-gray-400">
-            Contact us today to discuss your project and discover how swnk can elevate your web presence
+            {descriptionText}
           </p>
         </motion.div>
 
@@ -237,7 +206,7 @@ const Contact = () => {
             <div className="space-y-8">
               {contactInfo.map((item, index) => (
                 <motion.div
-                  key={item.title}
+                  key={item.title || item.label}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -248,15 +217,19 @@ const Contact = () => {
                     {React.cloneElement(item.icon, { className: 'w-6 h-6 text-primary' })}
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold mb-1">{item.title}</h3>
-                    <MotionA
-                      href={item.link}
-                      className="text-gray-400 hover:text-primary transition-colors"
-                      whileHover={{ x: 5 }}
-                      transition={{ type: 'spring', stiffness: 400, damping: 10 }}
-                    >
-                      {item.value}
-                    </MotionA>
+                    <h3 className="text-lg font-semibold mb-1">{item.title || item.label}</h3>
+                    {item.link ? (
+                      <MotionA
+                        href={item.link}
+                        className="text-gray-400 hover:text-primary transition-colors"
+                        whileHover={{ x: 5 }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+                      >
+                        {item.value}
+                      </MotionA>
+                    ) : (
+                      <span className="text-gray-300">{item.value}</span>
+                    )}
                   </div>
                 </motion.div>
               ))}
@@ -272,13 +245,13 @@ const Contact = () => {
                 <h3 className="text-lg font-semibold mb-4">Connect With Us</h3>
                 <div className="flex flex-wrap gap-4">
                   {[
-                    { icon: <Github className="w-5 h-5" />, href: "https://github.com/swnk-official", label: "GitHub" },
-                    { icon: <Twitter className="w-5 h-5" />, href: "https://x.com/swnk_ofc", label: "Twitter" },
-                    { icon: <Linkedin className="w-5 h-5" />, href: "https://www.linkedin.com/company/swnk", label: "LinkedIn" },
-                    { icon: <Facebook className="w-5 h-5" />, href: "https://www.facebook.com/people/swnk/61562599613319", label: "Facebook" },
-                    { icon: <Instagram className="w-5 h-5" />, href: "https://instagram.com/swnk.official", label: "Instagram" },
-                    { icon: <Youtube className="w-5 h-5" />, href: "https://www.youtube.com/@swnk.official", label: "YouTube" },
-                    { icon: <MessageCircle className="w-5 h-5" />, href: "https://t.me/swnkofficial", label: "Telegram" },
+                    { icon: <Github className="w-5 h-5" />, href: "https://github.com/Shadownik(Swnk)-official", label: "GitHub" },
+                    { icon: <Twitter className="w-5 h-5" />, href: "https://x.com/Shadownik(Swnk)_ofc", label: "Twitter" },
+                    { icon: <Linkedin className="w-5 h-5" />, href: "https://www.linkedin.com/company/Shadownik(Swnk)", label: "LinkedIn" },
+                    { icon: <Facebook className="w-5 h-5" />, href: "https://www.facebook.com/people/Shadownik(Swnk)/61562599613319", label: "Facebook" },
+                    { icon: <Instagram className="w-5 h-5" />, href: "https://instagram.com/Shadownik(Swnk).official", label: "Instagram" },
+                    { icon: <Youtube className="w-5 h-5" />, href: "https://www.youtube.com/@Shadownik(Swnk).official", label: "YouTube" },
+                    { icon: <MessageCircle className="w-5 h-5" />, href: "https://t.me/Shadownik(Swnk)official", label: "Telegram" },
                     { icon: <MessagesSquare className="w-5 h-5" />, href: "https://www.whatsapp.com/channel/0029VakSdtTfXUuURqTLgF3A", label: "WhatsApp" }
                   ].map((social, i) => (
                     <MotionA 

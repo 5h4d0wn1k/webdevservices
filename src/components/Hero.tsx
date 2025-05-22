@@ -4,8 +4,11 @@ import { ArrowRight, Sparkles, Rocket, Star } from 'lucide-react';
 import { Scene } from './3d/Scene';
 import { Link } from 'react-router-dom';
 import { FaRocket } from 'react-icons/fa';
+import { heroData } from '../data/heroData';
 
 const Hero = () => {
+  const { spanText, headingTextPart1, headingTextPart2, descriptionText, exploreButtonText, exploreButtonHref, startButtonText, startButtonHref } = heroData;
+
   return (
     <div className="relative pt-20 min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-black via-gray-900 to-black">
       {/* Animated Background */}
@@ -40,7 +43,7 @@ const Hero = () => {
             <div className="flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-primary/20 to-accent/20 border border-white/10 backdrop-blur-sm">
               <Star className="w-5 h-5 text-primary animate-pulse" />
               <span className="text-primary uppercase tracking-wider text-sm font-medium">
-                Digital Agency
+                {spanText}
               </span>
             </div>
           </motion.div>
@@ -51,9 +54,9 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-6xl sm:text-7xl md:text-8xl font-bold mb-12 leading-[1.1]"
           >
-            <span className="block mb-4">The Future of</span>
+            <span className="block mb-4">{headingTextPart1}</span>
             <span className="bg-gradient-to-r from-primary via-accent to-neon-purple bg-clip-text text-transparent animate-gradient">
-              Digital Innovation
+              {headingTextPart2}
             </span>
           </motion.h1>
 
@@ -63,8 +66,7 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-gray-300 text-xl sm:text-2xl max-w-3xl mx-auto mb-16 leading-relaxed backdrop-blur-sm bg-black/30 p-8 rounded-2xl border border-white/10"
           >
-            Transforming visions into digital masterpieces through innovative design
-            and cutting-edge technology. Experience the next generation of web development.
+            {descriptionText}
           </motion.p>
 
           <motion.div
@@ -74,7 +76,7 @@ const Hero = () => {
             className="flex flex-col sm:flex-row gap-8 justify-center items-center"
           >
             <motion.a
-              href="#portfolio"
+              href={exploreButtonHref}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="group inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-primary to-accent text-white font-medium rounded-full hover:from-primary-dark hover:to-accent-dark transition-all duration-300 shadow-lg shadow-primary/25"

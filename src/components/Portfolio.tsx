@@ -8,59 +8,7 @@ import {
   ExternalLink,
   Sparkles
 } from 'lucide-react';
-
-const categories = [
-  { id: 'all', label: 'All Work' },
-  { id: 'web', label: 'Web Development', icon: <Code2 className="w-4 h-4" /> },
-  { id: 'education', label: 'Education', icon: <Smartphone className="w-4 h-4" /> },
-  { id: 'app', label: 'Web Apps', icon: <ShoppingBag className="w-4 h-4" /> },
-  { id: 'ngo', label: 'Non-Profit', icon: <Globe2 className="w-4 h-4" /> }
-];
-
-const projects = [
-  {
-    title: "Sunrise Public School",
-    category: "education",
-    image: "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&q=80&w=1200",
-    description: "Official website for Sunrise Public School featuring admissions, curriculum, and student portal.",
-    link: "#"
-  },
-  {
-    title: "Cybersecurity Services",
-    category: "web",
-    image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&q=80&w=1200",
-    description: "Comprehensive cybersecurity services and product offerings for enterprises and SMBs.",
-    link: "https://cybersecurity.swnk.in"
-  },
-  {
-    title: "NGO Social Projects",
-    category: "ngo",
-    image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=1200",
-    description: "Platform for social impact initiatives and community engagement projects.",
-    link: "https://ngo.swnk.in"
-  },
-  {
-    title: "Metatask App",
-    category: "app",
-    image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&q=80&w=1200",
-    description: "Productivity and task management web application with enhanced collaboration features.",
-    link: "https://metatask.swnk.in"
-  },
-  {
-    title: "Prize Payout Platform",
-    category: "app",
-    image: "https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?auto=format&fit=crop&q=80&w=1200",
-    description: "Secure platform for managing and distributing competition prizes and rewards.",
-    link: "https://prizepayout.vercel.app/"
-  },
-  {
-    title: "Portfolio - Nikhil Nagpure",
-    category: "web",
-    image: "https://images.unsplash.com/photo-1545665277-5937489579f2?auto=format&fit=crop&q=80&w=1200",
-    description: "Professional portfolio showcasing the skills and projects of Nikhil Nagpure.",
-    link: "https://portfolio.swnk.tech"
-  }
-];
+import { portfolioData } from '../data/portfolioData';
 
 // Create motion components with forwardRef
 const MotionDiv = motion(forwardRef((props: any, ref) => (
@@ -72,7 +20,7 @@ const MotionA = motion(forwardRef((props: any, ref) => (
 )));
 
 // Wrap PortfolioCard with forwardRef
-const PortfolioCard = forwardRef(({ project }: { project: typeof projects[0] }, ref: React.Ref<HTMLDivElement>) => {
+const PortfolioCard = forwardRef(({ project }: { project: typeof portfolioData.projects[0] }, ref: React.Ref<HTMLDivElement>) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -113,7 +61,7 @@ const PortfolioCard = forwardRef(({ project }: { project: typeof projects[0] }, 
                 href={project.link}
                 className="inline-flex items-center text-sm bg-gradient-to-r from-primary/20 to-accent/20 backdrop-blur-sm rounded-lg px-4 py-2 hover:from-primary/30 hover:to-accent/30 transition-colors w-fit border border-white/10"
               >
-                View Project <ExternalLink className="ml-2 text-primary" size={16} />
+                {portfolioData.viewProjectButtonText} <ExternalLink className="ml-2 text-primary" size={16} />
               </MotionA>
             )}
           </AnimatePresence>
@@ -128,6 +76,7 @@ PortfolioCard.displayName = 'PortfolioCard';
 
 const Portfolio = () => {
   const [activeCategory, setActiveCategory] = useState('all');
+  const { spanText, headingText, descriptionText, viewProjectButtonText, categories, projects } = portfolioData;
 
   const filteredProjects = projects.filter(
     project => activeCategory === 'all' || project.category === activeCategory
@@ -153,13 +102,13 @@ const Portfolio = () => {
         >
           <div className="flex items-center justify-center gap-2 mb-4">
             <Sparkles className="w-6 h-6 text-primary" />
-            <span className="text-primary uppercase tracking-wider text-sm font-medium">Our Work</span>
+            <span className="text-primary uppercase tracking-wider text-sm font-medium">{spanText}</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-neon-purple bg-clip-text text-transparent">
-            Featured Projects
+            {headingText}
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto text-lg mb-12">
-            Explore our collection of award-winning projects that showcase our expertise in creating exceptional digital experiences.
+            {descriptionText}
           </p>
 
           <div className="flex flex-wrap justify-center gap-4 mb-12">

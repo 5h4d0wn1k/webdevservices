@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaCheckCircle, FaClock, FaCode, FaComments, FaFile, FaTasks } from 'react-icons/fa';
+import { projectManagementData } from '../../data/projectManagementData';
 
 interface ProjectPhase {
   title: string;
@@ -17,108 +18,13 @@ interface ProjectMilestone {
   completed: boolean;
 }
 
-const projectPhases: ProjectPhase[] = [
-  {
-    title: "Discovery & Planning",
-    description: "Understanding requirements and planning project architecture",
-    status: 'completed',
-    deliverables: [
-      "Project Requirements Document",
-      "Technical Specifications",
-      "Project Timeline",
-      "Architecture Diagram"
-    ],
-    timeline: "Week 1-2"
-  },
-  {
-    title: "Design & Prototyping",
-    description: "Creating wireframes and visual designs",
-    status: 'in-progress',
-    deliverables: [
-      "Wireframes",
-      "UI/UX Design",
-      "Interactive Prototype",
-      "Design System"
-    ],
-    timeline: "Week 2-4"
-  },
-  {
-    title: "Development",
-    description: "Building the core functionality and features",
-    status: 'pending',
-    deliverables: [
-      "Frontend Implementation",
-      "Backend Development",
-      "Database Integration",
-      "API Development"
-    ],
-    timeline: "Week 4-10"
-  },
-  {
-    title: "Testing & QA",
-    description: "Ensuring quality and performance",
-    status: 'pending',
-    deliverables: [
-      "Unit Testing",
-      "Integration Testing",
-      "Performance Testing",
-      "Bug Fixes"
-    ],
-    timeline: "Week 10-12"
-  },
-  {
-    title: "Deployment & Launch",
-    description: "Going live and monitoring performance",
-    status: 'pending',
-    deliverables: [
-      "Production Deployment",
-      "Performance Monitoring",
-      "Documentation",
-      "Training Materials"
-    ],
-    timeline: "Week 12"
-  }
-];
-
-const milestones: ProjectMilestone[] = [
-  {
-    title: "Project Kickoff",
-    description: "Initial meeting and requirement gathering",
-    dueDate: "2024-04-01",
-    completed: true
-  },
-  {
-    title: "Design Approval",
-    description: "Client sign-off on final designs",
-    dueDate: "2024-04-15",
-    completed: false
-  },
-  {
-    title: "MVP Release",
-    description: "First version with core features",
-    dueDate: "2024-05-15",
-    completed: false
-  },
-  {
-    title: "Beta Testing",
-    description: "User testing and feedback collection",
-    dueDate: "2024-06-01",
-    completed: false
-  },
-  {
-    title: "Production Launch",
-    description: "Official website launch",
-    dueDate: "2024-06-15",
-    completed: false
-  }
-];
-
 export const ProjectManagement = () => {
   const [activeTab, setActiveTab] = useState('timeline');
+  const { sectionHeading, timelineButtonText, milestonesButtonText, projectPhases, milestones, quickActions } = projectManagementData;
 
   return (
     <div className="container mx-auto px-4 py-16">
-      <h2 className="text-4xl font-bold text-center mb-12">Project Management Dashboard</h2>
+      <h2 className="text-4xl font-bold text-center mb-12">{sectionHeading}</h2>
 
       {/* Project Navigation */}
       <div className="flex justify-center mb-8">
@@ -131,7 +37,7 @@ export const ProjectManagement = () => {
                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
             }`}
           >
-            Project Timeline
+            {timelineButtonText}
           </button>
           <button
             onClick={() => setActiveTab('milestones')}
@@ -141,7 +47,7 @@ export const ProjectManagement = () => {
                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
             }`}
           >
-            Milestones
+            {milestonesButtonText}
           </button>
         </div>
       </div>
@@ -149,7 +55,7 @@ export const ProjectManagement = () => {
       {/* Project Timeline */}
       {activeTab === 'timeline' && (
         <div className="grid gap-8">
-          {projectPhases.map((phase, index) => (
+          {projectPhases.map((phase: ProjectPhase, index: number) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, x: -20 }}
@@ -174,7 +80,7 @@ export const ProjectManagement = () => {
               </div>
               <p className="text-gray-600 mb-4">{phase.description}</p>
               <div className="grid grid-cols-2 gap-4">
-                {phase.deliverables.map((deliverable, i) => (
+                {phase.deliverables.map((deliverable: string, i: number) => (
                   <div
                     key={i}
                     className="flex items-center text-gray-700"
@@ -196,7 +102,7 @@ export const ProjectManagement = () => {
       {/* Project Milestones */}
       {activeTab === 'milestones' && (
         <div className="grid gap-6">
-          {milestones.map((milestone, index) => (
+          {milestones.map((milestone: ProjectMilestone, index: number) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
@@ -223,19 +129,19 @@ export const ProjectManagement = () => {
       <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <button className="flex items-center justify-center p-4 bg-white rounded-lg shadow hover:shadow-lg transition-shadow">
           <FaFile className="mr-2 text-primary" />
-          <span>View Documents</span>
+          <span>{quickActions.viewDocuments}</span>
         </button>
         <button className="flex items-center justify-center p-4 bg-white rounded-lg shadow hover:shadow-lg transition-shadow">
           <FaComments className="mr-2 text-primary" />
-          <span>Project Discussion</span>
+          <span>{quickActions.projectDiscussion}</span>
         </button>
         <button className="flex items-center justify-center p-4 bg-white rounded-lg shadow hover:shadow-lg transition-shadow">
           <FaClock className="mr-2 text-primary" />
-          <span>Time Tracking</span>
+          <span>{quickActions.timeTracking}</span>
         </button>
         <button className="flex items-center justify-center p-4 bg-white rounded-lg shadow hover:shadow-lg transition-shadow">
           <FaCode className="mr-2 text-primary" />
-          <span>Code Repository</span>
+          <span>{quickActions.codeRepository}</span>
         </button>
       </div>
     </div>

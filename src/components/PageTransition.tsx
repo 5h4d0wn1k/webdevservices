@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Logo from './Logo';
+import { pageTransitionData } from '../data/pageTransitionData';
 
 type PageTransitionProps = {
   children: React.ReactNode;
@@ -8,15 +9,16 @@ type PageTransitionProps = {
 
 const PageTransition: React.FC<PageTransitionProps> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
+  const { loadingDuration, loadingText } = pageTransitionData;
   
   useEffect(() => {
     // Simulate initial loading
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, loadingDuration);
     
     return () => clearTimeout(timer);
-  }, []);
+  }, [loadingDuration]);
   
   // Variants for page transitions
   const pageVariants = {
@@ -114,7 +116,7 @@ const PageTransition: React.FC<PageTransitionProps> = ({ children }) => {
             transition={{ delay: 0.5 }}
             className="mt-8 text-2xl font-light text-white"
           >
-            swnk
+            {loadingText}
           </motion.h2>
         </motion.div>
       ) : (

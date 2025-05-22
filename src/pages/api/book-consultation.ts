@@ -15,10 +15,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // Create JWT client for Google Calendar using the service account
     const auth = new JWT({
-      email: "swnk-calender@web-dev-services-454105.iam.gserviceaccount.com",
+      email: "Shadownik(Swnk)-calender@web-dev-services-454105.iam.gserviceaccount.com",
       key: process.env.GOOGLE_CALENDAR_KEY?.replace(/\\n/g, '\n'),
       scopes: ['https://www.googleapis.com/auth/calendar'],
-      subject: "swnk.official@gmail.com" // Impersonate this user to make them the host
+      subject: "Shadownik(Swnk).official@gmail.com" // Impersonate this user to make them the host
     });
 
     const calendar = google.calendar({ version: 'v3', auth });
@@ -55,7 +55,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // Attendees for the meeting
     const attendees = [
-      { email: "swnk.official@gmail.com" }, // Host
+      { email: "Shadownik(Swnk).official@gmail.com" }, // Host
       { email: "nikhilnagpure203@gmail.com", displayName: "Nikhil Nagpure (Founder & CEO)" },
       { email: "aniwiss07@gmail.com", displayName: "Web Development Lead" },
       { email: email, displayName: name } // Client
@@ -63,7 +63,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // Create an event with Google Meet integration
     const event = {
-      summary: `swnk Consultation with ${name}`,
+      summary: `Shadownik(Swnk) Consultation with ${name}`,
       description: `
 Client Consultation Details:
 ---------------------------
@@ -87,7 +87,7 @@ ${message}
       attendees: attendees,
       conferenceData: {
         createRequest: {
-          requestId: `swnk-${Date.now()}`,
+          requestId: `Shadownik(Swnk)-${Date.now()}`,
           conferenceSolutionKey: { type: 'hangoutsMeet' }
         }
       },
@@ -123,7 +123,7 @@ ${message}
     });
     
     // Use environment variable for logo URL with a fallback
-    const logoUrl = process.env.LOGO_URL || 'https://swnk.in/logo.svg';
+    const logoUrl = process.env.LOGO_URL || 'https://shadownik.online/logo.svg';
     
     // Common HTML styles for emails
     const emailStyles = `
@@ -151,11 +151,11 @@ ${message}
     <body>
       <div class="container">
         <div class="header">
-          <img src="${logoUrl}" alt="swnk Logo" style="height: 40px; margin-bottom: 15px;">
+          <img src="${logoUrl}" alt="Shadownik(Swnk) Logo" style="height: 40px; margin-bottom: 15px;">
           <h1>New Client Consultation Booking</h1>
         </div>
         <div class="content">
-          <p>A new client has booked a consultation with swnk.</p>
+          <p>A new client has booked a consultation with Shadownik(Swnk).</p>
           
           <h2>Client Information</h2>
           <table>
@@ -201,8 +201,8 @@ ${message}
           </div>
         </div>
         <div class="footer">
-          <img src="${logoUrl}" alt="swnk Logo" style="height: 30px; margin-bottom: 15px;">
-          <p>© ${new Date().getFullYear()} swnk Web Development Services</p>
+          <img src="${logoUrl}" alt="Shadownik(Swnk) Logo" style="height: 30px; margin-bottom: 15px;">
+          <p>© ${new Date().getFullYear()} Shadownik(Swnk) Web Development Services</p>
         </div>
       </div>
     </body>
@@ -219,7 +219,7 @@ ${message}
     <body>
       <div class="container">
         <div class="header">
-          <img src="${logoUrl}" alt="swnk Logo" style="height: 40px; margin-bottom: 15px;">
+          <img src="${logoUrl}" alt="Shadownik(Swnk) Logo" style="height: 40px; margin-bottom: 15px;">
           <h1>Upcoming Client Consultation</h1>
         </div>
         <div class="content">
@@ -278,11 +278,11 @@ ${message}
             <li>Checking your equipment before the meeting (camera, microphone, etc.)</li>
           </ul>
           
-          <p>Best regards,<br>swnk Team</p>
+          <p>Best regards,<br>Shadownik(Swnk) Team</p>
         </div>
         <div class="footer">
-          <img src="${logoUrl}" alt="swnk Logo" style="height: 30px; margin-bottom: 15px;">
-          <p>© ${new Date().getFullYear()} swnk Web Development Services</p>
+          <img src="${logoUrl}" alt="Shadownik(Swnk) Logo" style="height: 30px; margin-bottom: 15px;">
+          <p>© ${new Date().getFullYear()} Shadownik(Swnk) Web Development Services</p>
         </div>
       </div>
     </body>
@@ -299,13 +299,13 @@ ${message}
     <body>
       <div class="container">
         <div class="header">
-          <img src="${logoUrl}" alt="swnk Logo" style="height: 40px; margin-bottom: 15px;">
-          <h1>Your Consultation with swnk</h1>
+          <img src="${logoUrl}" alt="Shadownik(Swnk) Logo" style="height: 40px; margin-bottom: 15px;">
+          <h1>Your Consultation with Shadownik(Swnk)</h1>
         </div>
         <div class="content">
           <p>Dear ${name},</p>
           
-          <p>Thank you for booking a consultation with swnk. We're looking forward to discussing your ${projectType} project with you.</p>
+          <p>Thank you for booking a consultation with Shadownik(Swnk). We're looking forward to discussing your ${projectType} project with you.</p>
           
           <div class="meeting-box">
             <h2>Meeting Details</h2>
@@ -329,15 +329,15 @@ ${message}
             <li>Think about your project goals, timeline, and specific requirements</li>
           </ul>
           
-          <p>If you need to reschedule or have any questions before our meeting, please contact us at <a href="mailto:info@swnk.in">info@swnk.in</a>.</p>
+          <p>If you need to reschedule or have any questions before our meeting, please contact us at <a href="mailto:info@shadownik.online">info@shadownik.online</a>.</p>
           
           <p>We're looking forward to speaking with you!</p>
           
-          <p>Best regards,<br>Team swnk</p>
+          <p>Best regards,<br>Team Shadownik(Swnk)</p>
         </div>
         <div class="footer">
-          <img src="${logoUrl}" alt="swnk Logo" style="height: 30px; margin-bottom: 15px;">
-          <p>© ${new Date().getFullYear()} swnk Web Development Services</p>
+          <img src="${logoUrl}" alt="Shadownik(Swnk) Logo" style="height: 30px; margin-bottom: 15px;">
+          <p>© ${new Date().getFullYear()} Shadownik(Swnk) Web Development Services</p>
         </div>
       </div>
     </body>
@@ -346,7 +346,7 @@ ${message}
 
     // Send email to admin
     const adminEmailResult = await sendEmail({
-      to: "swnk.official@gmail.com",
+      to: "Shadownik(Swnk).official@gmail.com",
       subject: `New Consultation: ${name} - ${formattedDate}`,
       html: adminHtml
     });
@@ -374,7 +374,7 @@ ${message}
     // Send email to client
     const clientEmailResult = await sendEmail({
       to: email,
-      subject: 'Your Consultation with swnk - Confirmation',
+      subject: 'Your Consultation with Shadownik(Swnk) - Confirmation',
       html: clientHtml
     });
     

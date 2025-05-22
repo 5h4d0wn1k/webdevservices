@@ -18,7 +18,7 @@ app.use(express.json());
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: process.env.GMAIL_USER || 'sales@swnk.in',
+    user: process.env.GMAIL_USER || 'sales@shadownik.online',
     pass: process.env.EMAIL_PASSWORD,
   },
 });
@@ -52,8 +52,8 @@ app.post('/api/contact', async (req, res) => {
 
     // Send notification to admin
     await transporter.sendMail({
-      from: '"swnk Contact Form" <support@swnk.in>',
-      to: 'sales@swnk.in',
+      from: '"Shadownik(Swnk) Contact Form" <support@shadownik.online>',
+      to: 'sales@shadownik.online',
       subject: `New Contact Form Submission - ${service}`,
       html: `
         <h2>New Contact Form Submission</h2>
@@ -69,11 +69,11 @@ app.post('/api/contact', async (req, res) => {
 
     // Send confirmation to client
     await transporter.sendMail({
-      from: '"swnk Web Development" <info@swnk.in>',
+      from: '"Shadownik(Swnk) Web Development" <info@shadownik.online>',
       to: email,
-      subject: 'Thank You for Contacting swnk',
+      subject: 'Thank You for Contacting Shadownik(Swnk)',
       html: `
-        <h2>Thank you for contacting swnk!</h2>
+        <h2>Thank you for contacting Shadownik(Swnk)!</h2>
         <p>Dear ${name},</p>
         
         <p>We have received your message regarding ${service}. Our team will review your request and get back to you shortly.</p>
@@ -83,14 +83,14 @@ app.post('/api/contact', async (req, res) => {
         
         <p>In the meantime, you can:</p>
         <ul>
-          <li>Check out our portfolio at <a href="https://swnk.in">swnk.in</a></li>
+          <li>Check out our portfolio at <a href="https://shadownik.online">shadownik.online</a></li>
           <li>Follow us on social media for updates</li>
           <li>Schedule a free consultation call</li>
         </ul>
         
         <p>If you have any urgent questions, please don't hesitate to call us.</p>
         
-        <p>Best regards,<br>The swnk Team</p>
+        <p>Best regards,<br>The Shadownik(Swnk) Team</p>
       `,
     });
 
@@ -151,9 +151,9 @@ Details: ${message}
         timeZone: 'Asia/Kolkata',
       },
       attendees: [
-        { email: 'sales@swnk.in' },
-        { email: 'support@swnk.in' },
-        { email: 'info@swnk.in' },
+        { email: 'sales@shadownik.online' },
+        { email: 'support@shadownik.online' },
+        { email: 'info@shadownik.online' },
       ],
       conferenceData: {
         createRequest: {
@@ -173,8 +173,8 @@ Details: ${message}
 
     // Send notification to admin
     await transporter.sendMail({
-      from: '"swnk Booking System" <sales@swnk.in>',
-      to: 'support@swnk.in',
+      from: '"Shadownik(Swnk) Booking System" <sales@shadownik.online>',
+      to: 'support@shadownik.online',
       subject: `New Consultation Booking - ${projectType}`,
       html: `
         <h2>New Consultation Booking</h2>
@@ -197,11 +197,11 @@ Details: ${message}
 
     // Send confirmation to client
     await transporter.sendMail({
-      from: '"swnk Web Development" <info@swnk.in>',
+      from: '"Shadownik(Swnk) Web Development" <info@shadownik.online>',
       to: email,
-      subject: 'Your Consultation with swnk is Confirmed',
+      subject: 'Your Consultation with Shadownik(Swnk) is Confirmed',
       html: `
-        <h2>Thank you for booking a consultation with swnk!</h2>
+        <h2>Thank you for booking a consultation with Shadownik(Swnk)!</h2>
         <p>Dear ${name},</p>
         
         <p>Your consultation has been confirmed for:</p>
@@ -233,7 +233,7 @@ Details: ${message}
         
         <p>If you need to reschedule or have any questions, please reply to this email or call us.</p>
         
-        <p>Best regards,<br>The swnk Team</p>
+        <p>Best regards,<br>The Shadownik(Swnk) Team</p>
       `,
     });
 

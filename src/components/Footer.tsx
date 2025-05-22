@@ -12,6 +12,7 @@ import {
   ArrowUp,
   Sparkles
 } from 'lucide-react';
+import { footerData } from '../data/footerData';
 
 // Create motion components with forwardRef
 const MotionDiv = motion(forwardRef((props: any, ref) => (
@@ -30,6 +31,8 @@ const Footer = () => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  const { brandName, description, socialLinks, servicesHeading, servicesLinks, companyHeading, companyLinks, copyrightText, copyrightLinkText, copyrightLinkHref, privacyPolicyLinkText, privacyPolicyLinkHref, termsOfServiceLinkText, termsOfServiceLinkHref } = footerData;
 
   return (
     <footer className="relative overflow-hidden bg-gradient-to-b from-black via-gray-900 to-black border-t border-white/10">
@@ -56,23 +59,13 @@ const Footer = () => {
               whileHover={{ scale: 1.05 }}
               className="text-2xl font-bold mb-6 inline-block bg-gradient-to-r from-primary via-accent to-neon-purple bg-clip-text text-transparent"
             >
-              swnk
+              {brandName}
             </MotionA>
             <p className="text-gray-400 mb-6 max-w-md">
-              Crafting exceptional digital experiences through innovative design and cutting-edge technology.
+              {description}
             </p>
             <div className="flex space-x-4">
-              {[
-                { icon: <Github className="w-5 h-5" />, href: "https://github.com/swnk-official" },
-                { icon: <Twitter className="w-5 h-5" />, href: "https://x.com/swnk_ofc", label: "Twitter" },
-                { icon: <Linkedin className="w-5 h-5" />, href: "https://www.linkedin.com/company/swnk", label: "LinkedIn" },
-                { icon: <Facebook className="w-5 h-5" />, href: "https://www.facebook.com/people/swnk/61562599613319", label: "Facebook" },
-                { icon: <Instagram className="w-5 h-5" />, href: "https://instagram.com/swnk.official", label: "Instagram" },
-                { icon: <Youtube className="w-5 h-5" />, href: "https://www.youtube.com/@swnk.official", label: "YouTube" },
-                { icon: <MessageCircle className="w-5 h-5" />, href: "https://t.me/swnkofficial", label: "Telegram" },
-                { icon: <MessagesSquare className="w-5 h-5" />, href: "https://www.whatsapp.com/channel/0029VakSdtTfXUuURqTLgF3A", label: "WhatsApp" }
-             
-              ].map((social, index) => (
+              {socialLinks.map((social, index) => (
                 <MotionA
                   key={index}
                   href={social.href}
@@ -90,16 +83,10 @@ const Footer = () => {
 
           <div>
             <h3 className="font-semibold mb-6 bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
-              Services
+              {servicesHeading}
             </h3>
             <ul className="space-y-4">
-              {[
-                "Web Development",
-                "Mobile Solutions",
-                "E-Commerce",
-                "UI/UX Design",
-                "Cloud Services"
-              ].map((item) => (
+              {servicesLinks.map((item) => (
                 <li key={item}>
                   <MotionA
                     href="#"
@@ -116,16 +103,10 @@ const Footer = () => {
 
           <div>
             <h3 className="font-semibold mb-6 bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
-              Company
+              {companyHeading}
             </h3>
             <ul className="space-y-4">
-              {[
-                { label: "About Us", href: "#about" },
-                { label: "Portfolio", href: "#portfolio" },
-                { label: "Careers", href: "#" },
-                { label: "Blog", href: "#blog" },
-                { label: "Contact", href: "#contact" }
-              ].map((item) => (
+              {companyLinks.map((item) => (
                 <li key={item.label}>
                   <MotionA
                     href={item.href}
@@ -143,23 +124,25 @@ const Footer = () => {
 
         <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/10">
           <p className="text-gray-400 text-sm mb-4 md:mb-0">
-            © 2024 swnk. All rights reserved.
+            {copyrightText} <a href={copyrightLinkHref} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">{copyrightLinkText}</a>.
+            <br/>
+            © 2024 {copyrightLinkText}. All rights reserved.
           </p>
           
           <div className="flex items-center gap-8">
             <MotionA
-              href="/privacy-policy"
+              href={privacyPolicyLinkHref}
               whileHover={{ scale: 1.05 }}
               className="text-sm text-gray-400 hover:text-white transition-colors"
             >
-              Privacy Policy
+              {privacyPolicyLinkText}
             </MotionA>
             <MotionA
-              href="/terms-of-service"
+              href={termsOfServiceLinkHref}
               whileHover={{ scale: 1.05 }}
               className="text-sm text-gray-400 hover:text-white transition-colors"
             >
-              Terms of Service
+              {termsOfServiceLinkText}
             </MotionA>
             <MotionButton
               onClick={scrollToTop}

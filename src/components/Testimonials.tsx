@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Star, Quote, User } from 'lucide-react';
+import { testimonialsData } from '../data/testimonialsData';
 
 interface Testimonial {
   id: number;
@@ -18,45 +19,6 @@ const DefaultAvatar = () => (
     <User className="w-8 h-8 text-gray-400" />
   </div>
 );
-
-const testimonials: Testimonial[] = [
-  {
-    id: 1,
-    name: "Nikhil Nagpure",
-    role: "Founder & CEO",
-    company: "shadownik (swnk)",
-    avatar: "",
-    rating: 5,
-    quote: "As the founder of shadownik (swnk), I'm proud to lead a team that's revolutionizing web development services. Our commitment to excellence and innovation drives us to deliver exceptional results for every client. We combine technical expertise with creative solutions to create digital experiences that make a difference."
-  },
-  {
-    id: 2,
-    name: "Vishwakarma",
-    role: "Principal",
-    company: "Sunrise Public School",
-    avatar: "",
-    rating: 5,
-    quote: "Leading both shadownik (swnk) and Sunrise Public School has given me unique insights into the importance of digital transformation in education. Our team's ability to create engaging educational platforms while maintaining high standards of excellence is truly remarkable."
-  },
-  {
-    id: 3,
-    name: "Manish Nagpure",
-    role: "Network Engineer",
-    company: "shadownik (swnk)",
-    avatar: "",
-    rating: 5,
-    quote: "Our technical infrastructure and network solutions are built on cutting-edge technology. We ensure robust, secure, and scalable systems that support our clients' growing needs. The combination of technical expertise and client-focused approach sets us apart in the industry."
-  },
-  {
-    id: 4,
-    name: "Dinesh Nagpure",
-    role: "Chemistry Teacher",
-    company: "Govt. High School",
-    avatar: "",
-    rating: 5,
-    quote: "The integration of technology in education through shadownik (swnk)'s solutions has transformed how we teach and learn. Our digital platforms make complex concepts more accessible and engaging for students, while providing teachers with powerful tools for effective instruction."
-  }
-];
 
 const TestimonialCard: React.FC<{ testimonial: Testimonial; isActive: boolean }> = ({ testimonial, isActive }) => {
   const [imgError, setImgError] = useState(true); // Set to true by default since we start with empty avatar URLs
@@ -115,6 +77,7 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial; isActive: boolean }>
 const Testimonials = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [autoplay, setAutoplay] = useState(true);
+  const { spanText, headingText, descriptionText, autoplayInterval, prevButtonAriaLabel, nextButtonAriaLabel, testimonials } = testimonialsData;
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -122,11 +85,11 @@ const Testimonials = () => {
     if (autoplay) {
       interval = setInterval(() => {
         setActiveIndex((current) => (current + 1) % testimonials.length);
-      }, 5000);
+      }, autoplayInterval);
     }
     
     return () => clearInterval(interval);
-  }, [autoplay]);
+  }, [autoplay, autoplayInterval, testimonials.length]);
 
   const handlePrevious = () => {
     setAutoplay(false);
@@ -161,11 +124,11 @@ const Testimonials = () => {
         >
           <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/20 border border-primary/30 mb-4">
             <Star size={14} className="text-primary mr-2" />
-            <span className="text-sm font-medium text-primary">Client Success</span>
+            <span className="text-sm font-medium text-primary">{spanText}</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">What Our Clients Say</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">{headingText}</h2>
           <p className="max-w-2xl mx-auto text-xl text-gray-400">
-            Discover how we've helped businesses transform their digital presence
+            {descriptionText}
           </p>
         </motion.div>
         
@@ -173,11 +136,16 @@ const Testimonials = () => {
           {/* Testimonial Carousel */}
           <div className="overflow-hidden pb-12">
             <AnimatePresence mode="wait">
-              <TestimonialCard 
-                key={testimonials[activeIndex].id} 
-                testimonial={testimonials[activeIndex]} 
-                isActive={true}
-              />
+              {/* Use testimonials from data file */}
+              {testimonials.map((testimonial, index) => (
+                activeIndex === index && (
+                  <TestimonialCard 
+                    key={testimonial.id} 
+                    testimonial={testimonial} 
+                    isActive={true}
+                  />
+                )
+              ))}
             </AnimatePresence>
           </div>
           
@@ -188,7 +156,7 @@ const Testimonials = () => {
               whileTap={{ scale: 0.9 }}
               className="p-2 rounded-full bg-white/5 border border-white/10 hover:bg-primary/20 hover:border-primary/30 transition-colors"
               onClick={handlePrevious}
-              aria-label="Previous testimonial"
+              aria-label={prevButtonAriaLabel}
             >
               <ChevronLeft size={20} />
             </motion.button>
@@ -199,9 +167,7 @@ const Testimonials = () => {
                   key={index}
                   onClick={() => handleDotClick(index)}
                   className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                    index === activeIndex 
-                      ? 'bg-primary w-6' 
-                      : 'bg-white/30 hover:bg-white/50'
+                    activeIndex === index ? 'bg-primary scale-125' : 'bg-gray-600 hover:bg-gray-400'
                   }`}
                   aria-label={`Go to testimonial ${index + 1}`}
                 />
@@ -213,7 +179,7 @@ const Testimonials = () => {
               whileTap={{ scale: 0.9 }}
               className="p-2 rounded-full bg-white/5 border border-white/10 hover:bg-primary/20 hover:border-primary/30 transition-colors"
               onClick={handleNext}
-              aria-label="Next testimonial"
+              aria-label={nextButtonAriaLabel}
             >
               <ChevronRight size={20} />
             </motion.button>

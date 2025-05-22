@@ -13,73 +13,7 @@ import {
   CheckCircle,
   ArrowRight
 } from 'lucide-react';
-
-const services = [
-  {
-    id: "web-development",
-    icon: <Code2 className="w-8 h-8" />,
-    title: "Web Development",
-    description: "Crafting performant, scalable web applications with cutting-edge technologies and best practices.",
-    features: ["Custom Development", "Progressive Web Apps", "API Integration", "Cloud Solutions"],
-    caseStudy: "Transformed a legacy corporate website into a modern, responsive platform, resulting in 45% increase in user engagement and 2x conversion rate."
-  },
-  {
-    id: "mobile-solutions",
-    icon: <Smartphone className="w-8 h-8" />,
-    title: "Mobile Solutions",
-    description: "Building native and cross-platform mobile applications that deliver exceptional user experiences.",
-    features: ["iOS Development", "Android Development", "React Native", "Flutter"],
-    caseStudy: "Developed a cross-platform mobile app for a retail client that integrated with their existing systems, increasing mobile sales by 37%."
-  },
-  {
-    id: "e-commerce",
-    icon: <ShoppingBag className="w-8 h-8" />,
-    title: "E-Commerce",
-    description: "Creating powerful online stores with seamless payment integration and inventory management.",
-    features: ["Custom Platforms", "Payment Gateway", "Inventory Systems", "Analytics"],
-    caseStudy: "Built a custom e-commerce solution for a boutique brand, resulting in 60% higher conversion rates compared to their previous platform."
-  },
-  {
-    id: "backend-systems",
-    icon: <Database className="w-8 h-8" />,
-    title: "Backend Systems",
-    description: "Developing robust backend infrastructure that scales with your business needs.",
-    features: ["API Development", "Database Design", "Cloud Architecture", "Security"],
-    caseStudy: "Redesigned the backend architecture for a SaaS platform, improving performance by 70% and reducing operating costs by 35%."
-  },
-  {
-    id: "design-branding",
-    icon: <Palette className="w-8 h-8" />,
-    title: "Design & Branding",
-    description: "Creating stunning visual identities and user interfaces that captivate and convert.",
-    features: ["UI/UX Design", "Brand Strategy", "Visual Identity", "Motion Graphics"],
-    caseStudy: "Rebranded a tech startup with comprehensive design system, resulting in consistent brand recognition and 40% improved user satisfaction."
-  },
-  {
-    id: "performance",
-    icon: <Gauge className="w-8 h-8" />,
-    title: "Performance Optimization",
-    description: "Supercharging your digital platforms for lightning-fast experiences.",
-    features: ["Load Speed", "Core Web Vitals", "Resource Optimization", "Caching Strategies"],
-    caseStudy: "Optimized an enterprise web application, reducing load times by 65% and increasing overall system performance by 40%."
-  },
-  {
-    id: "cms-solutions",
-    icon: <Blocks className="w-8 h-8" />,
-    title: "CMS Solutions",
-    description: "Implementing powerful content management systems tailored to your workflow.",
-    features: ["WordPress", "Contentful", "Headless CMS", "Custom CMS"],
-    caseStudy: "Developed a custom headless CMS for a media company, enabling them to publish across multiple platforms from a single interface."
-  },
-  {
-    id: "ai-integrations",
-    icon: <BrainCircuit className="w-8 h-8" />,
-    title: "AI Integrations",
-    description: "Leveraging artificial intelligence to enhance your digital experiences.",
-    features: ["Chatbots", "Recommendation Engines", "NLP", "Predictive Analytics"],
-    caseStudy: "Integrated AI-powered recommendation system for an e-learning platform, increasing course completion rates by 32%."
-  }
-];
+import { servicesData } from '../data/servicesData';
 
 // Enhanced ServiceCard component with hover effects and animations
 const ServiceCard = ({ 
@@ -88,7 +22,7 @@ const ServiceCard = ({
   isActive, 
   onClick 
 }: { 
-  service: typeof services[0], 
+  service: typeof servicesData.services[0], 
   index: number,
   isActive: boolean,
   onClick: () => void 
@@ -159,16 +93,7 @@ const ServiceCard = ({
 const Services = () => {
   const [activeService, setActiveService] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
-  
-  const categories = [
-    { id: "all", name: "All Services" },
-    { id: "web", name: "Web", services: ["web-development", "performance", "cms-solutions"] },
-    { id: "mobile", name: "Mobile", services: ["mobile-solutions"] },
-    { id: "commerce", name: "Commerce", services: ["e-commerce"] },
-    { id: "infrastructure", name: "Infrastructure", services: ["backend-systems", "performance"] },
-    { id: "design", name: "Design", services: ["design-branding"] },
-    { id: "innovation", name: "Innovation", services: ["ai-integrations"] }
-  ];
+  const { spanText, services, categories } = servicesData;
   
   const filteredServices = selectedCategory === "all" 
     ? services 
@@ -196,7 +121,7 @@ const Services = () => {
         >
           <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/20 border border-primary/30 mb-4">
             <Sparkles size={14} className="text-primary mr-2" />
-            <span className="text-sm font-medium text-primary">Our Expertise</span>
+            <span className="text-sm font-medium text-primary">{spanText}</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold mb-4">Comprehensive Web Services</h2>
           <p className="max-w-2xl mx-auto text-xl text-gray-400">
@@ -248,15 +173,17 @@ const Services = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mt-16"
         >
-          <a 
-            href="#contact" 
-            className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white font-medium shadow-lg shadow-primary/30 transition-all duration-300 hover:scale-105"
-          >
-            Get Started with swnk
-            <ArrowRight size={16} className="ml-2" />
-          </a>
+          <div className="text-center mt-16">
+            <h3 className="text-3xl font-bold mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Ready to Start Your Project?</h3>
+            <p className="text-gray-400 max-w-2xl mx-auto mb-8">Let's discuss your ideas and how we can help you achieve your digital goals. Get a free consultation today.</p>
+            <a 
+              href="#contact"
+              className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-primary to-accent rounded-lg shadow-lg hover:from-primary-dark hover:to-accent-dark transition-all duration-300"
+            >
+              Book a Free Consultation
+            </a>
+          </div>
         </motion.div>
       </div>
     </section>

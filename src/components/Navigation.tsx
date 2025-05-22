@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Logo from './Logo';
+import { navigationData } from '../data/navigationData';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,22 +18,7 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navItems = [
-    { name: 'About', href: '#about' },
-    { 
-      name: 'Services', 
-      href: '#services',
-      dropdown: [
-        { name: 'Web Development', href: '#web-development' },
-        { name: 'E-commerce', href: '#e-commerce' },
-        { name: 'Web Applications', href: '#web-applications' },
-        { name: 'Digital Marketing', href: '#digital-marketing' }
-      ]
-    },
-    { name: 'Portfolio', href: '#portfolio' },
-    { name: 'Blog', href: '#blog' },
-    { name: 'Contact', href: '#contact' },
-  ];
+  const { brandName, navItems } = navigationData;
 
   const handleDropdownToggle = (name: string) => {
     setActiveDropdown(activeDropdown === name ? null : name);
@@ -59,7 +45,7 @@ const Navigation = () => {
             <a href="/" className="flex items-center gap-2">
               <Logo className="h-10 w-10" />
               <span className="text-transparent bg-gradient-to-r from-primary via-accent to-neon-purple bg-clip-text text-2xl font-bold">
-                shadownik (swnk)
+                {brandName}
               </span>
             </a>
           </motion.div>

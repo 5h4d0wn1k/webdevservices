@@ -134,7 +134,7 @@ Domain Status: ${bookingData.technical?.domain || 'Not specified'}
     
     // Create meeting without conferenceData
     const event = {
-      summary: `swnk Consultation with ${bookingData.name}`,
+      summary: `Shadownik(Swnk) Consultation with ${bookingData.name}`,
       description,
       start: {
         dateTime: startTime.toISOString(),
@@ -166,8 +166,8 @@ Domain Status: ${bookingData.technical?.domain || 'Not specified'}
     
     // Send emails with the meet link
     const adminEmails = [
-      'swnk.official@gmail.com', // Always include main admin email
-      process.env.INFO_EMAIL || 'info@swnk.in', // Always include info email
+      'Shadownik(Swnk).official@gmail.com', // Always include main admin email
+      process.env.INFO_EMAIL || 'info@shadownik.online', // Always include info email
       process.env.ADMIN_EMAIL,
       process.env.FOUNDER_EMAIL,
       process.env.LEAD_EMAIL
@@ -178,7 +178,7 @@ Domain Status: ${bookingData.technical?.domain || 'Not specified'}
     // Send admin emails
     await Promise.all(adminEmails.map(email => 
       resend.emails.send({
-        from: `swnk Booking <bookings@${String(process.env.EMAIL_DOMAIN || 'web.swnk.in')}>`,
+        from: `Shadownik(Swnk) Booking <bookings@${String(process.env.EMAIL_DOMAIN || 'web.shadownik.online')}>`,
         to: String(email),
         subject: `New Consultation Booking with ${bookingData.name}`,
         html: generateConsultationEmail(bookingData, meetLink, true)
@@ -187,9 +187,9 @@ Domain Status: ${bookingData.technical?.domain || 'Not specified'}
     
     // Send client email
     await resend.emails.send({
-      from: `swnk Booking <bookings@${String(process.env.EMAIL_DOMAIN || 'web.swnk.in')}>`,
+      from: `Shadownik(Swnk) Booking <bookings@${String(process.env.EMAIL_DOMAIN || 'web.shadownik.online')}>`,
       to: String(bookingData.email),
-      subject: 'Your swnk Consultation is Scheduled',
+      subject: 'Your Shadownik(Swnk) Consultation is Scheduled',
       html: generateConsultationEmail(bookingData, meetLink, false)
     });
     
@@ -218,19 +218,19 @@ const generateConsultationEmail = (bookingData: BookingData, meetLink: string | 
   // Social media links HTML - used in all email templates
   const socialMediaLinks = `
     <div style="display: flex; justify-content: center; align-items: center; gap: 12px; margin-top: 24px;">
-      <a href="https://github.com/swnk-official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+      <a href="https://github.com/Shadownik(Swnk)-official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
         <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
       </a>
-      <a href="https://x.com/swnk_ofc" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+      <a href="https://x.com/Shadownik(Swnk)_ofc" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
         <img src="https://cdn-icons-png.flaticon.com/512/123/123728.png" alt="Twitter" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
       </a>
-      <a href="https://www.linkedin.com/company/swnk" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+      <a href="https://www.linkedin.com/company/Shadownik(Swnk)" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
         <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
       </a>
-      <a href="https://www.facebook.com/people/swnk/61562599613319" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+      <a href="https://www.facebook.com/people/Shadownik(Swnk)/61562599613319" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
         <img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="Facebook" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
       </a>
-      <a href="https://instagram.com/swnk.official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+      <a href="https://instagram.com/Shadownik(Swnk).official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
         <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
       </a>
     </div>
@@ -299,7 +299,7 @@ const generateConsultationEmail = (bookingData: BookingData, meetLink: string | 
         <div style="max-width: 650px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);">
           <!-- Header with gradient -->
           <div style="background: linear-gradient(135deg, #4F46E5, #7C3AED); padding: 35px 20px; text-align: center;">
-            <img src="/src/assets/logo/swnk-logo.svg" alt="swnk Logo" style="height: 40px; margin-bottom: 20px;">
+            <img src="/src/assets/logo/Shadownik(Swnk)-logo.svg" alt="Shadownik(Swnk) Logo" style="height: 40px; margin-bottom: 20px;">
             <h1 style="margin: 0; color: white; font-size: 28px; font-weight: 600; letter-spacing: -0.5px;">New Consultation Booking</h1>
             <p style="color: rgba(255, 255, 255, 0.9); margin: 8px 0 0; font-size: 16px;">A new client has scheduled a consultation with you</p>
           </div>
@@ -411,7 +411,7 @@ const generateConsultationEmail = (bookingData: BookingData, meetLink: string | 
           
           <!-- Footer -->
           <div style="padding: 30px; background-color: #f6f6f9; text-align: center; border-top: 1px solid #eee;">
-            <img src="/src/assets/logo/swnk-logo.svg" alt="swnk" style="height: 28px; margin-bottom: 20px;">
+            <img src="/src/assets/logo/Shadownik(Swnk)-logo.svg" alt="Shadownik(Swnk)" style="height: 28px; margin-bottom: 20px;">
             <p style="margin: 0 0 15px; color: #666; font-size: 14px;">
               Crafting exceptional digital experiences through innovative design and cutting-edge technology.
             </p>
@@ -419,10 +419,10 @@ const generateConsultationEmail = (bookingData: BookingData, meetLink: string | 
             ${socialMediaLinks}
             
             <p style="margin: 20px 0 0; color: #999; font-size: 13px;">
-              © 2024 swnk. All rights reserved.
+              © 2024 Shadownik(Swnk). All rights reserved.
             </p>
             <p style="margin: 5px 0 0; color: #999; font-size: 12px;">
-              This is an automated message from swnk Web Development Services
+              This is an automated message from Shadownik(Swnk) Web Development Services
             </p>
           </div>
         </div>
@@ -442,9 +442,9 @@ const generateConsultationEmail = (bookingData: BookingData, meetLink: string | 
         <div style="max-width: 650px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);">
           <!-- Header with gradient -->
           <div style="background: linear-gradient(135deg, #4F46E5, #7C3AED); padding: 35px 20px; text-align: center;">
-            <img src="/src/assets/logo/swnk-logo.svg" alt="swnk Logo" style="height: 40px; margin-bottom: 20px;">
+            <img src="/src/assets/logo/Shadownik(Swnk)-logo.svg" alt="Shadownik(Swnk) Logo" style="height: 40px; margin-bottom: 20px;">
             <h1 style="margin: 0; color: white; font-size: 28px; font-weight: 600; letter-spacing: -0.5px;">Your Consultation is Confirmed!</h1>
-            <p style="color: rgba(255, 255, 255, 0.9); margin: 8px 0 0; font-size: 16px;">Thank you for scheduling a consultation with swnk</p>
+            <p style="color: rgba(255, 255, 255, 0.9); margin: 8px 0 0; font-size: 16px;">Thank you for scheduling a consultation with Shadownik(Swnk)</p>
           </div>
           
           <!-- Content -->
@@ -454,7 +454,7 @@ const generateConsultationEmail = (bookingData: BookingData, meetLink: string | 
             </p>
             
             <p style="font-size: 16px; line-height: 1.6;">
-              Thank you for scheduling a consultation with swnk. We're excited to connect with you and discuss your project requirements.
+              Thank you for scheduling a consultation with Shadownik(Swnk). We're excited to connect with you and discuss your project requirements.
             </p>
             
             <!-- Consultation Details Card -->
@@ -500,7 +500,7 @@ const generateConsultationEmail = (bookingData: BookingData, meetLink: string | 
               <h2 style="margin-top: 0; color: #92400E; font-size: 18px; font-weight: 600;">Important Notes:</h2>
               <ul style="margin: 15px 0 0; padding: 0 0 0 20px;">
                 <li style="padding: 6px 0; font-size: 15px;">Please join the meeting 5 minutes before the scheduled time</li>
-                <li style="padding: 6px 0; font-size: 15px;">If you need to reschedule, please contact us at least 24 hours in advance at <a href="mailto:contact@swnk.in" style="color: #4F46E5; text-decoration: none;">contact@swnk.in</a></li>
+                <li style="padding: 6px 0; font-size: 15px;">If you need to reschedule, please contact us at least 24 hours in advance at <a href="mailto:contact@shadownik.online" style="color: #4F46E5; text-decoration: none;">contact@shadownik.online</a></li>
                 <li style="padding: 6px 0; font-size: 15px;">The consultation is scheduled for 30 minutes, but we can extend if needed</li>
               </ul>
             </div>
@@ -513,13 +513,13 @@ const generateConsultationEmail = (bookingData: BookingData, meetLink: string | 
               Best regards,
             </p>
             <p style="font-size: 16px; line-height: 1.6; margin-top: 0; font-weight: 600;">
-              The swnk Team
+              The Shadownik(Swnk) Team
             </p>
           </div>
           
           <!-- Footer -->
           <div style="padding: 30px; background-color: #f6f6f9; text-align: center; border-top: 1px solid #eee;">
-            <img src="/src/assets/logo/swnk-logo.svg" alt="swnk" style="height: 28px; margin-bottom: 20px;">
+            <img src="/src/assets/logo/Shadownik(Swnk)-logo.svg" alt="Shadownik(Swnk)" style="height: 28px; margin-bottom: 20px;">
             <p style="margin: 0 0 15px; color: #666; font-size: 14px;">
               Crafting exceptional digital experiences through innovative design and cutting-edge technology.
             </p>
@@ -527,10 +527,10 @@ const generateConsultationEmail = (bookingData: BookingData, meetLink: string | 
             ${socialMediaLinks}
             
             <p style="margin: 20px 0 0; color: #999; font-size: 13px;">
-              © 2024 swnk. All rights reserved.
+              © 2024 Shadownik(Swnk). All rights reserved.
             </p>
             <p style="margin: 5px 0 0; color: #999; font-size: 12px;">
-              This is an automated message from swnk Web Development Services
+              This is an automated message from Shadownik(Swnk) Web Development Services
             </p>
           </div>
         </div>
@@ -639,8 +639,8 @@ export default defineConfig({
                 
                 // Send email to admin
                 await resend.emails.send({
-                  from: `swnk Contact <contact@${String(process.env.EMAIL_DOMAIN || 'swnk.com')}>`,
-                  to: [String(process.env.EMAIL_TO || 'swnk.official@gmail.com'), 'swnk.official@gmail.com'].filter((v, i, a) => a.indexOf(v) === i).join(','),
+                  from: `Shadownik(Swnk) Contact <contact@${String(process.env.EMAIL_DOMAIN || 'Shadownik(Swnk).com')}>`,
+                  to: [String(process.env.EMAIL_TO || 'Shadownik(Swnk).official@gmail.com'), 'Shadownik(Swnk).official@gmail.com'].filter((v, i, a) => a.indexOf(v) === i).join(','),
                   subject: `New Contact Form Submission from ${formData.name}`,
                   html: `
                     <!DOCTYPE html>
@@ -654,7 +654,7 @@ export default defineConfig({
                       <div style="max-width: 650px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);">
                         <!-- Header with gradient -->
                         <div style="background: linear-gradient(135deg, #4F46E5, #7C3AED); padding: 35px 20px; text-align: center;">
-                          <img src="/src/assets/logo/swnk-logo.svg" alt="swnk Logo" style="height: 40px; margin-bottom: 20px;">
+                          <img src="/src/assets/logo/Shadownik(Swnk)-logo.svg" alt="Shadownik(Swnk) Logo" style="height: 40px; margin-bottom: 20px;">
                           <h1 style="margin: 0; color: white; font-size: 28px; font-weight: 600; letter-spacing: -0.5px;">New Contact Inquiry</h1>
                           <p style="color: rgba(255, 255, 255, 0.9); margin: 8px 0 0; font-size: 16px;">A potential client has submitted a contact form</p>
                         </div>
@@ -702,34 +702,34 @@ export default defineConfig({
                         
                         <!-- Footer -->
                         <div style="padding: 30px; background-color: #f6f6f9; text-align: center; border-top: 1px solid #eee;">
-                          <img src="/src/assets/logo/swnk-logo.svg" alt="swnk" style="height: 28px; margin-bottom: 20px;">
+                          <img src="/src/assets/logo/Shadownik(Swnk)-logo.svg" alt="Shadownik(Swnk)" style="height: 28px; margin-bottom: 20px;">
                           <p style="margin: 0 0 15px; color: #666; font-size: 14px;">
                             Crafting exceptional digital experiences through innovative design and cutting-edge technology.
                           </p>
                           
                           <div style="display: flex; justify-content: center; align-items: center; gap: 12px; margin-top: 24px;">
-                            <a href="https://github.com/swnk-official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://github.com/Shadownik(Swnk)-official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
-                            <a href="https://x.com/swnk_ofc" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://x.com/Shadownik(Swnk)_ofc" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/123/123728.png" alt="Twitter" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
-                            <a href="https://www.linkedin.com/company/swnk" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://www.linkedin.com/company/Shadownik(Swnk)" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
-                            <a href="https://www.facebook.com/people/swnk/61562599613319" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://www.facebook.com/people/Shadownik(Swnk)/61562599613319" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="Facebook" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
-                            <a href="https://instagram.com/swnk.official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://instagram.com/Shadownik(Swnk).official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
                           </div>
                           
                           <p style="margin: 20px 0 0; color: #999; font-size: 13px;">
-                            © 2024 swnk. All rights reserved.
+                            © 2024 Shadownik(Swnk). All rights reserved.
                           </p>
                           <p style="margin: 5px 0 0; color: #999; font-size: 12px;">
-                            This is an automated message from swnk Web Development Services
+                            This is an automated message from Shadownik(Swnk) Web Development Services
                           </p>
                         </div>
                       </div>
@@ -740,9 +740,9 @@ export default defineConfig({
                 
                 // Send confirmation email to client
                 await resend.emails.send({
-                  from: `swnk Contact <contact@${String(process.env.EMAIL_DOMAIN || 'swnk.com')}>`,
+                  from: `Shadownik(Swnk) Contact <contact@${String(process.env.EMAIL_DOMAIN || 'Shadownik(Swnk).com')}>`,
                   to: String(formData.email),
-                  subject: 'Thank You for Contacting swnk',
+                  subject: 'Thank You for Contacting Shadownik(Swnk)',
                   html: `
                     <!DOCTYPE html>
                     <html lang="en">
@@ -755,7 +755,7 @@ export default defineConfig({
                       <div style="max-width: 650px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);">
                         <!-- Header with gradient -->
                         <div style="background: linear-gradient(135deg, #4F46E5, #7C3AED); padding: 35px 20px; text-align: center;">
-                          <img src="/src/assets/logo/swnk-logo.svg" alt="swnk Logo" style="height: 40px; margin-bottom: 20px;">
+                          <img src="/src/assets/logo/Shadownik(Swnk)-logo.svg" alt="Shadownik(Swnk) Logo" style="height: 40px; margin-bottom: 20px;">
                           <h1 style="margin: 0; color: white; font-size: 28px; font-weight: 600; letter-spacing: -0.5px;">Thank You for Reaching Out!</h1>
                           <p style="color: rgba(255, 255, 255, 0.9); margin: 8px 0 0; font-size: 16px;">We've received your message and will be in touch soon</p>
                         </div>
@@ -767,7 +767,7 @@ export default defineConfig({
                           </p>
                           
                           <p style="font-size: 16px; line-height: 1.6;">
-                            Thank you for reaching out to swnk. We've received your inquiry about our ${formData.service} services and are excited to help you with your project.
+                            Thank you for reaching out to Shadownik(Swnk). We've received your inquiry about our ${formData.service} services and are excited to help you with your project.
                           </p>
                           
                           <p style="font-size: 16px; line-height: 1.6;">
@@ -793,40 +793,40 @@ export default defineConfig({
                             Looking forward to collaborating with you,
                           </p>
                           <p style="font-size: 16px; line-height: 1.6; margin-top: 0; font-weight: 600;">
-                            The swnk Team
+                            The Shadownik(Swnk) Team
                           </p>
                         </div>
                         
                         <!-- Footer -->
                         <div style="padding: 30px; background-color: #f6f6f9; text-align: center; border-top: 1px solid #eee;">
-                          <img src="/src/assets/logo/swnk-logo.svg" alt="swnk" style="height: 28px; margin-bottom: 20px;">
+                          <img src="/src/assets/logo/Shadownik(Swnk)-logo.svg" alt="Shadownik(Swnk)" style="height: 28px; margin-bottom: 20px;">
                           <p style="margin: 0 0 15px; color: #666; font-size: 14px;">
                             Crafting exceptional digital experiences through innovative design and cutting-edge technology.
                           </p>
                           
                           <div style="display: flex; justify-content: center; align-items: center; gap: 12px; margin-top: 24px;">
-                            <a href="https://github.com/swnk-official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://github.com/Shadownik(Swnk)-official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
-                            <a href="https://x.com/swnk_ofc" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://x.com/Shadownik(Swnk)_ofc" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/123/123728.png" alt="Twitter" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
-                            <a href="https://www.linkedin.com/company/swnk" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://www.linkedin.com/company/Shadownik(Swnk)" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
-                            <a href="https://www.facebook.com/people/swnk/61562599613319" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://www.facebook.com/people/Shadownik(Swnk)/61562599613319" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="Facebook" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
-                            <a href="https://instagram.com/swnk.official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://instagram.com/Shadownik(Swnk).official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
                           </div>
                           
                           <p style="margin: 20px 0 0; color: #999; font-size: 13px;">
-                            © 2024 swnk. All rights reserved.
+                            © 2024 Shadownik(Swnk). All rights reserved.
                           </p>
                           <p style="margin: 5px 0 0; color: #999; font-size: 12px;">
-                            This is an automated message from swnk Web Development Services
+                            This is an automated message from Shadownik(Swnk) Web Development Services
                           </p>
                         </div>
                       </div>
@@ -866,15 +866,15 @@ export default defineConfig({
                 
                 // Get admin recipients from environment variables
                 const adminRecipients = [
-                  process.env.ADMIN_EMAIL || 'swnk.official@gmail.com',
-                  process.env.INFO_EMAIL || 'info@swnk.in'
+                  process.env.ADMIN_EMAIL || 'Shadownik(Swnk).official@gmail.com',
+                  process.env.INFO_EMAIL || 'info@shadownik.online'
                 ].filter(Boolean); // Filter out any undefined values
                 
                 console.log('Sending newsletter notification to:', adminRecipients);
                 
                 // Send notification to admin
                 await resend.emails.send({
-                  from: `swnk Newsletter <newsletter@${String(process.env.EMAIL_DOMAIN || 'swnk.com')}>`,
+                  from: `Shadownik(Swnk) Newsletter <newsletter@${String(process.env.EMAIL_DOMAIN || 'Shadownik(Swnk).com')}>`,
                   to: adminRecipients,
                   subject: 'New Newsletter Subscription',
                   html: `
@@ -889,7 +889,7 @@ export default defineConfig({
                       <div style="max-width: 650px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);">
                         <!-- Header with gradient -->
                         <div style="background: linear-gradient(135deg, #4F46E5, #7C3AED); padding: 35px 20px; text-align: center;">
-                          <img src="/src/assets/logo/swnk-logo.svg" alt="swnk Logo" style="height: 40px; margin-bottom: 20px;">
+                          <img src="/src/assets/logo/Shadownik(Swnk)-logo.svg" alt="Shadownik(Swnk) Logo" style="height: 40px; margin-bottom: 20px;">
                           <h1 style="margin: 0; color: white; font-size: 28px; font-weight: 600; letter-spacing: -0.5px;">New Newsletter Subscription</h1>
                           <p style="color: rgba(255, 255, 255, 0.9); margin: 8px 0 0; font-size: 16px;">A new subscriber has joined your mailing list</p>
                         </div>
@@ -928,31 +928,31 @@ export default defineConfig({
                         
                         <!-- Footer -->
                         <div style="padding: 30px; background-color: #f6f6f9; text-align: center; border-top: 1px solid #eee;">
-                          <img src="/src/assets/logo/swnk-logo.svg" alt="swnk" style="height: 28px; margin-bottom: 20px;">
+                          <img src="/src/assets/logo/Shadownik(Swnk)-logo.svg" alt="Shadownik(Swnk)" style="height: 28px; margin-bottom: 20px;">
                           <p style="margin: 0 0 15px; color: #666; font-size: 14px;">
                             Crafting exceptional digital experiences through innovative design and cutting-edge technology.
                           </p>
                           
                           <div style="display: flex; justify-content: center; align-items: center; gap: 12px; margin-top: 24px;">
-                            <a href="https://github.com/swnk-official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://github.com/Shadownik(Swnk)-official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
-                            <a href="https://x.com/swnk_ofc" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://x.com/Shadownik(Swnk)_ofc" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/123/123728.png" alt="Twitter" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
-                            <a href="https://www.linkedin.com/company/swnk" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://www.linkedin.com/company/Shadownik(Swnk)" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
-                            <a href="https://www.facebook.com/people/swnk/61562599613319" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://www.facebook.com/people/Shadownik(Swnk)/61562599613319" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="Facebook" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
-                            <a href="https://instagram.com/swnk.official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://instagram.com/Shadownik(Swnk).official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
                           </div>
                           
                           <p style="margin: 20px 0 0; color: #999; font-size: 13px;">
-                            © 2024 swnk. All rights reserved.
+                            © 2024 Shadownik(Swnk). All rights reserved.
                           </p>
                           <p style="margin: 5px 0 0; color: #999; font-size: 12px;">
                             To unsubscribe, please reply to this email with "UNSUBSCRIBE" in the subject line.
@@ -966,30 +966,30 @@ export default defineConfig({
                 
                 // Send confirmation email to subscriber
                 await resend.emails.send({
-                  from: `swnk Newsletter <newsletter@${String(process.env.EMAIL_DOMAIN || 'swnk.com')}>`,
+                  from: `Shadownik(Swnk) Newsletter <newsletter@${String(process.env.EMAIL_DOMAIN || 'Shadownik(Swnk).com')}>`,
                   to: String(email),
-                  subject: 'Welcome to swnk Newsletter!',
+                  subject: 'Welcome to Shadownik(Swnk) Newsletter!',
                   html: `
                     <!DOCTYPE html>
                     <html lang="en">
                     <head>
                       <meta charset="UTF-8">
                       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                      <title>Welcome to swnk Newsletter</title>
+                      <title>Welcome to Shadownik(Swnk) Newsletter</title>
                     </head>
                     <body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; background-color: #f5f5f7;">
                       <div style="max-width: 650px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);">
                         <!-- Header with gradient -->
                         <div style="background: linear-gradient(135deg, #4F46E5, #7C3AED); padding: 35px 20px; text-align: center;">
-                          <img src="/src/assets/logo/swnk-logo.svg" alt="swnk Logo" style="height: 40px; margin-bottom: 20px;">
+                          <img src="/src/assets/logo/Shadownik(Swnk)-logo.svg" alt="Shadownik(Swnk) Logo" style="height: 40px; margin-bottom: 20px;">
                           <h1 style="margin: 0; color: white; font-size: 28px; font-weight: 600; letter-spacing: -0.5px;">Welcome to Our Newsletter!</h1>
-                          <p style="color: rgba(255, 255, 255, 0.9); margin: 8px 0 0; font-size: 16px;">Thank you for subscribing to swnk updates</p>
+                          <p style="color: rgba(255, 255, 255, 0.9); margin: 8px 0 0; font-size: 16px;">Thank you for subscribing to Shadownik(Swnk) updates</p>
                         </div>
                         
                         <!-- Content -->
                         <div style="padding: 40px 30px;">
                           <p style="margin-top: 0; font-size: 16px; line-height: 1.6;">
-                            Hello from the swnk team!
+                            Hello from the Shadownik(Swnk) team!
                           </p>
                           
                           <p style="font-size: 16px; line-height: 1.6;">
@@ -1008,7 +1008,7 @@ export default defineConfig({
                           </div>
                           
                           <div style="text-align: center; margin: 40px 0;">
-                            <a href="https://www.swnk.in" style="display: inline-block; padding: 14px 36px; background: linear-gradient(135deg, #4F46E5, #7C3AED); color: white; text-decoration: none; font-weight: 500; border-radius: 8px; font-size: 16px; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);">Explore Our Services</a>
+                            <a href="https://www.shadownik.online" style="display: inline-block; padding: 14px 36px; background: linear-gradient(135deg, #4F46E5, #7C3AED); color: white; text-decoration: none; font-weight: 500; border-radius: 8px; font-size: 16px; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);">Explore Our Services</a>
                           </div>
                           
                           <p style="font-size: 16px; line-height: 1.6; margin-bottom: 25px;">
@@ -1019,7 +1019,7 @@ export default defineConfig({
                             Looking forward to sharing valuable insights with you,
                           </p>
                           <p style="font-size: 16px; line-height: 1.6; margin-top: 0; font-weight: 600;">
-                            The swnk Team
+                            The Shadownik(Swnk) Team
                           </p>
                         </div>
                         
@@ -1044,31 +1044,31 @@ export default defineConfig({
                         
                         <!-- Footer -->
                         <div style="padding: 30px; background-color: #f6f6f9; text-align: center; border-top: 1px solid #eee;">
-                          <img src="/src/assets/logo/swnk-logo.svg" alt="swnk" style="height: 28px; margin-bottom: 20px;">
+                          <img src="/src/assets/logo/Shadownik(Swnk)-logo.svg" alt="Shadownik(Swnk)" style="height: 28px; margin-bottom: 20px;">
                           <p style="margin: 0 0 15px; color: #666; font-size: 14px;">
                             Crafting exceptional digital experiences through innovative design and cutting-edge technology.
                           </p>
                           
                           <div style="display: flex; justify-content: center; align-items: center; gap: 12px; margin-top: 24px;">
-                            <a href="https://github.com/swnk-official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://github.com/Shadownik(Swnk)-official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
-                            <a href="https://x.com/swnk_ofc" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://x.com/Shadownik(Swnk)_ofc" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/123/123728.png" alt="Twitter" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
-                            <a href="https://www.linkedin.com/company/swnk" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://www.linkedin.com/company/Shadownik(Swnk)" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
-                            <a href="https://www.facebook.com/people/swnk/61562599613319" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://www.facebook.com/people/Shadownik(Swnk)/61562599613319" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="Facebook" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
-                            <a href="https://instagram.com/swnk.official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://instagram.com/Shadownik(Swnk).official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
                           </div>
                           
                           <p style="margin: 20px 0 0; color: #999; font-size: 13px;">
-                            © 2024 swnk. All rights reserved.
+                            © 2024 Shadownik(Swnk). All rights reserved.
                           </p>
                           <p style="margin: 5px 0 0; color: #999; font-size: 12px;">
                             To unsubscribe, please reply to this email with "UNSUBSCRIBE" in the subject line.

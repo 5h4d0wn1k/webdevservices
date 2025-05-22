@@ -12,7 +12,7 @@ const getPort = () => {
 // Base URL configuration
 export const API_BASE_URL = isDevelopment 
   ? `${window?.location?.protocol || 'http:'}//${window?.location?.hostname || 'localhost'}:${getPort()}`
-  : 'https://web.swnk.in';
+  : 'https://web.shadownik.online';
 
 // API endpoints configuration
 export const API_ENDPOINTS = {

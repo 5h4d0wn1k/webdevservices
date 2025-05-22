@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, User, Mail, Phone, MessageSquare, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { Calendar, Clock, User, Mail, Phone, MessageSquare, CheckCircle, AlertCircle, Loader2, Send } from 'lucide-react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { API_ENDPOINTS } from '../config/api';
+import { consultationBookingData } from '../data/consultationBookingData';
 
 interface BookingData {
   name: string;
@@ -37,32 +38,7 @@ const ConsultationBooking: React.FC<ConsultationBookingProps> = ({ onBookingComp
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const projectTypes = [
-    "Custom Website",
-    "E-commerce Store",
-    "Web Application",
-    "Mobile App",
-    "UI/UX Design",
-    "Digital Marketing",
-    "Other"
-  ];
-
-  const budgetRanges = [
-    "Under $5,000",
-    "$5,000 - $10,000",
-    "$10,000 - $25,000",
-    "$25,000 - $50,000",
-    "$50,000+"
-  ];
-
-  const timeSlots = [
-    "09:00 AM",
-    "10:00 AM",
-    "11:00 AM",
-    "02:00 PM",
-    "03:00 PM",
-    "04:00 PM"
-  ];
+  const { headingText, descriptionText, projectTypes, budgetRanges, timeSlots, successMessage, errorMessage: dataErrorMessage, unexpectedErrorMessage, inputLabels, selectPlaceholders, buttonText } = consultationBookingData;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -134,7 +110,7 @@ const ConsultationBooking: React.FC<ConsultationBookingProps> = ({ onBookingComp
       }, 3000);
     } catch (error) {
       console.error('Consultation booking error:', error);
-      setErrorMessage(error instanceof Error ? error.message : 'An unexpected error occurred');
+      setErrorMessage(error instanceof Error ? error.message : unexpectedErrorMessage);
       setSubmitStatus('error');
       setTimeout(() => setSubmitStatus('idle'), 5000);
     } finally {
@@ -159,9 +135,9 @@ const ConsultationBooking: React.FC<ConsultationBookingProps> = ({ onBookingComp
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl font-bold mb-4">Schedule a Free Consultation</h2>
+          <h2 className="text-4xl font-bold mb-4">{headingText}</h2>
           <p className="text-xl text-gray-400">
-            Book a 30-minute call with our experts to discuss your project and get a free quote
+            {descriptionText}
           </p>
         </motion.div>
 
@@ -176,7 +152,7 @@ const ConsultationBooking: React.FC<ConsultationBookingProps> = ({ onBookingComp
                 className="bg-green-900/30 border border-green-500/30 rounded-lg p-4 flex items-center space-x-3"
               >
                 <CheckCircle className="text-green-500 w-5 h-5 flex-shrink-0" />
-                <p className="text-green-100">Consultation booked successfully! We've sent you a confirmation email with all the details.</p>
+                <p className="text-green-100">{successMessage}</p>
               </motion.div>
             )}
 
@@ -189,7 +165,7 @@ const ConsultationBooking: React.FC<ConsultationBookingProps> = ({ onBookingComp
               >
                 <AlertCircle className="text-red-500 w-5 h-5 flex-shrink-0" />
                 <div>
-                  <p className="text-red-100">There was an error booking your consultation.</p>
+                  <p className="text-red-100">{dataErrorMessage}</p>
                   {errorMessage && <p className="text-red-200 text-sm mt-1">{errorMessage}</p>}
                 </div>
               </motion.div>
@@ -201,7 +177,7 @@ const ConsultationBooking: React.FC<ConsultationBookingProps> = ({ onBookingComp
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-1">
                     <User className="w-4 h-4 inline mr-2" />
-                    Name
+                    {inputLabels.name}
                   </label>
                   <input
                     type="text"
@@ -215,7 +191,7 @@ const ConsultationBooking: React.FC<ConsultationBookingProps> = ({ onBookingComp
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-1">
                     <Mail className="w-4 h-4 inline mr-2" />
-                    Email
+                    {inputLabels.email}
                   </label>
                   <input
                     type="email"
@@ -229,7 +205,7 @@ const ConsultationBooking: React.FC<ConsultationBookingProps> = ({ onBookingComp
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-1">
                     <Phone className="w-4 h-4 inline mr-2" />
-                    Phone
+                    {inputLabels.phone}
                   </label>
                   <input
                     type="tel"
@@ -246,13 +222,13 @@ const ConsultationBooking: React.FC<ConsultationBookingProps> = ({ onBookingComp
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-1">
                     <Calendar className="w-4 h-4 inline mr-2" />
-                    Preferred Date
+                    {inputLabels.date}
                   </label>
                   <DatePicker
                     selected={bookingData.date}
                     onChange={(date) => setBookingData({ ...bookingData, date })}
                     minDate={new Date()}
-                    className="w-full px-4 py-3 bg-black/30 border border-white/10 rounded-lg focus:outline-none focus:border-primary/50 transition-colors"
+                    className={`w-full px-4 py-3 bg-black/30 border border-white/10 rounded-lg focus:outline-none focus:border-primary/50 transition-colors ${!bookingData.date && submitStatus === 'error' ? 'border-red-500' : ''}`}
                     placeholderText="Select a date"
                     required
                   />
@@ -261,7 +237,7 @@ const ConsultationBooking: React.FC<ConsultationBookingProps> = ({ onBookingComp
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-1">
                     <Clock className="w-4 h-4 inline mr-2" />
-                    Preferred Time
+                    {inputLabels.time}
                   </label>
                   <select
                     value={bookingData.time}
@@ -269,74 +245,81 @@ const ConsultationBooking: React.FC<ConsultationBookingProps> = ({ onBookingComp
                     className="w-full px-4 py-3 bg-black/30 border border-white/10 rounded-lg focus:outline-none focus:border-primary/50 transition-colors"
                     required
                   >
-                    <option value="">Select a time</option>
-                    {timeSlots.map((time) => (
-                      <option key={time} value={time}>{time}</option>
+                    <option value="">{selectPlaceholders.time}</option>
+                    {timeSlots.map(slot => (
+                      <option key={slot} value={slot}>{slot}</option>
                     ))}
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-1">Project Type</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-1">
+                    <MessageSquare className="w-4 h-4 inline mr-2" />
+                    {inputLabels.projectType}
+                  </label>
                   <select
                     value={bookingData.projectType}
                     onChange={(e) => setBookingData({ ...bookingData, projectType: e.target.value })}
                     className="w-full px-4 py-3 bg-black/30 border border-white/10 rounded-lg focus:outline-none focus:border-primary/50 transition-colors"
                     required
                   >
-                    <option value="">Select project type</option>
-                    {projectTypes.map((type) => (
+                    <option value="">{selectPlaceholders.projectType}</option>
+                    {projectTypes.map(type => (
                       <option key={type} value={type}>{type}</option>
                     ))}
                   </select>
                 </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-1">
+                    <Loader2 className="w-4 h-4 inline mr-2" />
+                    {inputLabels.budget}
+                  </label>
+                  <select
+                    value={bookingData.budget}
+                    onChange={(e) => setBookingData({ ...bookingData, budget: e.target.value })}
+                    className="w-full px-4 py-3 bg-black/30 border border-white/10 rounded-lg focus:outline-none focus:border-primary/50 transition-colors"
+                    required
+                  >
+                    <option value="">{selectPlaceholders.budget}</option>
+                    {budgetRanges.map(range => (
+                      <option key={range} value={range}>{range}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-1">
+                    <MessageSquare className="w-4 h-4 inline mr-2" />
+                    {inputLabels.message}
+                  </label>
+                  <textarea
+                    value={bookingData.message}
+                    onChange={(e) => setBookingData({ ...bookingData, message: e.target.value })}
+                    rows={4}
+                    className="w-full px-4 py-3 bg-black/30 border border-white/10 rounded-lg focus:outline-none focus:border-primary/50 transition-colors"
+                    required
+                  ></textarea>
+                </div>
               </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-300 mb-1">Budget Range</label>
-              <select
-                value={bookingData.budget}
-                onChange={(e) => setBookingData({ ...bookingData, budget: e.target.value })}
-                className="w-full px-4 py-3 bg-black/30 border border-white/10 rounded-lg focus:outline-none focus:border-primary/50 transition-colors"
-                required
+            <div className="text-center">
+              <motion.button
+                type="submit"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-primary to-accent text-white font-semibold px-8 py-4 rounded-full shadow-lg hover:from-accent hover:to-primary transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={isSubmitting}
               >
-                <option value="">Select budget range</option>
-                {budgetRanges.map((range) => (
-                  <option key={range} value={range}>{range}</option>
-                ))}
-              </select>
+                {isSubmitting ? (
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                ) : (
+                  <Send className="w-5 h-5" />
+                )}
+                {isSubmitting ? 'Booking...' : buttonText}
+              </motion.button>
             </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-300 mb-1">
-                <MessageSquare className="w-4 h-4 inline mr-2" />
-                Project Details
-              </label>
-              <textarea
-                value={bookingData.message}
-                onChange={(e) => setBookingData({ ...bookingData, message: e.target.value })}
-                rows={4}
-                className="w-full px-4 py-3 bg-black/30 border border-white/10 rounded-lg focus:outline-none focus:border-primary/50 transition-colors resize-none"
-                placeholder="Tell us about your project requirements..."
-                required
-              />
-            </div>
-
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full py-4 bg-gradient-to-r from-primary to-accent text-white font-semibold rounded-lg hover:from-primary/90 hover:to-accent/90 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300 flex items-center justify-center disabled:opacity-70"
-            >
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                  Booking Consultation...
-                </>
-              ) : (
-                'Book Free Consultation'
-              )}
-            </button>
           </form>
         </div>
       </div>

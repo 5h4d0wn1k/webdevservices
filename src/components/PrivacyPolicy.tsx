@@ -1,8 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Shield, ArrowLeft } from 'lucide-react';
+import { privacyPolicyData } from '../data/privacyPolicyData';
 
 const PrivacyPolicy = () => {
+  const { title, lastUpdated, sections, contactInfo, backLinkText, backLinkHref } = privacyPolicyData;
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black">
       <div className="max-w-4xl mx-auto px-4 py-24">
@@ -15,10 +18,10 @@ const PrivacyPolicy = () => {
           <div className="flex items-center gap-3 mb-6">
             <Shield className="w-8 h-8 text-primary" />
             <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              Privacy Policy
+              {title}
             </h1>
           </div>
-          <p className="text-gray-400 mb-4">Last updated: March 15, 2024</p>
+          <p className="text-gray-400 mb-4">Last updated: {lastUpdated}</p>
         </motion.div>
 
         <motion.div
@@ -27,78 +30,30 @@ const PrivacyPolicy = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="prose prose-invert max-w-none"
         >
-          <div className="bg-gradient-to-br from-primary/5 to-accent/5 rounded-2xl p-8 mb-8 border border-white/10">
-            <h2 className="text-2xl font-semibold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              1. Information We Collect
-            </h2>
-            <p className="text-gray-300 mb-4">
-              We collect information that you provide directly to us, including:
-            </p>
-            <ul className="list-disc list-inside text-gray-300 space-y-2 mb-4">
-              <li>Name and contact information</li>
-              <li>Account credentials</li>
-              <li>Payment information</li>
-              <li>Communication preferences</li>
-            </ul>
-          </div>
-
-          <div className="bg-gradient-to-br from-primary/5 to-accent/5 rounded-2xl p-8 mb-8 border border-white/10">
-            <h2 className="text-2xl font-semibold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              2. How We Use Your Information
-            </h2>
-            <p className="text-gray-300 mb-4">
-              We use the information we collect to:
-            </p>
-            <ul className="list-disc list-inside text-gray-300 space-y-2">
-              <li>Provide and maintain our services</li>
-              <li>Process your transactions</li>
-              <li>Send you technical notices and support messages</li>
-              <li>Communicate with you about products, services, and events</li>
-              <li>Protect against fraudulent or illegal activity</li>
-            </ul>
-          </div>
-
-          <div className="bg-gradient-to-br from-primary/5 to-accent/5 rounded-2xl p-8 mb-8 border border-white/10">
-            <h2 className="text-2xl font-semibold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              3. Information Sharing
-            </h2>
-            <p className="text-gray-300 mb-4">
-              We do not sell or rent your personal information to third parties. We may share your information with:
-            </p>
-            <ul className="list-disc list-inside text-gray-300 space-y-2">
-              <li>Service providers who assist in our operations</li>
-              <li>Professional advisors and consultants</li>
-              <li>Law enforcement when required by law</li>
-            </ul>
-          </div>
-
-          <div className="bg-gradient-to-br from-primary/5 to-accent/5 rounded-2xl p-8 mb-8 border border-white/10">
-            <h2 className="text-2xl font-semibold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              4. Your Rights and Choices
-            </h2>
-            <p className="text-gray-300 mb-4">
-              You have certain rights regarding your personal information:
-            </p>
-            <ul className="list-disc list-inside text-gray-300 space-y-2">
-              <li>Access your personal information</li>
-              <li>Correct inaccurate information</li>
-              <li>Request deletion of your information</li>
-              <li>Opt-out of marketing communications</li>
-            </ul>
-          </div>
-
-          <div className="bg-gradient-to-br from-primary/5 to-accent/5 rounded-2xl p-8 mb-8 border border-white/10">
-            <h2 className="text-2xl font-semibold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              5. Contact Us
-            </h2>
-            <p className="text-gray-300">
-              If you have any questions about this Privacy Policy, please contact us at:
-            </p>
-            <div className="mt-4">
-              <p className="text-gray-300">Email: support@swnk.in</p>
-              <p className="text-gray-300">Phone: +91 9165644843</p>
+          {sections.map((section, sectionIndex) => (
+            <div key={sectionIndex} className="bg-gradient-to-br from-primary/5 to-accent/5 rounded-2xl p-8 mb-8 border border-white/10">
+              <h2 className="text-2xl font-semibold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                {section.heading}
+              </h2>
+              {section.content.map((item, itemIndex) => (
+                Array.isArray(item) ? (
+                  <ul key={itemIndex} className="list-disc list-inside text-gray-300 space-y-2 mb-4">
+                    {item.map((listItem, listItemIndex) => (
+                      <li key={listItemIndex}>{listItem}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p key={itemIndex} className="text-gray-300 mb-4">{item}</p>
+                )
+              ))}
+              {section.heading === '5. Contact Us' && (
+                <div className="mt-4">
+                  <p className="text-gray-300">Email: {contactInfo.email}</p>
+                  <p className="text-gray-300">Phone: {contactInfo.phone}</p>
+                </div>
+              )}
             </div>
-          </div>
+          ))}
         </motion.div>
 
         <motion.div
@@ -108,11 +63,11 @@ const PrivacyPolicy = () => {
           className="mt-12"
         >
           <a
-            href="/"
+            href={backLinkHref}
             className="inline-flex items-center text-gray-400 hover:text-primary transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Home
+            {backLinkText}
           </a>
         </motion.div>
       </div>

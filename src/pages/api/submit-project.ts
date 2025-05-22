@@ -24,8 +24,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // Get admin recipients from environment variables with fallbacks
     const adminRecipients = [
-      'swnk.official@gmail.com', // Always include main admin email
-      process.env.INFO_EMAIL || 'info@swnk.in'
+      'Shadownik(Swnk).official@gmail.com', // Always include main admin email
+      process.env.INFO_EMAIL || 'info@shadownik.online'
     ];
     
     // Include team members if configured
@@ -37,7 +37,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     console.log('Sending project submission notification to:', adminRecipients);
 
     // Use environment variable for logo URL with a fallback
-    const logoUrl = process.env.LOGO_URL || 'https://swnk.in/logo.svg';
+    const logoUrl = process.env.LOGO_URL || 'https://shadownik.online/logo.svg';
 
     // Common HTML styles for emails
     const emailStyles = `
@@ -84,7 +84,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     <body>
       <div class="container">
         <div class="header">
-          <img src="${logoUrl}" alt="swnk Logo" style="height: 40px; margin-bottom: 15px;">
+          <img src="${logoUrl}" alt="Shadownik(Swnk) Logo" style="height: 40px; margin-bottom: 15px;">
           <h1 style="margin: 0; font-size: 24px;">New Project Submission</h1>
         </div>
         
@@ -184,8 +184,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           <p>This submission requires action. Please review the requirements and follow up with the client.</p>
         </div>
         <div class="footer">
-          <img src="${logoUrl}" alt="swnk">
-          <p>© ${new Date().getFullYear()} swnk Web Development Services. All rights reserved.</p>
+          <img src="${logoUrl}" alt="Shadownik(Swnk)">
+          <p>© ${new Date().getFullYear()} Shadownik(Swnk) Web Development Services. All rights reserved.</p>
         </div>
       </div>
     </body>
@@ -217,14 +217,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     <body>
       <div class="container">
         <div class="header">
-          <img src="${logoUrl}" alt="swnk Logo" style="height: 40px; margin-bottom: 15px;">
+          <img src="${logoUrl}" alt="Shadownik(Swnk) Logo" style="height: 40px; margin-bottom: 15px;">
           <h1 style="margin: 0; font-size: 24px;">Thank You for Your Project Submission</h1>
         </div>
         
         <div class="content">
           <p>Dear ${formData.businessInfo.name},</p>
           
-          <p>Thank you for submitting your project details to swnk. We're excited to learn more about your project and help bring your vision to life.</p>
+          <p>Thank you for submitting your project details to Shadownik(Swnk). We're excited to learn more about your project and help bring your vision to life.</p>
           
           <div class="section">
             <h2>Project Summary</h2>
@@ -279,15 +279,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             </ol>
           </div>
           
-          <p>If you have any questions before then, feel free to reach out to us at <a href="mailto:info@swnk.in">info@swnk.in</a>.</p>
+          <p>If you have any questions before then, feel free to reach out to us at <a href="mailto:info@shadownik.online">info@shadownik.online</a>.</p>
           
           <p>We look forward to working with you!</p>
           
-          <p>Best regards,<br>The swnk Team</p>
+          <p>Best regards,<br>The Shadownik(Swnk) Team</p>
         </div>
         <div class="footer">
-          <img src="${logoUrl}" alt="swnk">
-          <p>© ${new Date().getFullYear()} swnk Web Development Services. All rights reserved.</p>
+          <img src="${logoUrl}" alt="Shadownik(Swnk)">
+          <p>© ${new Date().getFullYear()} Shadownik(Swnk) Web Development Services. All rights reserved.</p>
         </div>
       </div>
     </body>
@@ -306,7 +306,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Send confirmation to client
     const clientResult = await sendEmail({
       to: formData.businessInfo.email,
-      subject: 'Your Project Request - swnk Web Development Services',
+      subject: 'Your Project Request - Shadownik(Swnk) Web Development Services',
       html: clientHtml,
     });
 
