@@ -11,7 +11,7 @@ Disallow: /api/
 Crawl-delay: 10
 
 # Sitemap location
-Sitemap: https://web.shadownik.online/sitemap.xml
+Sitemap: https://web.swnk.in/sitemap.xml
 
 # Host
-Host: https://web.shadownik.online 
+Host: https://web.swnk.in 

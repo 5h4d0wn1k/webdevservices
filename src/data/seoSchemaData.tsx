@@ -92,12 +92,12 @@ export const seoSchemaData: SeoSchemaDataType = {
   schemaData: {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "Shadownik(Swnk) Web Development Services",
-    "url": "https://web.shadownik.online",
-    "description": "Professional web development services from Shadownik(Swnk), the specialized sub-division of Shadownik in IT. We offer custom websites, e-commerce solutions, web applications, and digital transformation services. Get a free consultation today.",
+    "name": "Shadownik(SWNK) Web Development Services",
+    "url": "https://web.swnk.in",
+    "description": "Professional web development services from Shadownik(SWNK), the specialized sub-division of Shadownik in IT. We offer custom websites, e-commerce solutions, web applications, and digital transformation services. Get a free consultation today.",
     "potentialAction": {
       "@type": "SearchAction",
-      "target": "https://web.shadownik.online/search?q={search_term_string}",
+      "target": "https://web.swnk.in/search?q={search_term_string}",
       "query-input": "required name=search_term_string"
     }
   },
@@ -105,47 +105,47 @@ export const seoSchemaData: SeoSchemaDataType = {
   organizationData: {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "Shadownik(Swnk)",
-    "url": "https://web.shadownik.online",
-    "logo": "https://web.shadownik.online/logo.png",
+    "name": "Shadownik(SWNK)",
+    "url": "https://web.swnk.in",
+    "logo": "https://web.swnk.in/logo.png",
     "sameAs": [
-      "https://github.com/Shadownik(Swnk)-official",
-      "https://x.com/Shadownik(Swnk)_ofc",
-      "https://www.linkedin.com/company/Shadownik(Swnk)",
+      "https://github.com/Shadownik(SWNK)-official",
+      "https://x.com/Shadownik(SWNK)_ofc",
+      "https://www.linkedin.com/company/Shadownik(SWNK)",
       "https://discord.gg/UA4yYEGx",
-      "https://www.facebook.com/people/Shadownik(Swnk)/61562599613319",
-      "https://instagram.com/Shadownik(Swnk).official",
-      "https://www.youtube.com/@Shadownik(Swnk).official",
-      "https://t.me/Shadownik(Swnk)official",
+      "https://www.facebook.com/people/Shadownik(SWNK)/61562599613319",
+      "https://instagram.com/Shadownik(SWNK).official",
+      "https://www.youtube.com/@Shadownik(SWNK).official",
+      "https://t.me/Shadownik(SWNK)official",
       "https://www.whatsapp.com/channel/0029VakSdtTfXUuURqTLgF3A",
-      "https://shadownik.online"
+      "https://swnk.in"
     ],
     "contactPoint": {
       "@type": "ContactPoint",
       "telephone": "+91 9165644843",
       "contactType": "customer service",
-      "email": "support@shadownik.online",
+      "email": "support@swnk.in",
       "availableLanguage": ["English", "Hindi"]
     },
     "slogan": "Transforming Ideas into Digital Reality",
-    "description": "Shadownik(Swnk) is the specialized web development services division of Shadownik, an IT leader. We provide expert custom solutions that drive business growth and digital transformation.",
-    "keywords": "web development, custom websites, e-commerce, web applications, digital transformation, SEO services, mobile apps, Shadownik(Swnk), Shadownik"
+    "description": "Shadownik(SWNK) is the specialized web development services division of Shadownik, an IT leader. We provide expert custom solutions that drive business growth and digital transformation.",
+    "keywords": "web development, custom websites, e-commerce, web applications, digital transformation, SEO services, mobile apps, Shadownik(SWNK), Shadownik"
   },
 
   professionalServiceData: {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
-    "name": "Shadownik(Swnk) Web Development",
-    "image": "https://web.shadownik.online/logo.png",
+    "name": "Shadownik(SWNK) Web Development",
+    "image": "https://web.swnk.in/logo.png",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Remote",
       "addressCountry": "IN"
     },
     "telephone": "+91-9165644843",
-    "email": "info@shadownik.online",
-    "url": "https://web.shadownik.online",
-    "description": "Shadownik(Swnk), a specialized web development division of Shadownik, provides premium web development services including custom websites, e-commerce, web applications, and digital marketing solutions. Schedule a free consultation to discuss your project.",
+    "email": "info@swnk.in",
+    "url": "https://web.swnk.in",
+    "description": "Shadownik(SWNK), a specialized web development division of Shadownik, provides premium web development services including custom websites, e-commerce, web applications, and digital marketing solutions. Schedule a free consultation to discuss your project.",
     "priceRange": "$$-$$$",
     "openingHours": "Mo-Fr 09:00-18:00",
     "areaServed": {
@@ -177,10 +177,10 @@ export const seoSchemaData: SeoSchemaDataType = {
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "What web development services does Shadownik(Swnk) offer?",
+        "name": "What web development services does Shadownik(SWNK) offer?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Shadownik(Swnk), the web development services division of Shadownik, offers a comprehensive range of web development services including custom website development, e-commerce solutions, web applications, mobile app development, UI/UX design, and digital marketing services."
+          "text": "Shadownik(SWNK), the web development services division of Shadownik, offers a comprehensive range of web development services including custom website development, e-commerce solutions, web applications, mobile app development, UI/UX design, and digital marketing services."
         }
       },
       {

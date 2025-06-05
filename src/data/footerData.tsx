@@ -30,41 +30,41 @@ interface FooterDataType {
 }
 
 export const footerData: FooterDataType = {
-  brandName: "Shadownik(Swnk)",
+  brandName: "Shadownik(SWNK)",
   description: "Crafting exceptional digital experiences through innovative design and cutting-edge technology.",
   socialLinks: [
     {
       icon: <Github className="w-5 h-5" />,
-      href: "https://github.com/Shadownik(Swnk)-official"
+      href: "https://github.com/Shadownik(SWNK)-official"
     },
     {
       icon: <Twitter className="w-5 h-5" />,
-      href: "https://x.com/Shadownik(Swnk)_ofc",
+      href: "https://x.com/Shadownik(SWNK)_ofc",
       label: "Twitter"
     },
     {
       icon: <Linkedin className="w-5 h-5" />,
-      href: "https://www.linkedin.com/company/Shadownik(Swnk)",
+      href: "https://www.linkedin.com/company/Shadownik(SWNK)",
       label: "LinkedIn"
     },
     {
       icon: <Facebook className="w-5 h-5" />,
-      href: "https://www.facebook.com/people/Shadownik(Swnk)/61562599613319",
+      href: "https://www.facebook.com/people/Shadownik(SWNK)/61562599613319",
       label: "Facebook"
     },
     {
       icon: <Instagram className="w-5 h-5" />,
-      href: "https://instagram.com/Shadownik(Swnk).official",
+      href: "https://instagram.com/Shadownik(SWNK).official",
       label: "Instagram"
     },
     {
       icon: <Youtube className="w-5 h-5" />,
-      href: "https://www.youtube.com/@Shadownik(Swnk).official",
+      href: "https://www.youtube.com/@Shadownik(SWNK).official",
       label: "YouTube"
     },
     {
       icon: <MessageCircle className="w-5 h-5" />,
-      href: "https://t.me/Shadownik(Swnk)official",
+      href: "https://t.me/Shadownik(SWNK)official",
       label: "Telegram"
     },
     {
@@ -90,7 +90,7 @@ export const footerData: FooterDataType = {
     { label: "Contact", href: "#contact" }
   ],
   copyrightText: "A Web Development Service of",
-  copyrightLinkText: "Shadownik(Swnk)",
+  copyrightLinkText: "Shadownik(SWNK)",
   copyrightLinkHref: "#",
   privacyPolicyLinkText: "Privacy Policy",
   privacyPolicyLinkHref: "/privacy-policy",

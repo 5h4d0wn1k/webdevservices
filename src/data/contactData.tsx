@@ -20,13 +20,13 @@ interface ContactDataType {
 export const contactData: ContactDataType = {
   spanText: "Get in Touch",
   headingText: "Ready to Transform Your Digital Presence?",
-  descriptionText: "Contact us today to discuss your project and discover how Shadownik(Swnk) can elevate your web presence",
+  descriptionText: "Contact us today to discuss your project and discover how Shadownik(SWNK) can elevate your web presence",
   contactInfo: [
     {
       icon: <Mail className="w-5 h-5" />,
       label: "Email",
-      value: "info@shadownik.online",
-      link: "mailto:info@shadownik.online"
+      value: "info@swnk.in",
+      link: "mailto:info@swnk.in"
     },
     {
       icon: <Phone className="w-6 h-6" />,

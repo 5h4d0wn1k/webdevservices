@@ -52,8 +52,8 @@ app.post('/api/contact', async (req, res) => {
 
     // Send notification to admin
     await transporter.sendMail({
-      from: '"Shadownik(Swnk) Contact Form" <support@shadownik.online>',
-      to: 'sales@shadownik.online',
+      from: '"Shadownik(SWNK) Contact Form" <support@swnk.in>',
+      to: 'sales@swnk.in',
       subject: `New Contact Form Submission - ${service}`,
       html: `
         <h2>New Contact Form Submission</h2>
@@ -69,11 +69,11 @@ app.post('/api/contact', async (req, res) => {
 
     // Send confirmation to client
     await transporter.sendMail({
-      from: '"Shadownik(Swnk) Web Development" <info@shadownik.online>',
+      from: '"Shadownik(SWNK) Web Development" <info@swnk.in>',
       to: email,
-      subject: 'Thank You for Contacting Shadownik(Swnk)',
+      subject: 'Thank You for Contacting Shadownik(SWNK)',
       html: `
-        <h2>Thank you for contacting Shadownik(Swnk)!</h2>
+        <h2>Thank you for contacting Shadownik(SWNK)!</h2>
         <p>Dear ${name},</p>
         
         <p>We have received your message regarding ${service}. Our team will review your request and get back to you shortly.</p>
@@ -83,14 +83,14 @@ app.post('/api/contact', async (req, res) => {
         
         <p>In the meantime, you can:</p>
         <ul>
-          <li>Check out our portfolio at <a href="https://shadownik.online">shadownik.online</a></li>
+          <li>Check out our portfolio at <a href="https://web.swnk.in">web.swnk.in</a></li>
           <li>Follow us on social media for updates</li>
           <li>Schedule a free consultation call</li>
         </ul>
         
         <p>If you have any urgent questions, please don't hesitate to call us.</p>
         
-        <p>Best regards,<br>The Shadownik(Swnk) Team</p>
+        <p>Best regards,<br>The Shadownik(SWNK) Team</p>
       `,
     });
 

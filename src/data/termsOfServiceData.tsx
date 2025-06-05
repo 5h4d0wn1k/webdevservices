@@ -22,63 +22,49 @@ export const termsOfServiceData: TermsOfServiceDataType = {
   lastUpdated: "March 15, 2024",
   sections: [
     {
-      heading: "1. Agreement to Terms",
+      heading: "1. Introduction",
       content: [
-        "By accessing or using our services, you agree to be bound by these Terms of Service. If you disagree with any part of the terms, you may not access our services.",
+        "Welcome to Shadownik(SWNK) Web Development Services. These Terms of Service govern your use of our website and services.",
+        "By accessing or using our services, you agree to be bound by these Terms."
       ]
     },
     {
-      heading: "2. Use of Services",
+      heading: "2. Services",
       content: [
-        "Our services are provided \"as is\" and \"as available.\" You agree to use our services only for lawful purposes and in accordance with these Terms.",
-        "2.1 Account Responsibilities",
-        [
-          "Maintain accurate account information",
-          "Keep your account credentials secure",
-          "Notify us of any unauthorized access",
-        ],
-        "2.2 Prohibited Activities",
-        [
-          "Violating any applicable laws or regulations",
-          "Impersonating others or providing false information",
-          "Interfering with the proper functioning of the services",
-        ]
+        "Shadownik(SWNK) provides web development services including but not limited to website design, development, maintenance, and related services.",
+        "We reserve the right to modify or discontinue any service at any time."
       ]
     },
     {
       heading: "3. Intellectual Property",
       content: [
-        "All content, features, and functionality are owned by Shadownik(Swnk), the web development services division of Shadownik, and are protected by international copyright, trademark, and other intellectual property laws.", // Updated text
-        [
-          "You may not copy, modify, or distribute our content",
-          "All trademarks are the property of their respective owners",
-          "Unauthorized use may violate applicable laws",
-        ]
+        "All content, designs, and materials provided by Shadownik(SWNK) remain our exclusive property.",
+        "Clients retain rights to their original content and data."
       ]
     },
     {
       heading: "4. Limitation of Liability",
       content: [
-        "In no event shall Shadownik(Swnk), the web development services division of Shadownik, be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses.", // Updated text
+        "In no event shall Shadownik(SWNK), the web development services division of Shadownik, be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses."
       ]
     },
     {
       heading: "5. Changes to Terms",
       content: [
-        "We reserve the right to modify or replace these Terms at any time. Changes will be effective immediately upon posting. Your continued use of our services constitutes acceptance of the modified Terms.",
+        "We reserve the right to modify or replace these Terms at any time. Changes will be effective immediately upon posting. Your continued use of our services constitutes acceptance of the modified Terms."
       ]
     },
     {
       heading: "6. Contact Information",
       content: [
-        "For any questions about these Terms, please contact us at:",
+        "For any questions about these Terms, please contact us at:"
       ]
     }
   ],
   contactInfo: {
-    email: "support@shadownik.online",
+    email: "support@swnk.in",
     phone: "+91 9165644843",
   },
   backLinkText: "Back to Home",
-  backLinkHref: "/",
+  backLinkHref: "/"
 }; 

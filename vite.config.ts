@@ -178,7 +178,7 @@ Domain Status: ${bookingData.technical?.domain || 'Not specified'}
     // Send admin emails
     await Promise.all(adminEmails.map(email => 
       resend.emails.send({
-        from: `Shadownik(Swnk) Booking <bookings@${String(process.env.EMAIL_DOMAIN || 'web.shadownik.online')}>`,
+        from: `Shadownik(SWNK) Booking <bookings@${String(process.env.EMAIL_DOMAIN || 'web.swnk.in')}>`,
         to: String(email),
         subject: `New Consultation Booking with ${bookingData.name}`,
         html: generateConsultationEmail(bookingData, meetLink, true)
@@ -187,9 +187,9 @@ Domain Status: ${bookingData.technical?.domain || 'Not specified'}
     
     // Send client email
     await resend.emails.send({
-      from: `Shadownik(Swnk) Booking <bookings@${String(process.env.EMAIL_DOMAIN || 'web.shadownik.online')}>`,
+      from: `Shadownik(SWNK) Booking <bookings@${String(process.env.EMAIL_DOMAIN || 'web.swnk.in')}>`,
       to: String(bookingData.email),
-      subject: 'Your Shadownik(Swnk) Consultation is Scheduled',
+      subject: 'Your Shadownik(SWNK) Consultation is Scheduled',
       html: generateConsultationEmail(bookingData, meetLink, false)
     });
     

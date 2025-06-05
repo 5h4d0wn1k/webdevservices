@@ -1,6 +1,6 @@
 # Deploying to Vercel
 
-This document contains instructions for deploying your Shadownik(Swnk) Web Services application to Vercel.
+This document contains instructions for deploying your Shadownik(SWNK) Web Services application to Vercel.
 
 ## Prerequisites
 
@@ -27,14 +27,14 @@ Add the following environment variables to your Vercel project:
 RESEND_API_KEY=your_resend_api_key
 
 # Email Configuration
-EMAIL_DOMAIN=web.shadownik.online
-ADMIN_EMAIL=sales@shadownik.online
-INFO_EMAIL=info@shadownik.online
+EMAIL_DOMAIN=web.swnk.in
+ADMIN_EMAIL=sales@swnk.in
+INFO_EMAIL=info@swnk.in
 INCLUDE_TEAM_MEMBERS=true
 
 # Website Configuration
-LOGO_URL=https://shadownik.online/logo.svg
-WEBSITE_URL=https://shadownik.online
+LOGO_URL=https://web.swnk.in/logo.svg
+WEBSITE_URL=https://web.swnk.in
 
 # Google Calendar API
 GOOGLE_CREDENTIALS_TYPE=service_account

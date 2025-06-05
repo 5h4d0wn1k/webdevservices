@@ -17,14 +17,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     
     // Get admin recipients from environment variables
     const adminRecipients = [
-      process.env.ADMIN_EMAIL || 'Shadownik(Swnk).official@gmail.com',
-      process.env.INFO_EMAIL || 'info@shadownik.online'
+      process.env.ADMIN_EMAIL || 'sales@swnk.in',
+      process.env.INFO_EMAIL || 'info@swnk.in'
     ];
     
     console.log('Sending newsletter notification to:', adminRecipients);
 
     // Use environment variable for logo URL with a fallback
-    const logoUrl = process.env.LOGO_URL || 'https://shadownik.online/logo.svg';
+    const logoUrl = process.env.LOGO_URL || 'https://web.swnk.in/logo.svg';
 
     // Notify admin about new newsletter subscription
     const adminHtml = `

@@ -7,53 +7,53 @@
                             http://www.google.com/schemas/sitemap-image/1.1
                             http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd">
   <url>
-    <loc>https://web.shadownik.online/</loc>
+    <loc>https://web.swnk.in/</loc>
     <lastmod>2024-03-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://web.shadownik.online/src/assets/logo/Shadownik(Swnk)-logo.svg</image:loc>
-      <image:title>shadownik (Shadownik(Swnk)) Logo</image:title>
+      <image:loc>https://web.swnk.in/src/assets/logo/Shadownik(SWNK)-logo.svg</image:loc>
+      <image:title>Shadownik(SWNK) Logo</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://web.shadownik.online/#about</loc>
+    <loc>https://web.swnk.in/#about</loc>
     <lastmod>2024-03-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://web.shadownik.online/#services</loc>
+    <loc>https://web.swnk.in/#services</loc>
     <lastmod>2024-03-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://web.shadownik.online/#portfolio</loc>
+    <loc>https://web.swnk.in/#portfolio</loc>
     <lastmod>2024-03-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://web.shadownik.online/#blog</loc>
+    <loc>https://web.swnk.in/#blog</loc>
     <lastmod>2024-03-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://web.shadownik.online/#contact</loc>
+    <loc>https://web.swnk.in/#contact</loc>
     <lastmod>2024-03-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://web.shadownik.online/privacy-policy</loc>
+    <loc>https://web.swnk.in/privacy-policy</loc>
     <lastmod>2024-03-16</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://web.shadownik.online/terms-of-service</loc>
+    <loc>https://web.swnk.in/terms-of-service</loc>
     <lastmod>2024-03-16</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>

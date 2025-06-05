@@ -17,9 +17,9 @@ interface SendEmailResult {
 
 // Initialize Resend
 const resend = new Resend(process.env.RESEND_API_KEY);
-const domain = process.env.EMAIL_DOMAIN || 'shadownik.online';
-const mainAdminEmail = process.env.ADMIN_EMAIL || 'Shadownik(Swnk).official@gmail.com';
-const infoEmail = process.env.INFO_EMAIL || 'info@shadownik.online';
+const domain = process.env.EMAIL_DOMAIN || 'web.swnk.in';
+const mainAdminEmail = process.env.ADMIN_EMAIL || 'sales@swnk.in';
+const infoEmail = process.env.INFO_EMAIL || 'info@swnk.in';
 
 /**
  * Sends an email using Resend
