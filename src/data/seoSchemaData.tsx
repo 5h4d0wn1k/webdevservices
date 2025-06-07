@@ -109,16 +109,15 @@ export const seoSchemaData: SeoSchemaDataType = {
     "url": "https://web.swnk.in",
     "logo": "https://web.swnk.in/logo.png",
     "sameAs": [
-      "https://github.com/Shadownik(SWNK)-official",
-      "https://x.com/Shadownik(SWNK)_ofc",
-      "https://www.linkedin.com/company/Shadownik(SWNK)",
+      "https://github.com/Shadownik-official",
+      "https://x.com/Shadownik_ofc",
+      "https://www.linkedin.com/company/shadownik",
       "https://discord.gg/UA4yYEGx",
-      "https://www.facebook.com/people/Shadownik(SWNK)/61562599613319",
-      "https://instagram.com/Shadownik(SWNK).official",
-      "https://www.youtube.com/@Shadownik(SWNK).official",
-      "https://t.me/Shadownik(SWNK)official",
-      "https://www.whatsapp.com/channel/0029VakSdtTfXUuURqTLgF3A",
-      "https://swnk.in"
+      "https://www.facebook.com/people/Shadownik/61562599613319",
+      "https://instagram.com/Shadownik.official",
+      "https://www.youtube.com/@Shadownik.official",
+      "https://t.me/shadownikofficial",
+      "https://www.whatsapp.com/channel/0029VakSdTtFXUuURqTLgF3A"
     ],
     "contactPoint": {
       "@type": "ContactPoint",

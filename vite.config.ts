@@ -218,19 +218,19 @@ const generateConsultationEmail = (bookingData: BookingData, meetLink: string | 
   // Social media links HTML - used in all email templates
   const socialMediaLinks = `
     <div style="display: flex; justify-content: center; align-items: center; gap: 12px; margin-top: 24px;">
-      <a href="https://github.com/Shadownik(Swnk)-official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+      <a href="https://github.com/Shadownik-official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
         <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
       </a>
-      <a href="https://x.com/Shadownik(Swnk)_ofc" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+      <a href="https://x.com/Shadownik_ofc" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
         <img src="https://cdn-icons-png.flaticon.com/512/123/123728.png" alt="Twitter" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
       </a>
-      <a href="https://www.linkedin.com/company/Shadownik(Swnk)" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+      <a href="https://www.linkedin.com/company/shadownik" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
         <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
       </a>
-      <a href="https://www.facebook.com/people/Shadownik(Swnk)/61562599613319" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+      <a href="https://www.facebook.com/people/Shadownik/61562599613319" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
         <img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="Facebook" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
       </a>
-      <a href="https://instagram.com/Shadownik(Swnk).official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+      <a href="https://instagram.com/Shadownik.official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
         <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
       </a>
     </div>
@@ -708,19 +708,19 @@ export default defineConfig({
                           </p>
                           
                           <div style="display: flex; justify-content: center; align-items: center; gap: 12px; margin-top: 24px;">
-                            <a href="https://github.com/Shadownik(Swnk)-official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://github.com/Shadownik-official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
-                            <a href="https://x.com/Shadownik(Swnk)_ofc" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://x.com/Shadownik_ofc" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/123/123728.png" alt="Twitter" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
-                            <a href="https://www.linkedin.com/company/Shadownik(Swnk)" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://www.linkedin.com/company/shadownik" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
-                            <a href="https://www.facebook.com/people/Shadownik(Swnk)/61562599613319" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://www.facebook.com/people/Shadownik/61562599613319" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="Facebook" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
-                            <a href="https://instagram.com/Shadownik(Swnk).official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://instagram.com/Shadownik.official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
                           </div>
@@ -805,19 +805,19 @@ export default defineConfig({
                           </p>
                           
                           <div style="display: flex; justify-content: center; align-items: center; gap: 12px; margin-top: 24px;">
-                            <a href="https://github.com/Shadownik(Swnk)-official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://github.com/Shadownik-official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
-                            <a href="https://x.com/Shadownik(Swnk)_ofc" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://x.com/Shadownik_ofc" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/123/123728.png" alt="Twitter" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
-                            <a href="https://www.linkedin.com/company/Shadownik(Swnk)" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://www.linkedin.com/company/shadownik" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
-                            <a href="https://www.facebook.com/people/Shadownik(Swnk)/61562599613319" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://www.facebook.com/people/Shadownik/61562599613319" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="Facebook" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
-                            <a href="https://instagram.com/Shadownik(Swnk).official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://instagram.com/Shadownik.official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
                           </div>
@@ -934,19 +934,19 @@ export default defineConfig({
                           </p>
                           
                           <div style="display: flex; justify-content: center; align-items: center; gap: 12px; margin-top: 24px;">
-                            <a href="https://github.com/Shadownik(Swnk)-official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://github.com/Shadownik-official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
-                            <a href="https://x.com/Shadownik(Swnk)_ofc" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://x.com/Shadownik_ofc" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/123/123728.png" alt="Twitter" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
-                            <a href="https://www.linkedin.com/company/Shadownik(Swnk)" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://www.linkedin.com/company/shadownik" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
-                            <a href="https://www.facebook.com/people/Shadownik(Swnk)/61562599613319" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://www.facebook.com/people/Shadownik/61562599613319" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="Facebook" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
-                            <a href="https://instagram.com/Shadownik(Swnk).official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://instagram.com/Shadownik.official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
                           </div>
@@ -1050,19 +1050,19 @@ export default defineConfig({
                           </p>
                           
                           <div style="display: flex; justify-content: center; align-items: center; gap: 12px; margin-top: 24px;">
-                            <a href="https://github.com/Shadownik(Swnk)-official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://github.com/Shadownik-official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
-                            <a href="https://x.com/Shadownik(Swnk)_ofc" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://x.com/Shadownik_ofc" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/123/123728.png" alt="Twitter" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
-                            <a href="https://www.linkedin.com/company/Shadownik(Swnk)" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://www.linkedin.com/company/shadownik" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
-                            <a href="https://www.facebook.com/people/Shadownik(Swnk)/61562599613319" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://www.facebook.com/people/Shadownik/61562599613319" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="Facebook" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
-                            <a href="https://instagram.com/Shadownik(Swnk).official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
+                            <a href="https://instagram.com/Shadownik.official" target="_blank" style="display: inline-block; padding: 6px; background: rgba(79, 70, 229, 0.1); border-radius: 6px; color: #4F46E5; text-decoration: none;">
                               <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram" width="20" height="20" style="filter: invert(38%) sepia(65%) saturate(6695%) hue-rotate(231deg) brightness(91%) contrast(101%);">
                             </a>
                           </div>

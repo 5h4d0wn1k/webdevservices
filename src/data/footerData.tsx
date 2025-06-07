@@ -35,41 +35,41 @@ export const footerData: FooterDataType = {
   socialLinks: [
     {
       icon: <Github className="w-5 h-5" />,
-      href: "https://github.com/Shadownik(SWNK)-official"
+      href: "https://github.com/Shadownik-official"
     },
     {
       icon: <Twitter className="w-5 h-5" />,
-      href: "https://x.com/Shadownik(SWNK)_ofc",
+      href: "https://x.com/Shadownik_ofc",
       label: "Twitter"
     },
     {
       icon: <Linkedin className="w-5 h-5" />,
-      href: "https://www.linkedin.com/company/Shadownik(SWNK)",
+      href: "https://www.linkedin.com/company/shadownik",
       label: "LinkedIn"
     },
     {
       icon: <Facebook className="w-5 h-5" />,
-      href: "https://www.facebook.com/people/Shadownik(SWNK)/61562599613319",
+      href: "https://www.facebook.com/people/Shadownik/61562599613319",
       label: "Facebook"
     },
     {
       icon: <Instagram className="w-5 h-5" />,
-      href: "https://instagram.com/Shadownik(SWNK).official",
+      href: "https://instagram.com/Shadownik.official",
       label: "Instagram"
     },
     {
       icon: <Youtube className="w-5 h-5" />,
-      href: "https://www.youtube.com/@Shadownik(SWNK).official",
+      href: "https://www.youtube.com/@Shadownik.official",
       label: "YouTube"
     },
     {
       icon: <MessageCircle className="w-5 h-5" />,
-      href: "https://t.me/Shadownik(SWNK)official",
+      href: "https://t.me/shadownikofficial",
       label: "Telegram"
     },
     {
       icon: <MessagesSquare className="w-5 h-5" />,
-      href: "https://www.whatsapp.com/channel/0029VakSdtTfXUuURqTLgF3A",
+      href: "https://www.whatsapp.com/channel/0029VakSdTtFXUuURqTLgF3A",
       label: "WhatsApp"
     }
   ],

@@ -245,14 +245,14 @@ const Contact = () => {
                 <h3 className="text-lg font-semibold mb-4">Connect With Us</h3>
                 <div className="flex flex-wrap gap-4">
                   {[
-                    { icon: <Github className="w-5 h-5" />, href: "https://github.com/Shadownik(Swnk)-official", label: "GitHub" },
-                    { icon: <Twitter className="w-5 h-5" />, href: "https://x.com/Shadownik(Swnk)_ofc", label: "Twitter" },
-                    { icon: <Linkedin className="w-5 h-5" />, href: "https://www.linkedin.com/company/Shadownik(Swnk)", label: "LinkedIn" },
-                    { icon: <Facebook className="w-5 h-5" />, href: "https://www.facebook.com/people/Shadownik(Swnk)/61562599613319", label: "Facebook" },
-                    { icon: <Instagram className="w-5 h-5" />, href: "https://instagram.com/Shadownik(Swnk).official", label: "Instagram" },
-                    { icon: <Youtube className="w-5 h-5" />, href: "https://www.youtube.com/@Shadownik(Swnk).official", label: "YouTube" },
-                    { icon: <MessageCircle className="w-5 h-5" />, href: "https://t.me/Shadownik(Swnk)official", label: "Telegram" },
-                    { icon: <MessagesSquare className="w-5 h-5" />, href: "https://www.whatsapp.com/channel/0029VakSdtTfXUuURqTLgF3A", label: "WhatsApp" }
+                    { icon: <Github className="w-5 h-5" />, href: "https://github.com/Shadownik-official", label: "GitHub" },
+                    { icon: <Twitter className="w-5 h-5" />, href: "https://x.com/Shadownik_ofc", label: "Twitter" },
+                    { icon: <Linkedin className="w-5 h-5" />, href: "https://www.linkedin.com/company/shadownik", label: "LinkedIn" },
+                    { icon: <Facebook className="w-5 h-5" />, href: "https://www.facebook.com/people/Shadownik/61562599613319", label: "Facebook" },
+                    { icon: <Instagram className="w-5 h-5" />, href: "https://instagram.com/Shadownik.official", label: "Instagram" },
+                    { icon: <Youtube className="w-5 h-5" />, href: "https://www.youtube.com/@Shadownik.official", label: "YouTube" },
+                    { icon: <MessageCircle className="w-5 h-5" />, href: "https://t.me/shadownikofficial", label: "Telegram" },
+                    { icon: <MessagesSquare className="w-5 h-5" />, href: "https://www.whatsapp.com/channel/0029VakSdTtFXUuURqTLgF3A", label: "WhatsApp" }
                   ].map((social, i) => (
                     <MotionA 
                       key={social.label}
