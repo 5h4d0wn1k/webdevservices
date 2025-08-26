@@ -77,7 +77,7 @@ export const privacyPolicyData: PrivacyPolicyDataType = {
     }
   ],
   contactInfo: {
-    email: "support@shadownik.online",
+    email: "support@swnk.in",
     phone: "+91 9165644843",
   },
   backLinkText: "Back to Home",

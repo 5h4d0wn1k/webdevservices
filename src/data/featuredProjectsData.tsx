@@ -45,7 +45,7 @@ export const featuredProjectsData: FeaturedProjectsDataType = {
     category: "web",
     image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&q=80&w=1200",
     description: "Comprehensive cybersecurity services and product offerings for enterprises and SMBs.",
-    link: "https://cybersecurity.shadownik.online",
+    link: "https://cybersecurity.swnk.in",
     stats: {},
     tags: [],
     icon: <Code2 className="w-6 h-6" />
@@ -55,7 +55,7 @@ export const featuredProjectsData: FeaturedProjectsDataType = {
     category: "ngo",
     image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=1200",
     description: "Platform for social impact initiatives and community engagement projects.",
-    link: "https://ngo.shadownik.online",
+    link: "https://ngo.swnk.in",
     stats: {},
     tags: [],
     icon: <Globe2 className="w-6 h-6" />

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Send, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
-import { API_ENDPOINTS } from '../config/api';
+// Newsletter backend removed; keep component purely client-side
 
 const Newsletter = () => {
   const [email, setEmail] = useState('');
@@ -34,28 +34,11 @@ const Newsletter = () => {
     setIsSubmitting(true);
     
     try {
-      const response = await fetch(API_ENDPOINTS.newsletter, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Server response:', errorText);
-        throw new Error('Failed to subscribe to newsletter');
-      }
-      
-      // Handle success
+      // No backend; simulate success UX
+      await new Promise(r => setTimeout(r, 600));
       setIsSuccess(true);
       setEmail('');
-      
-      // Reset success message after some time
-      setTimeout(() => {
-        setIsSuccess(false);
-      }, 5000);
+      setTimeout(() => setIsSuccess(false), 5000);
     } catch (err) {
       setError('Something went wrong. Please try again.');
       console.error('Newsletter subscription error:', err);

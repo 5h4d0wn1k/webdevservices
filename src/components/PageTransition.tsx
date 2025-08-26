@@ -86,7 +86,7 @@ const PageTransition: React.FC<PageTransitionProps> = ({ children }) => {
   };
 
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence mode="sync">
       {isLoading ? (
         <motion.div
           key="loader"

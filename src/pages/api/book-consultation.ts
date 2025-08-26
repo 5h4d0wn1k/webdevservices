@@ -8,17 +8,43 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ message: 'Method not allowed' });
   }
 
-  const { name, email, phone, date, time, projectType, budget, message } = req.body;
+  const { name, email, phone, date, time, projectType, budget, message, timeZone, durationMinutes } = req.body;
 
   try {
     console.log('Setting up email and calendar...');
 
+    // Normalize Google private key (supports base64 or \n strings)
+    const getPrivateKey = () => {
+      const b64 = process.env.GOOGLE_PRIVATE_KEY_BASE64;
+      if (b64 && b64.trim()) {
+        try {
+          const decoded = Buffer.from(b64, 'base64').toString('utf8');
+          if (decoded.includes('BEGIN PRIVATE KEY')) return decoded;
+        } catch {}
+      }
+      const key = process.env.GOOGLE_PRIVATE_KEY || process.env.GOOGLE_CALENDAR_KEY;
+      if (!key) return undefined;
+      const normalized = key.replace(/\\n/g, '\n');
+      if (normalized.includes('BEGIN PRIVATE KEY')) return normalized;
+      try {
+        const decoded = Buffer.from(normalized, 'base64').toString('utf8');
+        return decoded.includes('BEGIN PRIVATE KEY') ? decoded : normalized;
+      } catch {
+        return normalized;
+      }
+    };
+
+    const privateKey = getPrivateKey();
+    if (!privateKey) {
+      return res.status(500).json({ message: 'Google Calendar not configured: missing private key' });
+    }
+
     // Create JWT client for Google Calendar using the service account
     const auth = new JWT({
-      email: "Shadownik(Swnk)-calender@web-dev-services-454105.iam.gserviceaccount.com",
-      key: process.env.GOOGLE_CALENDAR_KEY?.replace(/\\n/g, '\n'),
+      email: process.env.GOOGLE_CLIENT_EMAIL,
+      key: privateKey,
       scopes: ['https://www.googleapis.com/auth/calendar'],
-      subject: "Shadownik(Swnk).official@gmail.com" // Impersonate this user to make them the host
+      subject: process.env.GOOGLE_CALENDAR_SUBJECT || 'Shadownik(Swnk).official@gmail.com'
     });
 
     const calendar = google.calendar({ version: 'v3', auth });
@@ -50,8 +76,75 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     
     eventStartTime.setHours(hours, minutes, 0);
     
+    const meetingDuration = Number(durationMinutes) && Number(durationMinutes) > 0 ? Number(durationMinutes) : 30;
     const eventEndTime = new Date(eventStartTime);
-    eventEndTime.setMinutes(eventEndTime.getMinutes() + 30);
+    eventEndTime.setMinutes(eventEndTime.getMinutes() + meetingDuration);
+
+    // Determine timezone (fallback to IST)
+    const tz = typeof timeZone === 'string' && timeZone.trim() ? timeZone : 'Asia/Kolkata';
+
+    // Check availability using FreeBusy for primary calendar
+    try {
+      const freeBusy = await calendar.freebusy.query({
+        requestBody: {
+          timeMin: eventStartTime.toISOString(),
+          timeMax: eventEndTime.toISOString(),
+          items: [{ id: 'primary' }],
+          timeZone: tz
+        }
+      });
+
+      const busy = freeBusy.data.calendars?.primary?.busy || [];
+      if (busy.length > 0) {
+        // Generate up to 5 alternative slots on the same day within business hours
+        const suggestions: Array<{ start: string; end: string; display: string }> = [];
+        const businessStartHour = 10; // 10:00
+        const businessEndHour = 18; // 18:00
+
+        // Start from requested time, then step forward in increments
+        const iter = new Date(eventStartTime);
+        const dayStart = new Date(eventStartTime);
+        dayStart.setHours(businessStartHour, 0, 0, 0);
+        const dayEnd = new Date(eventStartTime);
+        dayEnd.setHours(businessEndHour, 0, 0, 0);
+
+        // Ensure iterator is not before business start
+        if (iter < dayStart) {
+          iter.setTime(dayStart.getTime());
+        }
+
+        // Helper to check overlap
+        const overlaps = (start: Date, end: Date) => {
+          return busy.some(b => {
+            const bStart = new Date(String(b.start));
+            const bEnd = new Date(String(b.end));
+            return start < bEnd && end > bStart;
+          });
+        };
+
+        while (suggestions.length < 5 && iter < dayEnd) {
+          const candidateStart = new Date(iter);
+          const candidateEnd = new Date(iter);
+          candidateEnd.setMinutes(candidateEnd.getMinutes() + meetingDuration);
+
+          if (candidateEnd <= dayEnd && !overlaps(candidateStart, candidateEnd)) {
+            const display = candidateStart.toLocaleString('en-US', { timeZone: tz, hour: 'numeric', minute: '2-digit', hour12: true });
+            suggestions.push({ start: candidateStart.toISOString(), end: candidateEnd.toISOString(), display });
+          }
+          // step 15 minutes
+          iter.setMinutes(iter.getMinutes() + 15);
+        }
+
+        return res.status(409).json({
+          message: 'Requested time is unavailable',
+          available: false,
+          suggestions,
+        });
+      }
+    } catch (availabilityError) {
+      console.error('Availability check failed:', availabilityError);
+      // Continue but include warning; better to signal client
+    }
 
     // Attendees for the meeting
     const attendees = [
@@ -78,11 +171,11 @@ ${message}
 `,
       start: {
         dateTime: eventStartTime.toISOString(),
-        timeZone: 'Asia/Kolkata',
+        timeZone: tz,
       },
       end: {
         dateTime: eventEndTime.toISOString(),
-        timeZone: 'Asia/Kolkata',
+        timeZone: tz,
       },
       attendees: attendees,
       conferenceData: {
@@ -123,7 +216,7 @@ ${message}
     });
     
     // Use environment variable for logo URL with a fallback
-    const logoUrl = process.env.LOGO_URL || 'https://shadownik.online/logo.svg';
+    const logoUrl = process.env.LOGO_URL || 'https://swnk.in/logo.svg';
     
     // Common HTML styles for emails
     const emailStyles = `
@@ -193,7 +286,7 @@ ${message}
             <div class="meeting-details">
               <p><strong>Date:</strong> ${formattedDate}</p>
               <p><strong>Time:</strong> ${time}</p>
-              <p><strong>Duration:</strong> 30 minutes</p>
+              <p><strong>Duration:</strong> ${meetingDuration} minutes</p>
             </div>
             <p>This meeting has been added to your Google Calendar.</p>
             <a href="${meetLink}" class="join-button">Join Google Meet</a>
@@ -265,7 +358,7 @@ ${message}
             <div class="meeting-details">
               <p><strong>Date:</strong> ${formattedDate}</p>
               <p><strong>Time:</strong> ${time}</p>
-              <p><strong>Duration:</strong> 30 minutes</p>
+              <p><strong>Duration:</strong> ${meetingDuration} minutes</p>
             </div>
             <a href="${meetLink}" class="join-button">Join Google Meet</a>
             <p><small>Or copy this link: ${meetLink}</small></p>
@@ -304,35 +397,22 @@ ${message}
         </div>
         <div class="content">
           <p>Dear ${name},</p>
-          
-          <p>Thank you for booking a consultation with Shadownik(Swnk). We're looking forward to discussing your ${projectType} project with you.</p>
-          
+
+          <p>Thank you for reaching out to Shadownik(Swnk) regarding your ${projectType} needs. We’ve received your details and our team will review them shortly.</p>
+
           <div class="meeting-box">
-            <h2>Meeting Details</h2>
-            <div class="meeting-details">
-              <p><strong>Date:</strong> ${formattedDate}</p>
-              <p><strong>Time:</strong> ${time}</p>
-              <p><strong>Duration:</strong> 30 minutes</p>
-              <p><strong>Platform:</strong> Google Meet (video conference)</p>
-            </div>
-            <p>You'll be meeting with our team including our Founder & CEO and Web Development Lead.</p>
-            <a href="${meetLink}" class="join-button">Join Google Meet</a>
-            <p><small>Or copy this link: ${meetLink}</small></p>
-            <p><small>This meeting has also been added to your Google Calendar.</small></p>
+            <h2>What Happens Next</h2>
+            <ul>
+              <li>Our team reviews your information</li>
+              <li>We check availability and propose suitable time slots if needed</li>
+              <li>We’ll reach back to you professionally with the next steps</li>
+            </ul>
           </div>
-          
-          <h2>Preparing for your consultation</h2>
-          <p>To make the most of our time together, please:</p>
-          <ul>
-            <li>Prepare any specific questions you have about your project</li>
-            <li>Consider having examples of websites or designs you like</li>
-            <li>Think about your project goals, timeline, and specific requirements</li>
-          </ul>
-          
-          <p>If you need to reschedule or have any questions before our meeting, please contact us at <a href="mailto:info@shadownik.online">info@shadownik.online</a>.</p>
-          
-          <p>We're looking forward to speaking with you!</p>
-          
+
+          <p>For any questions or further communication, please write to <a href="mailto:info@swnk.in">info@swnk.in</a>.</p>
+
+          <p>We appreciate your interest and will be in touch soon.</p>
+
           <p>Best regards,<br>Team Shadownik(Swnk)</p>
         </div>
         <div class="footer">
@@ -344,39 +424,27 @@ ${message}
     </html>
     `;
 
-    // Send email to admin
-    const adminEmailResult = await sendEmail({
-      to: "Shadownik(Swnk).official@gmail.com",
-      subject: `New Consultation: ${name} - ${formattedDate}`,
-      html: adminHtml
-    });
+    // Send meeting emails: to admins (Nikhil + company) and to client
+    const adminRecipients = [
+      'nikhilnagpure203@gmail.com',
+      'info@swnk.in'
+    ];
+
+    const [adminEmailResult, clientEmailResult] = await Promise.all([
+      sendEmail({
+        to: adminRecipients,
+        subject: `New Consultation: ${name} - ${formattedDate}`,
+        html: adminHtml
+      }),
+      sendEmail({
+        to: email,
+        cc: adminRecipients,
+        subject: 'Your Consultation with Shadownik(Swnk) - Confirmation',
+        html: clientHtml
+      })
+    ]);
     
     console.log('Admin email sent:', adminEmailResult);
-
-    // Send email to CEO
-    const ceoEmailResult = await sendEmail({
-      to: "nikhilnagpure203@gmail.com",
-      subject: `Upcoming Consultation: ${name} - ${formattedDate}`,
-      html: teamMemberHtml("Nikhil")
-    });
-    
-    console.log('CEO email sent:', ceoEmailResult);
-
-    // Send email to Web Development Lead
-    const devLeadEmailResult = await sendEmail({
-      to: "aniwiss07@gmail.com",
-      subject: `Upcoming Consultation: ${name} - ${formattedDate}`,
-      html: teamMemberHtml("Web Development Lead")
-    });
-    
-    console.log('Web Dev Lead email sent:', devLeadEmailResult);
-
-    // Send email to client
-    const clientEmailResult = await sendEmail({
-      to: email,
-      subject: 'Your Consultation with Shadownik(Swnk) - Confirmation',
-      html: clientHtml
-    });
     
     console.log('Client email sent:', clientEmailResult);
 

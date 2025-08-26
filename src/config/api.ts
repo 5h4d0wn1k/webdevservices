@@ -16,10 +16,7 @@ export const API_BASE_URL = isDevelopment
 
 // API endpoints configuration
 export const API_ENDPOINTS = {
-  contact: `/api/contact`,
   bookConsultation: `/api/book-consultation`,
-  submitProject: `/api/submit-project`,
-  newsletter: `/api/newsletter`,
 };
 
 // API configuration

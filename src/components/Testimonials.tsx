@@ -135,7 +135,7 @@ const Testimonials = () => {
         <div className="relative">
           {/* Testimonial Carousel */}
           <div className="overflow-hidden pb-12">
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="sync">
               {/* Use testimonials from data file */}
               {testimonials.map((testimonial, index) => (
                 activeIndex === index && (

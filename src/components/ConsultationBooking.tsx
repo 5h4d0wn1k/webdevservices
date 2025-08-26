@@ -12,6 +12,8 @@ interface BookingData {
   phone: string;
   date: Date | null;
   time: string;
+  timeZone?: string;
+  durationMinutes?: number;
   projectType: string;
   budget: string;
   message: string;
@@ -37,6 +39,7 @@ const ConsultationBooking: React.FC<ConsultationBookingProps> = ({ onBookingComp
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const [suggestions, setSuggestions] = useState<Array<{ start: string; end: string; display: string }>>([]);
 
   const { headingText, descriptionText, projectTypes, budgetRanges, timeSlots, successMessage, errorMessage: dataErrorMessage, unexpectedErrorMessage, inputLabels, selectPlaceholders, buttonText } = consultationBookingData;
 
@@ -53,6 +56,7 @@ const ConsultationBooking: React.FC<ConsultationBookingProps> = ({ onBookingComp
     setIsSubmitting(true);
     setSubmitStatus('idle');
     setErrorMessage('');
+    setSuggestions([]);
 
     try {
       // Format the date to ISO string
@@ -76,6 +80,9 @@ const ConsultationBooking: React.FC<ConsultationBookingProps> = ({ onBookingComp
       const data = await response.json();
 
       if (!response.ok) {
+        if (response.status === 409 && data?.suggestions?.length) {
+          setSuggestions(data.suggestions);
+        }
         throw new Error(data.message || 'Failed to book consultation');
       }
 
@@ -102,6 +109,8 @@ const ConsultationBooking: React.FC<ConsultationBookingProps> = ({ onBookingComp
           phone: '',
           date: null,
           time: '',
+          timeZone: undefined,
+          durationMinutes: undefined,
           projectType: '',
           budget: '',
           message: ''
@@ -167,6 +176,32 @@ const ConsultationBooking: React.FC<ConsultationBookingProps> = ({ onBookingComp
                 <div>
                   <p className="text-red-100">{dataErrorMessage}</p>
                   {errorMessage && <p className="text-red-200 text-sm mt-1">{errorMessage}</p>}
+                  {suggestions.length > 0 && (
+                    <div className="mt-3">
+                      <p className="text-red-200 text-sm mb-2">Suggested alternative times:</p>
+                      <div className="flex flex-wrap gap-2">
+                        {suggestions.map((s, idx) => (
+                          <button
+                            key={idx}
+                            type="button"
+                            className="px-3 py-1 text-sm rounded-full bg-white/10 hover:bg-white/20 border border-white/20"
+                            onClick={() => {
+                              setBookingData(prev => ({
+                                ...prev,
+                                date: new Date(s.start),
+                                time: new Date(s.start).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
+                              }));
+                              setSubmitStatus('idle');
+                              setErrorMessage('');
+                              setSuggestions([]);
+                            }}
+                          >
+                            {s.display}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </motion.div>
             )}
@@ -250,6 +285,32 @@ const ConsultationBooking: React.FC<ConsultationBookingProps> = ({ onBookingComp
                       <option key={slot} value={slot}>{slot}</option>
                     ))}
                   </select>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-1">Time zone</label>
+                    <input
+                      type="text"
+                      placeholder={Intl.DateTimeFormat().resolvedOptions().timeZone}
+                      value={bookingData.timeZone || ''}
+                      onChange={(e) => setBookingData({ ...bookingData, timeZone: e.target.value })}
+                      className="w-full px-4 py-3 bg-black/30 border border-white/10 rounded-lg focus:outline-none focus:border-primary/50 transition-colors"
+                    />
+                    <p className="text-xs text-gray-400 mt-1">Leave blank to auto-detect.</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-1">Duration (minutes)</label>
+                    <input
+                      type="number"
+                      min={15}
+                      step={15}
+                      placeholder="30"
+                      value={bookingData.durationMinutes || ''}
+                      onChange={(e) => setBookingData({ ...bookingData, durationMinutes: Number(e.target.value) })}
+                      className="w-full px-4 py-3 bg-black/30 border border-white/10 rounded-lg focus:outline-none focus:border-primary/50 transition-colors"
+                    />
+                  </div>
                 </div>
 
                 <div>

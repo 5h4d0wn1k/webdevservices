@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaArrowRight, FaCheck, FaFileUpload, FaInfoCircle, FaRocket, FaLightbulb, FaCode, FaCog, FaCalendarAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import ConsultationBooking from '../ConsultationBooking';
-import { API_ENDPOINTS } from '../../config/api';
+// Onboarding backend removed; keep client-only UX
 import { clientOnboardingData } from '../../data/clientOnboardingData';
 
 interface FormData {
@@ -146,20 +146,8 @@ export const ClientOnboarding = () => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus('idle');
-
     try {
-      const response = await fetch(API_ENDPOINTS.submitProject, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to submit project');
-      }
-
+      await new Promise(r => setTimeout(r, 500));
       setSubmitStatus('success');
       setTimeout(() => {
         setFormData(initialFormData);
@@ -177,20 +165,8 @@ export const ClientOnboarding = () => {
   const submitProjectData = async (data: FormData) => {
     setIsSubmitting(true);
     setSubmitStatus('idle');
-
     try {
-      const response = await fetch(API_ENDPOINTS.submitProject, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to submit project');
-      }
-
+      await new Promise(r => setTimeout(r, 500));
       setSubmitStatus('success');
       setTimeout(() => {
         setFormData(initialFormData);
@@ -290,7 +266,7 @@ export const ClientOnboarding = () => {
           </div>
         </div>
 
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="sync">
           {/* Step 1: Project Type */}
           {step === 1 && (
             <motion.div

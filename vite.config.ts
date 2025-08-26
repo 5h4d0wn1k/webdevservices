@@ -40,14 +40,42 @@ interface BookingData {
   };
 }
 
+const getGooglePrivateKey = () => {
+  // Prefer explicit base64 var if provided
+  const b64 = process.env.GOOGLE_PRIVATE_KEY_BASE64;
+  if (b64 && b64.trim()) {
+    try {
+      const decoded = Buffer.from(b64, 'base64').toString('utf8');
+      if (decoded.includes('BEGIN PRIVATE KEY')) return decoded;
+    } catch {}
+  }
+  // Fallback to raw key with \n replacements
+  const key = process.env.GOOGLE_PRIVATE_KEY || process.env.GOOGLE_CALENDAR_KEY;
+  if (!key) return undefined;
+  const normalized = key.replace(/\\n/g, '\n');
+  if (normalized.includes('BEGIN PRIVATE KEY')) return normalized;
+  // Try base64 decode if it doesn't look like a PEM
+  try {
+    const decoded = Buffer.from(normalized, 'base64').toString('utf8');
+    return decoded.includes('BEGIN PRIVATE KEY') ? decoded : normalized;
+  } catch {
+    return normalized;
+  }
+};
+
 const createCalendarEvent = async (bookingData: BookingData) => {
   try {
+    const privateKey = getGooglePrivateKey();
+    if (!privateKey) {
+      throw new Error('Missing Google private key. Set GOOGLE_PRIVATE_KEY or GOOGLE_PRIVATE_KEY_BASE64');
+    }
+
     const auth = new google.auth.GoogleAuth({
       credentials: {
         type: process.env.GOOGLE_CREDENTIALS_TYPE || "service_account",
         project_id: process.env.GOOGLE_PROJECT_ID,
         private_key_id: process.env.GOOGLE_PRIVATE_KEY_ID,
-        private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+        private_key: privateKey,
         client_email: process.env.GOOGLE_CLIENT_EMAIL,
         client_id: process.env.GOOGLE_CLIENT_ID,
         auth_uri: process.env.GOOGLE_AUTH_URI || "https://accounts.google.com/o/oauth2/auth" as any,
@@ -167,7 +195,7 @@ Domain Status: ${bookingData.technical?.domain || 'Not specified'}
     // Send emails with the meet link
     const adminEmails = [
       'Shadownik(Swnk).official@gmail.com', // Always include main admin email
-      process.env.INFO_EMAIL || 'info@shadownik.online', // Always include info email
+      process.env.INFO_EMAIL || 'info@swnk.in', // Always include info email
       process.env.ADMIN_EMAIL,
       process.env.FOUNDER_EMAIL,
       process.env.LEAD_EMAIL
@@ -500,7 +528,7 @@ const generateConsultationEmail = (bookingData: BookingData, meetLink: string | 
               <h2 style="margin-top: 0; color: #92400E; font-size: 18px; font-weight: 600;">Important Notes:</h2>
               <ul style="margin: 15px 0 0; padding: 0 0 0 20px;">
                 <li style="padding: 6px 0; font-size: 15px;">Please join the meeting 5 minutes before the scheduled time</li>
-                <li style="padding: 6px 0; font-size: 15px;">If you need to reschedule, please contact us at least 24 hours in advance at <a href="mailto:contact@shadownik.online" style="color: #4F46E5; text-decoration: none;">contact@shadownik.online</a></li>
+                <li style="padding: 6px 0; font-size: 15px;">If you need to reschedule, please contact us at least 24 hours in advance at <a href="mailto:contact@swnk.in" style="color: #4F46E5; text-decoration: none;">contact@swnk.in</a></li>
                 <li style="padding: 6px 0; font-size: 15px;">The consultation is scheduled for 30 minutes, but we can extend if needed</li>
               </ul>
             </div>
@@ -867,7 +895,7 @@ export default defineConfig({
                 // Get admin recipients from environment variables
                 const adminRecipients = [
                   process.env.ADMIN_EMAIL || 'Shadownik(Swnk).official@gmail.com',
-                  process.env.INFO_EMAIL || 'info@shadownik.online'
+                  process.env.INFO_EMAIL || 'info@swnk.in'
                 ].filter(Boolean); // Filter out any undefined values
                 
                 console.log('Sending newsletter notification to:', adminRecipients);
@@ -1008,7 +1036,7 @@ export default defineConfig({
                           </div>
                           
                           <div style="text-align: center; margin: 40px 0;">
-                            <a href="https://www.shadownik.online" style="display: inline-block; padding: 14px 36px; background: linear-gradient(135deg, #4F46E5, #7C3AED); color: white; text-decoration: none; font-weight: 500; border-radius: 8px; font-size: 16px; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);">Explore Our Services</a>
+                            <a href="https://www.swnk.in" style="display: inline-block; padding: 14px 36px; background: linear-gradient(135deg, #4F46E5, #7C3AED); color: white; text-decoration: none; font-weight: 500; border-radius: 8px; font-size: 16px; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);">Explore Our Services</a>
                           </div>
                           
                           <p style="font-size: 16px; line-height: 1.6; margin-bottom: 25px;">

@@ -58,7 +58,7 @@ export const aboutData: AboutDataType = {
       description: "Bringing world-class expertise to every project, anywhere."
     }
   ],
-  introText: "Welcome to the dedicated Web Development Services division of <span className=\"text-white font-semibold\">Shadownik(Swnk)<\/span>, a specialized sub-division of <span className=\"text-white font-semibold\">Shadownik<\/span>, a leading force in the IT sector. Based at <span className=\"text-white font-semibold\">web.shadownik.online<\/span>, this platform showcases our expertise in building exceptional web experiences. At Shadownik(Swnk), we're more than just developers – we're digital craftsmen obsessed with perfection. Our journey began with a simple mission: to create exceptional digital experiences that push the boundaries of what's possible within the Shadownik(Swnk) ecosystem and for our clients.",
+  introText: "Welcome to the dedicated Web Development Services division of <span className=\"text-white font-semibold\">Shadownik(Swnk)<\/span>, a specialized sub-division of <span className=\"text-white font-semibold\">Shadownik<\/span>, a leading force in the IT sector. Based at <span className=\"text-white font-semibold\">web.swnk.in<\/span>, this platform showcases our expertise in building exceptional web experiences. At Shadownik(Swnk), we're more than just developers – we're digital craftsmen obsessed with perfection. Our journey began with a simple mission: to create exceptional digital experiences that push the boundaries of what's possible within the Shadownik(Swnk) ecosystem and for our clients.",
   spanText: "About Us",
   headingText: "Crafting Digital Excellence",
   imageSrc: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200",

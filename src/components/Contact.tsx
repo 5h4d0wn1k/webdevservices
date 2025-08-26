@@ -19,7 +19,7 @@ import {
   MessageCircle,
   MessagesSquare
 } from 'lucide-react';
-import { API_ENDPOINTS } from '../config/api';
+// Contact backend removed; send via mailto fallback
 import { contactData } from '../data/contactData';
 
 const { spanText, headingText, descriptionText, contactInfo, services } = contactData;
@@ -129,32 +129,15 @@ const Contact = () => {
     
     setIsSubmitting(true);
     setSubmitStatus('idle');
-    
     try {
-      const response = await fetch(API_ENDPOINTS.contact, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+      const subject = encodeURIComponent(`Contact: ${formData.name} - ${formData.service}`);
+      const body = encodeURIComponent(`From: ${formData.name} <${formData.email}>
+Service: ${formData.service}
 
-      let responseData;
-      try {
-        responseData = await response.json();
-      } catch (parseError) {
-        console.error('Error parsing JSON response:', parseError);
-        throw new Error('Invalid response format');
-      }
-
-      if (!response.ok) {
-        console.error('Server error response:', responseData);
-        throw new Error(responseData.message || 'Failed to send message');
-      }
-
-      // Success - don't check for exact message text to make it more flexible
+Message:
+${formData.message}`);
+      window.location.href = `mailto:info@swnk.in?subject=${subject}&body=${body}`;
       setSubmitStatus('success');
-      // Reset form after successful submission
       setTimeout(() => {
         setFormData({ name: '', email: '', service: '', message: '' });
         setIsTouched({});
@@ -164,9 +147,7 @@ const Contact = () => {
     } catch (error) {
       console.error('Contact form error:', error);
       setSubmitStatus('error');
-      setTimeout(() => {
-        setSubmitStatus('idle');
-      }, 3000);
+      setTimeout(() => setSubmitStatus('idle'), 3000);
     } finally {
       setIsSubmitting(false);
     }
@@ -283,7 +264,7 @@ const Contact = () => {
             <div className="bg-gradient-to-br from-gray-900 to-black border border-white/10 rounded-2xl p-8 shadow-xl">
               <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
                 {/* Success/Error Messages */}
-                <AnimatePresence mode="wait">
+                <AnimatePresence mode="sync">
                   {submitStatus === 'success' && (
                     <motion.div 
                       initial={{ opacity: 0, height: 0 }}

@@ -97,7 +97,7 @@ const TermsOfService = () => {
               For any questions about these Terms, please contact us at:
             </p>
             <div className="mt-4">
-              <p className="text-gray-300">Email: support@shadownik.online</p>
+              <p className="text-gray-300">Email: support@swnk.in</p>
               <p className="text-gray-300">Phone: +91 9165644843</p>
             </div>
           </div>
