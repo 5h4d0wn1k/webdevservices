@@ -69,5 +69,5 @@ typed and reviewed.
 
 ## License
 
-No LICENSE file is currently published in this repository. Contact the
-maintainer about usage terms.
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
